@@ -15,6 +15,7 @@ We could use github pages to build a personal blog.
 ### 2.GithubPages
 
 Github pages uses Jeykll to build the static website.
+
 * Install ruby and gem by OS package manager
 * Uses ```gem install github-pages``` to install the local environment to dev and test your website
 * In local website folder, use ```jekyll serve``` to lunch the server.
