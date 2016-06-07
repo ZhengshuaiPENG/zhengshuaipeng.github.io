@@ -1,0 +1,31 @@
+markdown: kramdown
+highlighter: pygments
+permalink: /posts/:title.html
+excerpt_separator: "<!-- more -->"
+
+github: ZhengshuaiPENG
+author: "Zhengshuai PENG"
+email: zhengshuai.peng@outlook.com
+name: "Blog of Zhengshuai PENG"
+url: blog.lovian.org
+domain: lovian.org
+all_categories: [
+["java", "Java","/posts/java.html"],
+["program", "Programming","/posts/program.html"],
+["web", "Web","/posts/web.html"],
+["linux", "Linux","/posts/linux.html"],
+["read", "Note","/posts/read.html"],
+["algorithm", "Algorithm","/posts/algorithm.html"],
+["about", "About","/about.html"]
+]
+
+paginate: 8
+paginate_path: "posts/page:num"
+timezone: Europe/Paris
+
+collections:
+  docs:
+    output: true
+
+gems:
+ - jekyll-paginate
