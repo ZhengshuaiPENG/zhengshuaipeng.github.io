@@ -20,7 +20,10 @@ title: "Blog Of Zhengshuai PENG"
 {{ post.content | truncatewords:75}}
 </br>
 </article>
-	<p><h3><a href="{{ post.url }}">Read More &raquo;</a></h3></p>
+        <div class="date">
+            Written on {{ post.date | date: "%B %e, %Y" }}
+        </div>
+	<p><h4><a href="{{ post.url }}">Read More &raquo;</a></h4></p>
 <hr>
 </br>
 {% endfor %}
