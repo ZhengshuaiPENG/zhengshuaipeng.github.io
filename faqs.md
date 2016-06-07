@@ -24,7 +24,7 @@ Github pages uses Jeykll to build the static website.
 
 There are many templates in Github, just clone them into your repository and modify them
 
-#### 4.Comment
+### 4.Comment
 
 For chinese users, you could use 'duoshuo';Just register an account, and get a shortname from duoshuo, add the code into your layout.
 
