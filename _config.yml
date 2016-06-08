@@ -3,7 +3,7 @@ kramdown:
   input: GFM
   hard_wrap: false
   auto_ids: true
-highlighter: rouge
+  syntax_highlighter: rouge
 permalink: /posts/:title.html
 excerpt_separator: "<!-- more -->"
 
