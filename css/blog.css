@@ -42,3 +42,23 @@ footer {
 #back-top a:hover {
   background-color: #777;
 }
+
+/* unvisited link */
+a:link {
+    color: green;
+}
+
+/* visited link */
+a:visited {
+    color: blue;
+}
+
+/* mouse over link */
+a:hover {
+    color: hotpink;
+}
+
+/* selected link */
+a:active {
+    color: blue;
+}
