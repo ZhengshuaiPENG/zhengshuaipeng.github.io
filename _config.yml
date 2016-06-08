@@ -1,5 +1,9 @@
-markdown: kramdown
-highlighter: pygments
+markdown: redcarpet
+highlighter: true
+
+redcarpet:
+  extensions: [:smart, :fenced_code, :gh_blockcode]
+
 permalink: /posts/:title.html
 excerpt_separator: "<!-- more -->"
 
