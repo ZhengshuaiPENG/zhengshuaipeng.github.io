@@ -2,6 +2,8 @@ markdown: kramdown
 kramdown:
   input: GFM
   hard_wrap: false
+  auto_ids: true
+highlighter: rouge
 permalink: /posts/:title.html
 excerpt_separator: "<!-- more -->"
 
@@ -31,3 +33,4 @@ collections:
 
 gems:
  - jekyll-paginate
+ - github-pages
