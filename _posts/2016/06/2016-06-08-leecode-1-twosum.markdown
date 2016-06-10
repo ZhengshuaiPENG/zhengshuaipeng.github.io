@@ -16,6 +16,9 @@ tags: [C++,Algorithm, LeetCode, Array]
 
  The return format had been changed to zero-based indices. Please read the above updated description carefully.
 
+## Answer
+Just loop twice to find the indices of elements who has the same value, store the indices to a new vector ans.
+
 ## Code:
 
 ```cpp
