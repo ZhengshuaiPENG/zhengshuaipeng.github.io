@@ -8,7 +8,6 @@
     <meta name="description" content="{{ page.title }} - {{ site.name }} - Author:{{ site.author }}" /> {% if page.tags.size > 0%}
     <meta name="keywords" content="{% for tag in page.tags %}{% if tag != " " %}{{ tag }}{% if forloop.index != page.tags.size %},{% endif %}{% endif %}{% endfor %}"/>{% endif %}
     <title>{{ page.title }} - {{ site.name }}</title>
-    {% include head.html %}
     {% seo %}
     <!-- Bootstrap Core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet" />
