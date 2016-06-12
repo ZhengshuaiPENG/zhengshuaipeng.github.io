@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content="{{ page.title }} - {{ site.name }} - Author:{{ site.author }}"/>
     <title>{% for cat in site.all_categories %}{% if page.category == cat[0] %}Categories：{{cat[1]}} - {{ site.name }}{% endif %}{% endfor %}</title>
+    {% include head.html %}
+    {% seo %}
     <!-- Bootstrap Core CSS -->
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
     <!-- Custom CSS -->
