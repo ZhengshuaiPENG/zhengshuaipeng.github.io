@@ -1,9 +1,16 @@
+# SEO settings
+title: "Lovian"
+title2: "Blog" # default: ""
+description: "A programming blog of Zhengshuai PENG, Lovian"
+keywords: "Jekyll, Java, Programming, Linux, IT, C++, Algorithm, PENG Zhengshuai, Lovian"
+
+
+highlighter: rouge
 markdown: kramdown
 kramdown:
   input: GFM
-  hard_wrap: false
-  auto_ids: true
   syntax_highlighter: rouge
+
 permalink: /posts/:title.html
 excerpt_separator: "<!-- more -->"
 
