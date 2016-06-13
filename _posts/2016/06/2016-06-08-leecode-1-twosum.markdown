@@ -21,7 +21,7 @@ Just loop twice to find the indices of elements who has the same value, store th
 
 ## Code:
 
-```cpp
+{% highlight c++ linenos %}
 #include <vector>
 using namespace std;
 
@@ -41,4 +41,4 @@ class TwoSum{
         }
 };
 
-```
+{% endhighlight %}
