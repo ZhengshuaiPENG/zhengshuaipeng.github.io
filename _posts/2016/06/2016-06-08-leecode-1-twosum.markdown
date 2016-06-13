@@ -21,7 +21,7 @@ Just loop twice to find the indices of elements who has the same value, store th
 
 ## Code:
 
-{% highlight c++ linenos %}
+{% highlight cpp linenos %}
 #include <vector>
 using namespace std;
 
