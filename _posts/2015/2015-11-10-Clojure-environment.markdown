@@ -1,8 +1,12 @@
 ---
 layout: post
-category: "linux"
 title:  "Clojure Environment With VIM/Emacs On Linux"
-tags: [Linux,VIM, Emacs]
+date: 2015-11-10
+desc: "set clojure environment with vim/emacs on linux"
+keywords: "Linux, VIM, emacs, Clojure, leinigen"
+categories: [Linux]
+tags: [Linux,VIM, Emacs, Clojure]
+icon: fa-linux
 ---
 # How to set Clojure environment with vim/Emacs
 
