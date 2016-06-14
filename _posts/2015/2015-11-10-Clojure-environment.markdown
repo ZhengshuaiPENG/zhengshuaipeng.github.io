@@ -29,35 +29,35 @@ Leiningen is a tool for Clojure, it makes you feel more easier with Clojure.
 *	Go to [Leiningen](leiningen.org), to download the script
 *	Open Terminal
 
-		```bash
-		cd Downloads/
-		ls
-		sudo mv lein /usr/local/bin/
-		cd /usr/local/bin/
-		sudo chmod +x lein
-		./lein
-		```
+	```shell
+	cd Downloads/
+	ls
+	sudo mv lein /usr/local/bin/
+	cd /usr/local/bin/
+	sudo chmod +x lein
+	./lein
+	```
 
 *	Set profiles.clj
 
-		```bash
-		cd ~/.lein && vim profiles.clj
-		{:user {:plugins [[cider/cider-nrepl "0.10.0-SNAPSHOT"]]
-				:dependencies [[org.clojure/tools.nrepl "0.2.12"]]}}
-		```
+	```shell
+	cd ~/.lein && vim profiles.clj
+	{:user {:plugins [[cider/cider-nrepl "0.10.0-SNAPSHOT"]]
+			:dependencies [[org.clojure/tools.nrepl "0.2.12"]]}}
+	```
 
 	use :wq save it
 
 
 *	To see if success
 
-		```
-		lein version
-		```
+	```shell
+	lein version
+	```
 
 *	Some commands
 
-		```bash
+		
 		Several tasks are available:
 		change              Rewrite project.clj by applying a function.
 		check               Check syntax and warn on reflection.
@@ -100,7 +100,7 @@ Leiningen is a tool for Clojure, it makes you feel more easier with Clojure.
 
 		These aliases are available:
 		downgrade, expands to upgrade
-		```
+		
 
 ## II. VIM
 
@@ -108,9 +108,9 @@ Leiningen is a tool for Clojure, it makes you feel more easier with Clojure.
 
 *	You can install vim from package manager
 
-		```bash
-		sudo apt-get install vim
-		```
+	```shell
+	sudo apt-get install vim
+	```
 
 
 ### 2. Configure VIM
@@ -128,14 +128,14 @@ Leiningen is a tool for Clojure, it makes you feel more easier with Clojure.
 
 *	Create a new file called  ***.vimrc.bundles.local***, and add the following command, and save it
 
-		```
-		Bundle 'tpope/vim-fireplace'
-		```
+	```
+	Bundle 'tpope/vim-fireplace'
+	```
 *	Open Terminal
 
-		```bash
-		 vim +BundleInstall! +BundleClean +q
-		```
+	```shell
+	 vim +BundleInstall! +BundleClean +q
+	```
 
 *	So far, we have done with Clojure environment
 
@@ -143,25 +143,25 @@ Leiningen is a tool for Clojure, it makes you feel more easier with Clojure.
 
 *	Open Terminal
 
-		```bash
-		lein repl
-		```
+	```shell
+	lein repl
+	```
 	you will get return back the information of host, port, and some others
 
 *	Open vim, new a .clj file, and type some Clojure codes
 *	Execute
 
-		```
-		:Connect
-		```
+	```
+	:Connect
+	```
 
 	 fill with port address, and scope, i.e. test.clj just returned you back in the Terminal
 
 *	Stop the cursor in the Clojure function snippet and execute
 
-		```
-		: Eval
-		```
+	```
+	: Eval
+	```
 
 	thus you can see the result
 
@@ -172,9 +172,9 @@ Leiningen is a tool for Clojure, it makes you feel more easier with Clojure.
 
 *	You can install emacs 24.3 in package manager
 
-		```bash
-		sudo apt-get install emacs
-		```
+	```shell
+	sudo apt-get install emacs
+	```
 
 *	Or you can go to the offical site to download and install the newer version, but I think 24.3 is enough to use
 
@@ -182,9 +182,9 @@ Leiningen is a tool for Clojure, it makes you feel more easier with Clojure.
 
 *	First, you may need some simple configuration to make your emacs more effective, here I recommand a [emacs.d](https://github.com/purcell/emacs.d) of purcell. His configuration already integrated the environment which we need for clojure.
 
-		```bash
-		git clone https://github.com/purcell/emacs.d.git ~/.emacs.d
-		```
+	```shell
+	git clone https://github.com/purcell/emacs.d.git ~/.emacs.d
+	```
 
 *	Or you can get your own configuration, and install [cider](https://github.com/clojure-emacs/cider)  according to this [doc-tutorial](http://clojure-doc.org/articles/tutorials/emacs.html)
 
