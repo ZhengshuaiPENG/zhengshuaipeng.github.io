@@ -1,0 +1,22 @@
+---
+layout: post
+title:  "Personal Blog"
+date: 2015-07-01
+desc: "Zhengshuai PENG's personal blog"
+keywords: "ZhengshuaiPENG, Lovian, Blog"
+categories: [Note]
+tags: [blog, note]
+icon: fa-pencil
+---
+### Note
+
+This is my personal blog to record some technique articles.
+Maybe you have question that why I built one more personal blog as I already have [lovian](http://www.lovian.org). Because I think that for a developer, it's better to communicate with people comes from all the world. So all the articles in this blog will be written in English. And for  [lovian](http://www.lovian.org), I will use Chinese. The posts may be duplicated or may be not. But this blog will collect all the technique articles. And I will do my best as I can.
+
+Hope My Blog will help you learn something or solve some problems.
+
+As my mother language is not English, so maybe there will be some errors in posts, If you don't understand somewhere, just comment blow, or send email to me. I'd like to discuss with you.
+
+
+
+

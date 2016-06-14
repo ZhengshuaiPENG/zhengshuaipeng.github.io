@@ -57,10 +57,6 @@ donate:
   wechat: 'static/img/pay/wechat.png'
   alipay: 'static/img/pay/alipay.png'
 
-# comment
-changyan:
-  appid: cysfY7ULn
-  conf: prod_861928934cecb7a18e15bedaed9dae29
 
 # share
 bshare:
