@@ -60,15 +60,11 @@ donate:
 
 # share
 bshare:
-  uuid: 513f778e-a8f7-4c20-9ec2-d29cc2328d75
-
-# baidu analytics
-ba:
-  uuid: 317acca9ef9255b934e46371e471431d
+  uuid: 99b5a665-de2c-4135-a5ea-7686e7fa9290
 
 # google analytics
 ga:
-  id: UA-73784599-1
+  id: UA-75834843-2
 
 # blog img path
 img_path: '/static/img/blog'
