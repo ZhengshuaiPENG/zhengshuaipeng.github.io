@@ -1,0 +1,469 @@
+---
+layout: blog
+title: index
+permalink: /
+---
+<div class="navbar-wrapper">
+        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#page-top" id="i18_title"><span data-i18n="website.title">{{ site.title }}</span></a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right" id="i18_navbar">
+                        <li><a class="page-scroll" href="#page-top"><span data-i18n="nav.home">{{ site.landing.home }}</span></a></li>
+                        <li><a class="page-scroll" href="#about_me"><span data-i18n="nav.about_me">{{ site.landing.about }}</span></a></li>
+                        <li><a class="page-scroll" href="#career"><span data-i18n="nav.career">{{ site.landing.career }}</span></a></li>
+                        <li><a class="page-scroll" href="#skills"><span data-i18n="nav.skills">{{ site.landing.skills }}</span></a></li>
+                        <li><a class="page-scroll" href="#project"><span data-i18n="nav.projects">{{ site.landing.projects }}</span></a></li>
+                        <li><a class="page-scroll" href="#blog"><span data-i18n="nav.blog">{{ site.landing.blog }}</span></a></li>
+                        <li><a class="page-scroll" href="#contact"><span data-i18n="nav.contact">{{ site.landing.contact }}</span></a></li>
+                        <li>
+                            <a class="btn btn-sm set_en"><img src="{{"static/img/flags/United-States.png"| prepend: site.baseurl }}" height="16px" width="16px"></a>
+                        </li>
+                        <li>
+                            <a class="btn btn-sm set_cn"><img src="{{"static/img/flags/China.png"| prepend: site.baseurl }}" height="16px" width="16px"></a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+</div>
+
+<div id="inSlider" class="carousel carousel-fade" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#inSlider" data-slide-to="0" class="active"></li>
+        <li data-target="#inSlider" data-slide-to="1"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <div class="container">
+                <div class="carousel-caption">
+                </div>
+                <div class="carousel-image wow zoomIn">
+                    <!-- <img src="static/img/landing/laptop.png" alt="laptop"/> -->
+                </div>
+            </div>
+            <!-- Set background for slide in css -->
+            <div class="header-back one"></div>
+
+        </div>
+        <div class="item">
+            <div class="container">
+                <div class="carousel-caption blank">
+                </div>
+            </div>
+            <!-- Set background for slide in css -->
+            <div class="header-back two"></div>
+        </div>
+    </div>
+    <a class="left carousel-control" href="#inSlider" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#inSlider" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<section id="about_me" class="features">
+    <div class="container" id="i18_about_me">
+        <div class="row m-b-lg">
+            <div class="col-lg-12 text-center">
+                <div class="navy-line"></div>
+                <h1><span data-i18n="about_me.about_me">About Me</span></h1>
+                <!-- <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod.</p> -->
+            </div>
+        </div>
+        <div class="row">
+            <!-- java -->
+            <div class="col-sm-2 wow fadeInLeft text-center">
+                <div class="team-member">
+                    <div class="vote-icon">
+                        <i class="icon-python"> </i>
+                    </div>
+                </div>
+            </div>
+            <!-- linux -->
+            <div class="col-sm-2 wow fadeInLeft text-center">
+                <div class="team-member">
+                    <div class="vote-icon">
+                        <i class="fa fa-linux"> </i>
+                    </div>
+                </div>
+            </div>
+            <!-- avatar -->
+            <div class="col-sm-4">
+                <div class="team-member wow zoomIn">
+                    <img src="{{ site.author.head_img | prepend: site.baseurl }}" height="110" width="110" class="img-responsive img-circle" alt="">
+                    <h4><span class="navy">{{ site.author.last_name }}</span> {{ site.author.first_name }}</h4>
+                </div>
+            </div>
+            <!-- html -->
+            <div class="col-sm-2 wow fadeInRight text-center">
+                <div class="team-member">
+                    <div class="vote-icon">
+                        <i class="icon-html"> </i>
+                    </div>
+                </div>
+            </div>
+            <!-- docker -->
+            <div class="col-sm-2 wow fadeInRight text-center">
+                <div class="team-member">
+                    <div class="vote-icon">
+                        <i class="icon-docker"> </i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center m-t-lg m-b-lg">
+                <p><span data-i18n="about_me.des">
+                    I am a Java engineer with website development. I love technologies and desire to share amazing world! Anything but ordinary.
+                </span></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="career" class="timeline features gray-section">
+    <div class="container" id="i18_career">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <div class="navy-line"></div>
+                <h1><span data-i18n="career.my_career">My Career</span></h1>
+            </div>
+        </div>
+        <div class="row features-block">
+
+            <div class="col-lg-12">
+                <div id="vertical-timeline" class="vertical-container light-timeline center-orientation">
+                    <!-- nextcode -->
+                    <div class="vertical-timeline-block">
+                        <div class="vertical-timeline-icon navy-bg">
+                            <i class="fa fa-plus-square"></i>
+                        </div>
+                        <div class="vertical-timeline-content">
+                            <h2><span data-i18n="career.nextcode">Magillem Internship</span></h2>
+                            <p><span data-i18n="career.nextcode_des">Now I am doing my internship at Magillem Europe in charge of sysml importer project in Magillem tools for electronic companies. </span></p>
+                            <span class="vertical-date"><span data-i18n="career.nextcode_date"> Aug. 2016 </span><br/> <small><span data-i18n="career.nextcode_job">Java Developer</span></small> </span>
+                        </div>
+                    </div>
+
+                    <!-- student -->
+                    <div class="vertical-timeline-block">
+                        <div class="vertical-timeline-icon navy-bg">
+                            <i class="fa fa-book"></i>
+                        </div>
+                        <div class="vertical-timeline-content">
+                            <h2><span data-i18n="career.college">Master Graduation</span></h2>
+                            <p><span data-i18n="career.college_des">At November 2016,I will graduate from ISEP(Paris, Fr) in major of Software Engineering.</span></p>
+                            <span class="vertical-date"><span data-i18n="career.college_date"> Sep. 2016 </span><br/> <small><span data-i18n="career.college_job">Student</span></small> </span>
+                        </div>
+                    </div>
+
+
+                    <div class="vertical-timeline-block">
+                        <div class="vertical-timeline-icon navy-bg">
+                            <i class="fa fa-book"></i>
+                        </div>
+                        <div class="vertical-timeline-content">
+                            <h2><span data-i18n="career.university">Bachelor Graduation</span></h2>
+                            <p><span data-i18n="career.university_des">At Juin 2014,I graduated from Nankai University in major of Electronic Information.</span></p>
+                            <span class="vertical-date"><span data-i18n="career.university_date"> Juin 2014 </span><br/> <small><span data-i18n="career.university_job">Student</span></small> </span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<section id="skills" class="team features">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center" id="i18_skills">
+                <div class="navy-line"></div>
+                <h1><span data-i18n="skills.my_skills">My Skills</span></h1>
+            </div>
+        </div>
+        <div class="row features-block">
+          <div class="row">
+            <div class="col-lg-1 col-lg-offset-2 features-text wow fadeInLeft">
+              <p>Java</p>
+            </div>
+            <div class="col-lg-7 features-text wow fadeInLeft">
+                <div class="progress progress-bar-default">
+                    <div style="width: 85%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="85" role="progressbar" class="progress-bar">
+                        <span class="sr-only">85% Complete (success)</span>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-1 col-lg-offset-2 features-text wow fadeInLeft">
+              <p>WEB</p>
+            </div>
+            <div class="col-lg-7 features-text wow fadeInLeft">
+                <div class="progress progress-bar-default">
+                    <div style="width: 55%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="65" role="progressbar" class="progress-bar">
+                        <span class="sr-only">55% Complete (success)</span>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-1 col-lg-offset-2 features-text wow fadeInLeft">
+              <p>Linux</p>
+            </div>
+            <div class="col-lg-7 features-text wow fadeInLeft">
+                <div class="progress progress-bar-default">
+                    <div style="width: 80%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="80" role="progressbar" class="progress-bar">
+                        <span class="sr-only">80% Complete (success)</span>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-1 col-lg-offset-2 features-text wow fadeInLeft">
+              <p>Android</p>
+            </div>
+            <div class="col-lg-7 features-text wow fadeInLeft">
+                <div class="progress progress-bar-default">
+                    <div style="width: 50%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" role="progressbar" class="progress-bar">
+                        <span class="sr-only">50% Complete (success)</span>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-1 col-lg-offset-2 features-text wow fadeInLeft">
+              <p>C++</p>
+            </div>
+            <div class="col-lg-7 features-text wow fadeInLeft">
+                <div class="progress progress-bar-default">
+                    <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="70" role="progressbar" class="progress-bar">
+                        <span class="sr-only">40% Complete (success)</span>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+<br><br><br>
+</section>
+
+<section id="project" class="project gray-section features">
+    <div class="container" id="i18_projects">
+        <div class="row m-b-lg">
+            <div class="col-lg-12 text-center">
+                <div class="navy-line"></div>
+                <h1><span data-i18n="projects.my_projects">My Projects</span></h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4 wow fadeInLeft">
+                <div class="team-member">
+                    <img src="{{ site.project.OnlineHiringSystem.img | prepend: site.baseurl }}" class="img-responsive img-circle img-small" alt="">
+                    <h4><span class="navy">{{ site.project.OnlineHiringSystem.name }}</span></h4>
+                    <p><span data-i18n="projects.OnlineHiringSystem">OnlineHiringSystem is a RESTful Web Service application, which allows users to connect the social medias like facebook or linkedin via REST API</span></p>
+                     <a href="https://github.com/{{ site.author.github_username }}/AndroidInnerSensorMonitor" class="btn btn-primary">Github</a>
+                </div>
+            </div>
+
+            <div class="col-sm-4 wow">
+                <div class="team-member">
+                    <img src="{{ site.project.AndroidInnerSensorMonitor.img | prepend: site.baseurl }}" class="img-responsive img-circle img-small" alt="">
+                    <h4><span class="navy">{{ site.project.AndroidInnerSensorMonitor.name }}</span></h4>
+                    <p><span data-i18n="projects.AndroidInnerSensorMonitor">Android Inner Sensor Monitor is an Android APP, which will collect and display the inner sensor datas from Android Devices, and send data to a Web server to display them in the web page in real time as well</span></p>
+                     <a href="https://github.com/{{ site.author.github_username }}/HiringSmV02" class="btn btn-primary">Github</a>
+                </div>
+            </div>
+
+            <div class="col-sm-4 wow fadeInRight">
+                <div class="team-member">
+                    <img src="{{ site.project.SakilaSpring.img | prepend: site.baseurl }}" class="img-responsive img-circle img-small" alt="">
+                    <h4><span class="navy">{{ site.project.SakilaSpring.name }}</span></h4>
+                    <p><span data-i18n="projects.SakilaSpring">Through Spring, JPA, and AngularJS and mysql to operate Sakila database</span></p>
+                     <a href="https://github.com/{{ site.author.github_username }}/sakila-spring" class="btn btn-primary">Github</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br><br>
+</section>
+
+<section id="blog" class="navy-section testimonials" style="margin-top: 0">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center wow zoomIn" id="i18_blog">
+                <br><br><br><br>
+                <a class="btn btn-lg btn-default btn-rounded btn-outline" href="/blog/"><span data-i18n="blog.my_blog">My Blog</span></a>
+                <br><br><br><br>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<section id="contact" class="contact features">
+    <div class="container" id="i18_contact">
+        <div class="row m-b-lg">
+            <div class="col-lg-12 text-center">
+                <div class="navy-line"></div>
+                <h1><span data-i18n="contact.contact_me">Contact Me</span></h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 text-center fadeInLeft">
+                <a href="mailto:{{ site.author.email }}" class="btn btn-primary"><span data-i18n="contact.email">Send me mail</span></a>
+                <p class="m-t-sm"><span data-i18n="contact.follow">
+                    Or through the following ways
+                </span></p>
+                <ul class="list-inline social-icon">
+                    <li><a href="https://github.com/{{ site.author.github_username }}" target="blank"><i class="fa fa-github"></i></a>
+                    </li>
+                    <li><a href="https://www.facebook.com/{{ site.author.facebook_username }}" target="blank"><i class="fa fa-facebook"></i></a>
+                    </li>
+                    <li><a href="https://www.linkedin.com/in/{{ site.author.linkedin_username }}" target="blank"><i class="fa fa-linkedin"></i></a>
+                    </li>
+                    <!-- <li><a href="#" target="blank"><i class="fa fa-linkedin"></i></a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center m-t-lg m-b-lg">
+                <p><strong>&copy; 2016 {{ site.title }}</strong></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<script>
+
+    $(document).ready(function () {
+
+        $('body').scrollspy({
+            target: '.navbar-fixed-top',
+            offset: 80
+        });
+
+        // Page scrolling feature
+        $('a.page-scroll').bind('click', function(event) {
+            var link = $(this);
+            $('html, body').stop().animate({
+                scrollTop: $(link.attr('href')).offset().top - 50
+            }, 500);
+            event.preventDefault();
+            $("#navbar").collapse('hide');
+        });
+    });
+
+    var cbpAnimatedHeader = (function() {
+        var docElem = document.documentElement,
+                header = document.querySelector( '.navbar-default' ),
+                didScroll = false,
+                changeHeaderOn = 200;
+        function init() {
+            window.addEventListener( 'scroll', function( event ) {
+                if( !didScroll ) {
+                    didScroll = true;
+                    setTimeout( scrollPage, 250 );
+                }
+            }, false );
+        }
+        function scrollPage() {
+            var sy = scrollY();
+            if ( sy >= changeHeaderOn ) {
+                $(header).addClass('navbar-scroll')
+            }
+            else {
+                $(header).removeClass('navbar-scroll')
+            }
+            didScroll = false;
+        }
+        function scrollY() {
+            return window.pageYOffset || docElem.scrollTop;
+        }
+        init();
+
+    })();
+
+    // Activate WOW.js plugin for animation on scrol
+    new WOW().init();
+
+</script>
+
+<script>
+
+    $(document).ready(function (){
+
+        $.i18n.init({
+            resGetPath: 'static/locales/__lng__.json',
+            load: 'unspecific',
+            fallbackLng: false,
+            lng: 'en'
+        }, function (t){
+            $('.i18container').i18n();
+            // $('#i18_title').i18n();
+            $('#i18_navbar').i18n();
+            $('#i18_about_me').i18n();
+            $('#i18_skills').i18n();
+            $('#i18_projects').i18n();
+            $('#i18_career').i18n();
+            $('#i18_blog').i18n();
+            $('#i18_contact').i18n();
+        });
+
+        $('.set_en').on('click', function (){
+            i18n.setLng('en', function(){
+                $('.i18container').i18n();
+                // $('#i18_title').i18n();
+                $('#i18_navbar').i18n();
+                $('#i18_about_me').i18n();
+                $('#i18_skills').i18n();
+                $('#i18_projects').i18n();
+                $('#i18_career').i18n();
+                $('#i18_blog').i18n();
+                $('#i18_contact').i18n();
+
+                // $('.set_en').addClass('active');
+                // $('.set_cn').removeClass('active');
+            });
+        });
+
+        $('.set_cn').on('click', function (){
+            i18n.setLng('cn', function(){
+                $('.i18container').i18n();
+                // $('#i18_title').i18n();
+                $('#i18_navbar').i18n();
+                $('#i18_about_me').i18n();
+                $('#i18_skills').i18n();
+                $('#i18_projects').i18n();
+                $('#i18_career').i18n();
+                $('#i18_blog').i18n();
+                $('#i18_contact').i18n();
+
+                // $('.set_cn').addClass('active');
+                // $('.set_en').removeClass('active');
+            });
+        });
+
+    });
+
+</script>

@@ -1,0 +1,87 @@
+# Welcome to Jekyll!
+
+# SEO settings
+title: "Lovian Blog"
+description: "A programming blog of Zhengshuai PENG, Lovian"
+keywords: "Jekyll, Java, Programming, Linux, IT, C++, Algorithm, PENG Zhengshuai, Lovian"
+
+baseurl: "/"
+url: "blog.lovian.org"
+# url: "http://127.0.0.1:4000"
+
+# author
+author:
+  name: 'Zhengshuai PENG'
+  first_name: 'Zhengshuai'
+  last_name: 'PENG'
+  email: 'zhengshuai.peng@outlook.com'
+  facebook_username: 'cosinepzs'
+  github_username: 'ZhengshuaiPENG'
+  linkedin_username: 'zhengshuaipeng'
+  head_img: 'static/img/landing/PENGZhengshuai.png'
+
+# landing page
+landing:
+  home: 'Home'
+  about: 'About'
+  career: 'Career'
+  skills: 'Skills'
+  projects: 'Project'
+  blog: 'Blog'
+  contact: 'Contact'
+
+# my projects
+project:
+  OnlineHiringSystem:
+    name: 'OnlineHiringSystem'
+    img: 'static/img/landing/OnlineHiringSystem.jpg'
+  AndroidInnerSensorMonitor:
+    name: 'AndroidInnerSensorMonitor'
+    img: 'static/img/landing/AndroidInnerSensorMonitor.jpg'
+  SakilaSpring:
+    name: 'SakilaSpring'
+    img: 'static/img/landing/SakilaSpring.jpg'
+
+# blog index
+index:
+  home: 'Home'
+  java: 'Java'
+  linux: 'Linux'
+  web: 'Web'
+  database: 'Database'
+  algorithm: 'Algorithm'
+  note: 'Note'
+
+# donate
+donate:
+  wechat: 'static/img/pay/wechat.png'
+  alipay: 'static/img/pay/alipay.png'
+
+# comment
+changyan:
+  appid: cysfY7ULn
+  conf: prod_861928934cecb7a18e15bedaed9dae29
+
+# share
+bshare:
+  uuid: 513f778e-a8f7-4c20-9ec2-d29cc2328d75
+
+# baidu analytics
+ba:
+  uuid: 317acca9ef9255b934e46371e471431d
+
+# google analytics
+ga:
+  id: UA-73784599-1
+
+# blog img path
+img_path: '/static/img/blog'
+
+# Build settings
+encoding: "utf-8"
+
+highlighter: rouge
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge

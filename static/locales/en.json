@@ -1,0 +1,51 @@
+{
+  "website":{
+    "title": "Lovian blog"
+  },
+  "nav":{
+    "home": "Home",
+    "about_me": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "career": "Career",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "about_me":{
+    "about_me": "About Me",
+    "des": "I am a Java engineer with website development. I love technologies and desire to share amazing world! Anything but ordinary."
+  },
+  "skills":{
+    "my_skills": "My Skills"
+  },
+  "projects":{
+    "my_projects": "My Projects",
+    "OnlineHiringSystem": "OnlineHiringSystem is a RESTful Web Service application, which allows users to connect the social medias like facebook or linkedin via REST API",
+    "AndroidInnerSensorMonitor": "Android Inner Sensor Monitor is an Android APP, which will collect and display the inner sensor datas from Android Devices, and send data to a Web server to display them in the web page in real time as well",
+    "SakilaSpring": "Through Spring, JPA, and AngularJS and mysql to operate Sakila database"
+  },
+  "career":{
+    "my_career": "My Career",
+    "magillem": "Magillem Internship",
+    "magillem_des": "Now I am doing my internship at Magillem Europe in charge of sysml importer project in Magillem tools for electronic companies.",
+    "magillem_date": "Aug. 2016",
+    "magillem_job": "Java Developer",
+    "college": "Master Graduation",
+    "college_des": "At November 2016,I will graduate from ISEP(Paris, Fr) in major of Software Engineering.",
+    "college_date": "Sep. 2016",
+    "college_job": "Engineer of Software Engineering",
+    "university": "Bachelor Graduation",
+    "university_des": "At Juin 2014,I graduated from Nankai University in major of Electronic Information.",
+    "university_date": "Juin 2014",
+    "university_job": "Bachelor of Electornic Information"
+  },
+  "blog":{
+    "my_blog": "My Blog"
+  },
+  "contact":{
+    "contact_me": "Contact Me",
+    "email": "Send me mail",
+    "follow": "Or through the following ways"
+  }
+
+}
