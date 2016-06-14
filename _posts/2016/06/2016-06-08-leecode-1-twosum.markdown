@@ -4,7 +4,7 @@ title:  "[LeetCode] 1. TwoSum"
 date:   2016-06-08
 desc: "LeetCode 1. TwoSum C++ solution"
 keywords: "LeetCode, TwoSum, C++, Algorithm"
-categories: [algorithm]
+categories: [Algorithm]
 tags: [C++,Algorithm, LeetCode, Array]
 icon: fa-keyboard-o
 ---
