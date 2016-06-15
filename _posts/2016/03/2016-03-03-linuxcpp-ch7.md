@@ -191,14 +191,13 @@ void Swap(int * x, int * y)
     -    特别说明：不能返回函数内部定义的局部变量地址，只能返回某个全局量的地址，或者，返回作为函数的参数传给函数的指针
     -    示例：
 
-    ```cpp
+   ```cpp
     int global = 0;
     int * ReturnPointer()
     {
         return &global;
     }
-
-    ```
+   ```
 
 ### 10指针与复合数据类型
 
@@ -383,7 +382,8 @@ void PrintTwoDimensionalArray(int * a, unsigned int m, unsigned int n)
 
 
 //函数调用
-int a[2][3] = {{1, 2, 3}, {4, 5, 6}};
+int a[2][3] = {[1, 2, 3], [4, 5, 6]};
+// 这里 [] 应该是 {}，
 PrintTwoDimensionalArray(a, 2, 3);
 
 ```
@@ -907,7 +907,7 @@ int main(){
     return 0;
 
 }
-
+```
 
 
 #### 引用作为函数的返回值
