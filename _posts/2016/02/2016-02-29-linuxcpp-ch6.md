@@ -519,7 +519,7 @@ POINT GeneratePoint()
 {
     POINT t;
     t.x = GenerateRandomNumber(orignal_point_x, num_of_pixels_x - 1);
-    t.y = GenerateRandomNumber(orignal_point_y, num_of_pixels_y -1);
+    t.y = GenerateRandomNumber(orignal_point_y, num_of_pixels_y -1);{{1, 2, 3}}
     return t;
 
 }
