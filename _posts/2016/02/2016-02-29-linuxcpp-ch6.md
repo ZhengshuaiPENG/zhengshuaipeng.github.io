@@ -173,6 +173,7 @@ int main()
 ### 5.数组与函数
 
 -    数组元素作为函数实际参数
+
 ```cpp
 int Add(int x, int y)
 {
@@ -221,6 +222,7 @@ GenerateIntegers(a, NUMBER_OF_ELEMENTS, lower_bound, upper_bound);
 
 -    编写程序，随机生成 8 个 10-99 之间的整数保存到数组中，然后将这些程序颠倒过来。
 -    写一个数组操作库： arrmanip.h 
+
 ```cpp
 // arrmanip.h
 // header file of arrmanip
@@ -232,7 +234,6 @@ void PrintIntegers(int a[], unsigned int n);
 ```
 
 ```cpp
-
 // arrmanip.cpp
 #include <iostream>
 #include <iomanip>
@@ -269,11 +270,9 @@ void PrintIntegers(int a[], unsigned int n)
     }
     cout << endl;
 }
-
 ```
 
 ```cpp
-
 //test.cpp
 #include <iostream>
 #include "arrmanip.h"
@@ -294,7 +293,6 @@ int main(int argc, char const* argv[])
     PrintIntegers(a, NUMBER_OF_ELEMENTS);
     return 0;
 }
-
 ```
 ps: 在用g++ 编译的时候，需要链接上头文件的实现：
 ```$ g++ -Wall test.cpp arrmanip.cpp zyrandom.h```
@@ -425,6 +423,7 @@ struct STUDENT
 
 -    使用点号操作符 ```.``` 解析结构体量的某个特定的成员
 -    示例一：
+
 ```cpp
 DATE date;
 date.year = 2008;
@@ -437,6 +436,7 @@ date.day = 8;
 
 -    可以连续使用点号进行逐层解析
 -    示例二：
+
 ```cpp
 struct FRIEND{
     int id;
@@ -452,6 +452,7 @@ friend.birthday.year =1998;
 
 -    严格按照语法规范进行
 -    示例三：
+
 ```cpp
 
 FRIEND friends[4];
@@ -465,7 +466,6 @@ friends[0].birthday.year = 1988;
 编写一函数，使用结构体来存储日期，并返回该日在该年的第几天信息，具体天数从 1 开始计数， 例如 2016年 1 月 20 日返回 20, 2 月 1 日返回 32
 
 ```cpp
-
 // a function which can count the number of the date of the year
 struct DATE {
     int year;
@@ -497,14 +497,13 @@ bool IsLeap(int year)
 {
     return year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
 }
-
 ```
+
 由于数组不能整体赋值，所以数组不能作为函数的返回值; 但是结构体可以整体赋值，可以结构体可以作为函数的返回值。
 
 计算机屏幕上的点使用二维坐标描述， 编写函数，随机生成一个屏幕上的点， 设计算机的屏幕分辨率为 1920×1200, 屏幕坐标总是从 0 开始技术
 
 ```cpp
-
 struct POINT
 {
     int x;
@@ -524,7 +523,6 @@ POINT GeneratePoint()
     return t;
 
 }
-
 ```
 
 
