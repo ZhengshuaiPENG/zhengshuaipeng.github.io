@@ -62,6 +62,7 @@ icon: fa-keyboard-o
 编写程序，调用 rand 函数生成五个随机数
 
 -    第一版
+
 ```cpp
 #include <iostream>
 #include <cstdlib>

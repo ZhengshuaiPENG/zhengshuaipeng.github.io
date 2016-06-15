@@ -84,23 +84,23 @@ bool IsPrime(unsigned int n)
 -    实现2：（效率更高）
 我们可以观察，如果一个数是合数，那么它一定会有两个因子，假设这两个因子是 p、q ，p 和 q的乘积是 n， 那么 p、q 一定一个大一个小，假设较小的那个是 p， 则 p <= q, 在这种情况下，p 一定是小于等于根号 n 的。这意味着， 如果这个数 n 是一个合数， 那么它一定有一个小于根号 n 的因子， 如果在 [2, sqrt(n)]之间都找不到它的任何一个因子， 那就不需要在寻    找了，n肯定是素数 
 
-    ```cpp
-     bool IsPrime(unsigned int n)
+```cpp
+ bool IsPrime(unsigned int n)
+{
+    unsigned int i = 2;
+    //sqrt(n), 是n的平方根， 在 <math.h> 或 <cmath> 头文件中
+   //sqrt(n)结果是浮点数，需要cast转型
+    while (i <= (unsigned int)sqrt(n))
     {
-        unsigned int i = 2;
-        //sqrt(n), 是n的平方根， 在 <math.h> 或 <cmath> 头文件中
-        //sqrt(n)结果是浮点数，需要cast转型
-        while (i <= (unsigned int)sqrt(n))
-        {
-            if(n % i == 0)
-                return false;
-            i++;
-        }
-
-        return true;
+        if(n % i == 0)
+            return false;
+        i++;
     }
 
-    ```
+    return true;
+}
+
+```
 
 在linux中，默认情况下，是不把数学库<math.h>装载进去的。 如果要装载它， 应该在链接的时候在 g++ 后面写上 "-lm": ```g++ -lm ```, 把数学库链接进去，才能够编译通过; 同时这里sqrt(n)会带来一个隐含的bug， 因为sqrt的结果是浮点数，就会存在误差， 比如sqrt(121), 理论结果应该是11.00000， 但是计算机有可能把它表示成11.00001或者是10.999999，这时候将结果转型的时候，有可能是11， 也有可能是10, 所以，程序的bug就出现了，有可能会判断出错。实现3将会解决这个问题， 并且将代码改进的比实现2更快
 
