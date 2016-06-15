@@ -304,6 +304,7 @@ GenerateIntegers(a, NUM_OF_ELEMENTS);
 
 -    互换情况：指针一旦指向数组的基地址，则使用指针和数组格式访问元素时的地址计算方式是相同的，此时可以互换指针与数组操作格式
 -    程序示例：
+
 ```cpp
 int a[3] = {1, 2, 3};
 int * p = &a;
@@ -326,6 +327,7 @@ for(i = 0; i < 3; i++)
 ```
 
 上述代码一般只在一维数组上有效，在高维数组上，就不一定等效了。
+
 -    例外情况：数组名为常数，不能在数组格式上进行指针运算
 -    程序示例：
 
@@ -341,7 +343,6 @@ for(int i = 0; i < 3; i++)
 // 所以 a 是不能做 a++ 运算的
 for(int i = 0; i < 3; i++)
     cout << *a++ << endl;
-
 ```
 
 ##### 指针与数组的差异
@@ -378,8 +379,6 @@ void PrintTwoDimensionalArray(int * a, unsigned int m, unsigned int n)
             cout << *(a + n*i + j) << ";";
 }
 
-
-
 //函数调用
 int a[2][3] = {[1, 2, 3], [4, 5, 6]};
 // 这里 [] 应该是 {}，
@@ -392,6 +391,7 @@ PrintTwoDimensionalArray(a, 2, 3);
 ##### 指向结构体的指针对象
 
 -    指向结构体的只针对象声明
+
 ```cpp
 struct STUDENT
 { 
@@ -402,13 +402,11 @@ struct STUDENT
 
 STUDENT student = {2007010357, "Name", 19};
 STUDENT * pstudent = &student;
-
 ```
 
 -    访问指针所指向的结构体对象的成员
 
 ```cpp
-
 (*pstudent).id = 2007010357;
 (*pstudent).name = DuplicateString("Name");
 (*pstudent).age = 19;
@@ -432,6 +430,7 @@ pstudent->age = 19;
 ##### 结构体成员类型为指针
 
 -    结构体成员类型为指针的声明
+
 ```cpp
 struct ARRAY
 {
@@ -440,7 +439,6 @@ struct ARRAY
 }
 int a[8] = {1,2,3,4,5,6,7,8};
 ARRAY array = { 8, &a}
-
 ```
 
 -    访问指针类型的结构体成员
@@ -478,7 +476,6 @@ ARRAY array = { 8, &a}
 ```cpp
 char s[8] = {'C', 'P', 'P', '-', 'P', 'r', 'o', 'g'};
 char t[5] = {'H', 'e', 'l', 'l', 'o'};
-
 ```
 
 这两个数组的存储空间连在一起，'C' 就在 'o' 的后面， 无法区分，可能是一个字符串 HelloCPP-Prog， 可能是两个，或者好几个，区分不出来
@@ -487,10 +484,8 @@ char t[5] = {'H', 'e', 'l', 'l', 'o'};
     -    示例：
 
 ```cpp
-
 char s[9] = {'C', 'P', 'P', '-', 'P', 'r', 'o', 'g', '\0'};
 char t[6] = {'H', 'e', 'l', 'l', 'o', '\0'};
-
 ```
 
     -    优点：在程序运行时，通过测试 ```'\0'``` 字符确定字符数组是否结束，而不需要了解数组元素个数，使处理元素个数未知的数组成为可能通过指针运算直接操作字符数组种的字符，而不再使用数组格式访问字符
@@ -513,7 +508,6 @@ unsigned int FindCharFirst(char c, char s[])
     }
 
     return inexistent_index; //0xFFFFFFFF
-
 }
 ```
 
@@ -534,7 +528,6 @@ unsigned int FindCharFirst(char c, char* s)
 
     return inexistent_index;
 }
-
 ```
 
 #### 作为抽象的字符串整体
@@ -554,7 +547,6 @@ unsigned int FindCharFirst(char c, char s[]);
 unsigned int FindCharFirst(char c, char * s);
 // 抽象字符串
 unsigned int FindCharFirst(char c, STRING s);
-
 ```
 
 
@@ -575,8 +567,8 @@ unsigned int FindCharFirst(char c, STRING s);
     -    原因：数组空间已经分配，字符串文字空间已经分配，且它们位于不同的位置，不能直接整体赋值
     -    ```char s[9] = "CPP-Prog";```    正确， 这里编译字符串一个一个写进数组里面去
 
-```cpp
 
+```cpp
 //编写函数，将某个字符c 转换成字符串
 typedef char * STRING;
 STRING TransformCharIntoString(char c)
@@ -586,7 +578,6 @@ STRING TransformCharIntoString(char c)
     _s[1] = '\0';
     return _s;
 }
-
 ```
 
 因为字符和字符串是有区别的，因为字符串是以 ```\0```结尾，所以这里使用 ```malloc（2）``` 为这个单字符的字符串分配了两个字节的存储空间，然后把这个空间转换成STRING。但是如果像下面这么写就是错误的
@@ -599,7 +590,6 @@ char * TransformCharIntoString(char c)
     _s[1] = '\0';
     return _s;
 }
-
 ```
 
 这个错误非常典型，是个错误的函数定义： 对于所有返回值为指针类型的函数，都不能返回在函数内部定义的局部数据对象--所有局部对象在结束后不再有效，所以其地址在函数返回后没有意义
@@ -647,12 +637,10 @@ int a = s.length();
 -    string 对象的追加操作
 
 ```cpp
-
 string s1 = "abcd", s2 = "efg";
 s1.append(s2);
 s1 += s2;
 //两种方式都可以将字符串 s2追加到 s1 的底部
-
 ```
 
 -    string 对象的比较操作
@@ -660,14 +648,14 @@ s1 += s2;
 使用比较函数，比较函数相当于关系操作符， s1是左操作符， s2是右操作符
 
 ```cpp
-
 //比较 s1 和 s2 两个字符串的大小关系
 string s1 = "abcdefg", s2 = "abcdexy";
 // 从0号位开始比较
 int a = s1.compare(s2, 0);
-
 ```
+
 -    string 对象查找操作
+
 ```cpp
 string s1 = "abcdefg", s2 = "bcd";
 //从字符串头开始查找，结果为 s2 在 s1首次出现的位置
@@ -727,7 +715,6 @@ int a = s1.find (s2, 0);
 -    将返回值转换为 ```char *``` 类型赋值给原指针， 使 p 指向新分配空间的匿名目标数据对象
 
 ```cpp
-
 //编写函数，复制字符串
 char * DuplicateString(char *s)
 {
@@ -749,7 +736,6 @@ char * DuplicateString(char *s)
 
     return t;
 }
-
 ```
 
 #### 内存释放函数 free
@@ -758,16 +744,17 @@ free函数是用来销毁 malloc 出来的空间，不是 malloc 出来的空间
 
 -    传递一个指向动态内存分配的目标数据对象的指针
 -    示例一：
+
 ```cpp
 char * p;
 p = (char *)malloc(11);
 free(p);
-
 ```
 
 ***销毁的不是 p 这个指针量，而是 p 指向的那个目标字符串所在的存储空间***
 
 -    示例二：
+
 ```cpp
 int * p = (int *)malloc(10 * sizeof(int));
 free(p);
@@ -869,7 +856,6 @@ int main(){
     return 0;
 
 }
-
 ```
 
 ### 2.引用函数作为函数参数
@@ -879,10 +865,9 @@ int main(){
 -    参数传递机制：引用传递， 直接修改实际参数值，不是值传递，是传递的原始数据的一个引用
 -    使用格式：```返回值类型 函数名称(类型 & 参数名称);```
 -    函数原型示例： ```void Swap(int & x, int & y);```
--    函数实现示例： 
+-    函数实现示例:
 
 ```cpp
-
 void Swap(int & x, int & y){
     int t;
     t = x;
@@ -891,20 +876,17 @@ void Swap(int & x, int & y){
     return;
 
 }
-
 ```
 
 -    函数调用示例：
 
 ```cpp
-
 int main(){
     int a = 10, b = 20;
     Swap(a, b);
     // 在Swap函数内部，x 就相当与 a 的别名， y 就相当于 b 的别名
     // 所以在Swap里 x 和 y的改变，就相当于 main 函数里 a， b 的改变 
     return 0;
-
 }
 ```
 
@@ -917,12 +899,10 @@ int main(){
 -    函数实现示例：
 
 ```cpp
-
 int & Inc(int & dest, const int & alpha){
     dest += alpha;
     return dest;
 }
-
 ```
 
 -    函数调用示例：引用类型返回值可以自增
@@ -934,7 +914,6 @@ int main(){
     c = Inc(a, b)++;
     return 0;
 }
-
 ```
 
 
