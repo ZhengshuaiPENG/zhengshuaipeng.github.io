@@ -40,7 +40,7 @@ project:
     img: 'static/img/landing/AndroidInnerSensorMonitor.jpg'
   XMIReader:
     name: 'XMIReader'
-    img: 'static/img/landing/XMIReader.jpg'
+    img: 'static/img/landing/XMLReader.jpg'
 
 # blog index
 index:
