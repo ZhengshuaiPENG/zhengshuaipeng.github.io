@@ -38,9 +38,9 @@ project:
   AndroidInnerSensorMonitor:
     name: 'AndroidInnerSensorMonitor'
     img: 'static/img/landing/AndroidInnerSensorMonitor.jpg'
-  SakilaSpring:
-    name: 'SakilaSpring'
-    img: 'static/img/landing/SakilaSpring.jpg'
+  XMIReader:
+    name: 'XMIReader'
+    img: 'static/img/landing/XMIReader.jpg'
 
 # blog index
 index:
@@ -48,7 +48,7 @@ index:
   java: 'Java'
   linux: 'Linux'
   web: 'Web'
-  database: 'Database'
+  programming: 'Programming'
   algorithm: 'Algorithm'
   note: 'Note'
 

@@ -22,7 +22,7 @@
     "my_projects": "My Projects",
     "OnlineHiringSystem": "OnlineHiringSystem is a RESTful Web Service application, which allows users to connect the social medias like facebook or linkedin via REST API",
     "AndroidInnerSensorMonitor": "Android Inner Sensor Monitor is an Android APP, which will collect and display the inner sensor datas from Android Devices, and send data to a Web server to display them in the web page in real time as well",
-    "SakilaSpring": "Through Spring, JPA, and AngularJS and mysql to operate Sakila database"
+    "XMIReader": "Use EMF/UML/Papyrus plugins to parse the Enterprise Architect XMI format files"
   },
   "career":{
     "my_career": "My Career",

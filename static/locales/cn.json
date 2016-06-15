@@ -22,7 +22,7 @@
     "my_projects": "我的项目",
     "OnlineHiringSystem": "Online Hiring System 是一个REST 的网页应用，这个网页应用可以通过 REST API 连接到社交网络比如 Facebook 或者 Linkedin",
     "AndroidInnerSensorMonitor": "Android Inner Sensor Monitor 是一个安卓应用，它可以获取并显示安卓设备内置传感器的数据，并且同时将数据发送到一个 web 服务器上，以实现网页数据实时显示",
-    "SakilaSpring": "通过spring，JPA, AngularJS 和 mysql 来操作 sakila 数据库"
+    "XMIReader": "通过 EMF/UML2/Papyrus 框架和插件来读取 Enterprise Architect 工具生成的 XMI 文件"
   },
   "career":{
     "my_career": "职业生涯",
