@@ -323,7 +323,6 @@ for(i = 0; i < 3; i++)
     //这里，a + i 代表的是 a + i * sizeof(int) 
     cout << *(a + i) << endl;
 }
-
 ```
 
 上述代码一般只在一维数组上有效，在高维数组上，就不一定等效了。
@@ -390,7 +389,7 @@ PrintTwoDimensionalArray(a, 2, 3);
 
 ##### 指向结构体的指针对象
 
--    指向结构体的只针对象声明
+-   指向结构体的只针对象声明
 
 ```cpp
 struct STUDENT
@@ -404,7 +403,7 @@ STUDENT student = {2007010357, "Name", 19};
 STUDENT * pstudent = &student;
 ```
 
--    访问指针所指向的结构体对象的成员
+-   访问指针所指向的结构体对象的成员
 
 ```cpp
 (*pstudent).id = 2007010357;
@@ -415,7 +414,7 @@ STUDENT * pstudent = &student;
 
 **必须使用括号**:选员操作符优先级高于引领操作符
 
--    选员操作符 ```->```
+-   选员操作符 ```->```
 
 ```cpp
 
@@ -429,7 +428,7 @@ pstudent->age = 19;
 
 ##### 结构体成员类型为指针
 
--    结构体成员类型为指针的声明
+-   结构体成员类型为指针的声明
 
 ```cpp
 struct ARRAY
