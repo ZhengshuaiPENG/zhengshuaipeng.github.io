@@ -85,21 +85,13 @@ icon: fa-keyboard-o
 ```c
 
 #include<stdio.h>    //预编译指令，包含标准头文件
-
 // 新版可以写成 <cstdio>
-
 int main()           //主函数的函数头， 全局唯一
-
 {                    //函数体
-
     printf("hello world!\n");
-
     // printf 标准库函数，位于stdio.h 中， \n 换行
-
     return 0;
-
     // 返回值是传给操作系统，操作系统根据返回值判断程序是否正确执行
-
 }
 
 ```
@@ -113,17 +105,12 @@ int main()           //主函数的函数头， 全局唯一
 ```cpp
 
 #include<iostream>
-
 using namespace std;    //标准命名空间
 
 int main()
-
 {
-
     cout << "Hello World!" << endl;
-
     return 0;
-
 }
 
 ```
@@ -148,23 +135,14 @@ using namespace std;
 int main()
 
 {
-
     int a, b, sum;
-
     cout << "a=";
-
     cin >> a;
-
     cout << "b=";
-
     cin >> b;
-
     sum = a + b;
-
     cout << a << " + " << b << " = " << sum << endl;
-
     return 0;
-
 }
 
 ```
@@ -249,11 +227,8 @@ int main()
 
 -    变量基本特征（VANT）
     -    变量总是具有值（value）
-
     -    变量总是与内存中地址（address）相对应
-
     -    变量总是具有名称（name）
-
     -    变量总是具有特定的类型（type）
 
 

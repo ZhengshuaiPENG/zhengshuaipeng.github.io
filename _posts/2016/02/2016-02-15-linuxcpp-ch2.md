@@ -39,31 +39,21 @@ icon: fa-keyboard-o
 ```cpp
 
 #include<iostream>
-
 using namespace std;
 
 int main(int argc, char const* argv[])
-
 {
-
     cout << "This program will compare two numbers and return you back the maxmum" << endl;
-
     int a, b, max;
-
     cout << "Please input first number" << endl;
-
     cin >> a;
-
     cout << "Please input second number" << endl;
-
     cin >> b;
 
     max = a > b ? a : b; // 三元表达式
-
     cout << "The maxmum number is " << max << endl;
 
     return 0;
-
 }
 
 ```
@@ -164,117 +154,62 @@ int main(int argc, char const* argv[])
 ```cpp
 
 // print calendar
-
 #include<iostream>
-
 #include<iomanip>
-
 // iomanip header to make table， 用来表格打印
-
 // manip is manipulate, to indicate of format of output
-
 // to use setw(width),设置宽度 来打印表格，在第width个位置打印
-
-
 
 using namespace std;
 
-
-
 typedef enum {SUN, MON, TUE, WED, THU, FRI, SAT} WEEKDAY;
-
 // define a enum type WEEKDAY
 
-
-
 int main(int argc, char const* argv[])
-
 {
-
     int date;
-
     const WEEKDAY date_1 = FRI;
-
     WEEKDAY weekday;
 
-
-
     // input part
-
     cout << "The program gets a date (1-31), \n";
-
     cout << "and prints a calendar of 2006-12 (just the date). \n";
-
     cout << "The date: ";
-
     cin >> date;
 
     if(date > 31 || date < 1){
-
         // to check if the input is valid
-
         cout << "Date error! \n";
-
         return 1;
-
     }
-
-
 
     // calculation part
-
     weekday = (WEEKDAY)((date + (int)date_1 - 1) % 7);
-
     // 1st is Friday. (int) here to convert the enum to int for calculation
 
-
-
     //output part
-
     cout << "Calendar 2016-12\n";
-
     cout << "---------------------\n";
-
     cout << "Su  Mo  Tu  We  Th  Fr  Sa\n";
-
     cout << "---------------------\n";
-
-
 
     // make table
-
     // print the week info in right position
-
     if (weekday == SUN) {
-
         cout << setw(2) << date;
-
     } else if (weekday == MON) {
-
         cout << setw(6) << date;
-
     } else if (weekday == TUE) {
-
         cout << setw(10) << date;
-
     } else if (weekday == WED) {
-
         cout << setw(14) << date;
-
     } else if (weekday == THU) {
-
         cout << setw(18) << date;
-
     } else if (weekday == FRI) {
-
         cout << setw(22) << date;
-
     } else {
-
         cout << setw(26) << date;
-
     }
-
     cout << endl <<"----------------------\n";
 
     return 0;
@@ -288,21 +223,13 @@ int main(int argc, char const* argv[])
 ```cpp
 
 switch(expression)
-
 {
-
     case 常数表达式1： 语句1;
-
     case 常数表达式2： 语句2;
-
     case 常数表达式3： 语句3;
-
     ...
-
     case 常数表达式4： 语句4;
-
     default： 默认语句序列
-
 }
 
 ```
@@ -319,117 +246,62 @@ switch(expression)
 ```cpp
 
 // print calendar
-
 #include <iostream>
-
 #include <iomanip>
 
-
-
 using namespace std;
-
 typedef enum{SUN, MON, TUE, WED, THU, FRI, SAT} WEEKDAY;
 
-
-
 int main(int argc, char const* argv[])
-
 {
-
     int date;
-
     const WEEKDAY date_1 = FRI;
-
     WEEKDAY weekday;
 
-
-
     cout << "The program gets a date(1-31), and prints the Calendar\n";
-
     cout << "The date:\n";
-
     cin >> date;
 
-
-
     if (date > 31 || date < 1) {
-
         cout << "Date error!\n";
-
         return 1;
-
     }
-
-
 
     weekday = (WEEKDAY)((date + (int)date_1 -1) % 7);
 
-
-
     cout << "Calendar 2016-12\n";
-
     cout << "-----------------------------\n";
-
     cout << "SU  MO  TU  WE  TH  FR  SA\n";
-
     cout << "-----------------------------\n";
-
     switch (weekday) {
-
         case SUN:
-
             cout << setw(2) << date ;
-
             break;
-
         case MON:
-
             cout << setw(6) << date;
-
             break;
-
         case TUE:
-
             cout << setw(10) << date;
-
             break;
-
         case WED:
-
             cout << setw(14) << date;
-
             break;
-
         case THU:
-
             cout << setw(18) << date;
-
             break;
-
         case FRI:
-
             cout << setw(22) << date;
-
             break;
-
         case SAT:
-
             cout << setw(26) << date;
-
             break;
-
         default:
-
             ;
-
     }
 
     // 如果这里没有break，且date是3 即Sunday的话， 则会打印 7 个 date
-
     // 因为程序会执行所有switch中的语句块
-
     cout << endl << "---------------------------\n";
-
     return 0;
 
 }
@@ -466,66 +338,35 @@ switch 中， case 只能起到进入相对应语句的作用，而没有离开�
 ```cpp
 
 // calculate sum
-
 #include <iostream>
-
 using namespace std;
-
 int main(int argc, char const* argv[])
-
 {
-
     int n, sum = 0;
-
     cout << "The program gets some integers, and output their sum. \n";
-
     cout << "To stop, please input 0.\n";
-
     cout << "Please input an integer:";
-
     cin >> n;
-
     //先在循环体外取值， 循环提内部先累加，再读取下一个
-
     while (n != 0) {
-
         sum += n;
-
         cout << "The next integer:";
-
         cin >> n;
-
     }
 
-       
-
     //或者可以这样， 使用哨兵，当用户输入满足情况，循环终止
-
     // 程序外部不赋值，程序内部先读取，再累加 
-
     //while (true) {
-
     //    cout << "The next integer: "
-
     //    cin >> n;
-
     //    if (n == 0) {
-
     //      break;
-
     //    }
-
     //    sum += n;
-
     //}
-
     // 此处 这个if语句就是个哨兵
 
-
-
-
     cout << "The sum is " << sum << endl;
-
     return 0;
 
 }
@@ -564,37 +405,21 @@ int main(int argc, char const* argv[])
 ```cpp
 
 // 求 1-n 的平方和
-
 #include <iostream>
-
 using namespace std;
 
-
-
 int main(int argc, char const* argv[])
-
 {
-
     int n, sum = 1;
-
     cout << "This program gets a positive integer. \n";
-
     cout << "And prints the squared sum from 1 to number n\n";
-
     cout << "The number:";
-
     cin >> n;
 
-
-
     for (int i = 1; i < n + 1; i++) {
-
         sum = sum + i * i;
-
     }
-
     cout << "The result is " << sum << endl;
-
     return 0;
 
 }
@@ -608,51 +433,28 @@ int main(int argc, char const* argv[])
 ```cpp
 
 //打印99乘法表
-
 #include <iostream>
-
 #include <iomanip>
-
 using namespace std;
 
-
-
 int main(int argc, char const* argv[])
-
 {
-
     cout << "Nine by Nine Multiplication Table \n";
-
     cout << "-----------------------------------\n";
 
-
-
     // print the row of 1-9
-
     for (int i = 0; i < 9; i++) {
-
         cout << setw(4) << i + 1;
-
     }
-
     cout << endl;
-
     cout << "------------------------------------\n";
 
-
-
     for (int i = 1; i < 10; i++) {
-
         for (int j = 1; j < i + 1; j++) {
-
             cout << setw(4) << i*j;
-
         }
-
         cout << endl;
-
     }
-
     return 0;
 
 }
