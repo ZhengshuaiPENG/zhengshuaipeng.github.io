@@ -191,13 +191,13 @@ void Swap(int * x, int * y)
     -    特别说明：不能返回函数内部定义的局部变量地址，只能返回某个全局量的地址，或者，返回作为函数的参数传给函数的指针
     -    示例：
 
-   ```cpp
-    int global = 0;
-    int * ReturnPointer()
-    {
-        return &global;
-    }
-   ```
+```cpp
+int global = 0;
+int * ReturnPointer()
+{
+    return &global;
+}
+```
 
 ### 10指针与复合数据类型
 
@@ -250,8 +250,8 @@ void Swap(int * x, int * y)
 ##### 作为函数参数的指针与数组
 
 -    数组作为函数参数：函数定义
-```cpp
 
+```cpp
 void GenerateIntegers(int a[], unsigned int n)
 {
     unsigned int i;
@@ -259,10 +259,9 @@ void GenerateIntegers(int a[], unsigned int n)
     for(i = 0; i < n; i++)
         a[i] = GenerateRandomNumber(lower_bound, upper_bound);
 }
-
 ```
 
-数组作为函数参数，传入数组，和传入数组元素的个数，是能够带回来结果的
+    数组作为函数参数，传入数组，和传入数组元素的个数，是能够带回来结果的
 
 -    数组作为函数参数：函数调用
 
