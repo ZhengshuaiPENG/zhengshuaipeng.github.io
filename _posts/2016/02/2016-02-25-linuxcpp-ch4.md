@@ -137,6 +137,7 @@ bool IsPrime(unsigned int n)
 -    函数原型设计：返回值就是最大公约数
     ``` unsigned int gcd(unsigned int x, unsigned int y);```
 -    实现1：（穷举法）
+
 ```cpp
 unsigned int gcd(unsigned int x, unsigned int y)
 {
@@ -159,7 +160,6 @@ unsigned int gcd(unsigned int x, unsigned int y)
     -    步骤3： 否则将 y 作为新 x， 将 r 作为新 y， 重复上述步骤
 
 ```cpp
-
 unsigned int gcd(unsigned int x, unsigned int y)
 {
     unsigned int r;
@@ -172,7 +172,6 @@ unsigned int gcd(unsigned int x, unsigned int y)
         y = r;
     }
 }
-
 ```
 
 算法的发现并不容易，应该好好学数学！！！！！！
@@ -208,6 +207,7 @@ unsigned int GetFactorial(unsigned int n)
 
 ```
 -    使用递归实现
+
 ```cpp
 unsigned int GetFactorial(unsigned int n)
 {
@@ -246,9 +246,8 @@ unsigned int GetFibonacci(unsigned int n)
     return f3;
 }
 
-
-
 ```
+
 -    使用递归实现
 
 ```cpp
@@ -301,6 +300,7 @@ void MoveHanoi(unsigned int n, HANOI from, HANOI tmp, HANOI to)
 }
 
 ```
+
 -    实现代码
 
 ```cpp
@@ -403,7 +403,7 @@ void MoveHanoi(unsigned int n, HANOI from, HANOI tmp, HANOI to)
 -    典型容错手段：
     -    数据有效性检查
     -    程序流程的提前终止
-    
+
 ```cpp
 void GetUserInput()
 {
@@ -426,6 +426,7 @@ void Input()
 }
 
 ```
+
 ## VI. 算法复杂度
 
 ### 1.算法复杂度
