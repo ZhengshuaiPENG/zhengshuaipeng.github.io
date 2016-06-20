@@ -577,7 +577,7 @@ returned_value = (*as_string)((ADT)pt);
 //将字符赋值给一个字符串，赋值不兼容，编译器不通过
 ```
 
-####.设计程序
+#### 设计程序
 
 -	设计程序，随机生成8个 10-99 之间的整数，调用 stdlib 库的 qsort 对其进行排序
 -	qsort 函数原型(quick sort)
