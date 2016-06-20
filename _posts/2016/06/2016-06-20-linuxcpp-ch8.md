@@ -8,7 +8,7 @@ categories: [Programming]
 tags: [C++,Algorithm, Linux]
 icon: fa-keyboard-o
 ---
-#链表与程序抽象
+# 链表与程序抽象
 
 [TOC]
 
