@@ -1,529 +1,689 @@
 ---
 layout: post
-title:  "[LinuxCPP] ch6. 复合数据类型"
-date:   2016-02-29
-desc: "Linux C++ note ch6. 复合数据类型"
+title:  "[LinuxCPP] ch8. 链表与程序抽象"
+date:   2016-06-20
+desc: "Linux C++ note ch8. 链表与程序抽象"
 keywords: "Linux, C++, Algorithm"
 categories: [Programming]
 tags: [C++,Algorithm, Linux]
 icon: fa-keyboard-o
 ---
-
-# 复合数据类型
+#链表与程序抽象
 
 [TOC]
 
-## I.字符
+## I. 数据抽象
 
-### 1.字符
+### 1.数据抽象的目的与意义
 
-#### 字符类型、字符文字与量
+#### 数据对象
 
--    定义格式： 字符变量：```char ch;``` 字符常量：```const char cch = 'C';```
--    字符文字使用单引号对
--    实际存储时字符类型量存储字符的对应ASCII值
--    可以使用signed（缺省情况） 与 unsigned 修饰字符类型
--    正常情况下，ASCII码，用一个字节（8 bit： -128 ～127之间）来存储字符
--    Unicode 则使用两个字节(16 bit)来存储
+数据对象有 VANT -- Value, Address， Name， Type
+-    信息缺失： 在真实的程序中， 数据对象只会保留地址和值， 没有数据类型、数据解释及数据意义等信息
+-    解决手段： ***抽象***
+    -    数据的表示： 注释、 有意义的数据对象名称（在源代码级别， 保持数据对象的意义）
+    -    数据的功能： 描述可以在数据上工作的操作集
+    -    数据的 功能比表示更重要（重心在算法而不是数据结构上）
 
-#### 字符表示的等价性
+### 2.结构化数据类型的性质
+-    类型： 细节由用户自定义， 语言仅提供定义手段
+-    成员 ： 结构化数据类型的子数据对象
+-    成员类型： 每个成员具有确切的类型
+-    成员数目 ： 部分结构化数据类型可变， 部分固定
+-    成员组织： 成员组织结构（线性结构或者非线性结构） 必须显式定义
+-    操作集 ： 可以在数据上进行的操作集合
 
-下列四个是等价的
-
--    ```char a = 'A';```
--    ```char a = 65;``` ：十进制ascii
--    ```char a = 0101;``` ：八进制ascii
--    ```char a = 0x41;``` ： 十六进制ascii
-
-### 2.ASCII码
-
-跟整数一一映射， 要记住 0 的 ascii 码值是 48
--    控制字符、通信专用字符、可打印字符
--    回车于换行(不同的系统，文件交换需要处理换行)
-    -    windows： ```\n\r```
-    -    linux: ```\n```
-    -    mac: ```\r```
-
-### 3.字符量的数学运算
-
-编写函数，判断某个字符是否为数字
+### 3.数据封装
+-    数据封装： 将数据结构的细节隐藏起来
+-    实现方式： 分别实现访问数据成员的存取函数
+-    数据封装示例
 
 ```cpp
+// dynamic array
+struct DYNINTS{
+    unsigned int capacity; // capacity of this array
+    unsigned int count; // number of items in the runtime
+    int * items; // array
+    bool modified; // array changed or not
+};
 
-bool IsDigit(char c)
+// getter
+unsigned int DiGetCount(DYNINTS* a)
 {
-    if(c >= '0' && c <= '9')
-        return true;
-    else
-        return false;
+    if(!a){
+        cout << "DiGetCount: Parameter illegal." << endl;
+        exit(1);
+    }
+    return a->count;
 }
-
-bool IsDigit(char c)
-{
-    if(c >= 48 && c <= 57)
-        return true;
-    else
-        return false;
-}
-
 ```
 
-编写函数，将字符转换为大写字符
+实现数据的封装，就是对结构体里的数据成员，提供相应的存储函数。
+
+### 4.信息隐藏
+
+-    数据封装的问题： 只要将结构体类型定义在头文件中，库的使用者就可以看到该定义， 并按照成员格式直接访问， 而不调用存储函数; 但是封装应该是不允许直接访问数据结构的成员，而是应该通过存储函数去访问，但是这里并没有限制成员的直接访问
+-    解决方法： 将结构体类型的具体细节定义在源文件中，所有针对该类型量的操作都只能通过函数接口来进行，从而隐藏实现细节 （就是藏起来所有的成员）
+***数据封装和信息隐藏和在一起，才是编写抽象程序的关键***
+-    信息隐藏示例
 
 ```cpp
-
-char ToUpperCase(char c)
-{
-    if(c >= 'a' && c <= 'z')
-        return c - 'a' + 'A';
-    else
-        return c;c
+/*头文件 “dynarray.h"*/
+struct DYNINTS;
+typdef struct DYNINTS * PDYNINTS;
+/*源文件 ”dynarray.cpp"*/
+struct DYNINTS{
+    unsigned int capacity;
+    unsigned int count;
+    int * items;
+    bool modified;
 }
-
 ```
 
+把定义写在源文件中，因为用户只能看见头文件，而源文件可以以编译好的二进制代码来提供，所以，用户是看不见数据结构是如何定义的，从而实现了信息隐藏的目的。 而为了保证用户可以正确的适用这个结构体，那么就应该在头文件中给出这个结构体的声明
 
-
-### 4.标准字符特征库
-
--    C 标准字符特征库： ctype.h/cctype
--    标准字符特征库常用函数
-    -    ```bool isalnum(char c);``` : 判断字符 c 是不是英文字母和数字
-    -    ```bool isalpha(char c);``` ：判断字符 c 是不是因为字符
-    -    ```bool isdigit(char c);```
-    -    ```bool islower(char c);```
-    -    ```bool isspace(char c);```
-    -    ```bool isupper(char c);```
-    -    ```bool tolower(char c);```
-    -    ```bool toupper(char c);```   
-
-## II.数组
-
-### 1.数组的意义与性质
-
-#### 数组的定义
-
--    格式： ```元素类型 数组名称 [常数表达式]```
--    示例： ```int a[8]``` 定义包含8个整数元素的数组
--    常数表达式必须是常数和常量， 不允许为变量
-    -    错误示例： ```int count 8; int c[count];``` 因为这里count是变量，但是如果 count 用 const 定义了，就是对的
-    -    如果是 C 程序， 那么常量也不允许，只能使用常数
--    数组元素编号从 0 开始计数， 元素访问格式为 a[0]、 a[1]、 a[2]、....
--    不允许对数组整体进行赋值操作，只能使用循环逐一的复制元素
-    -    错误示例： ```int a[8], b[8]; a = b;```
--    意义与性质
-    -    将相同性质的数据元素组织成整体， 构成单一维度上的数据序列
-
-### 2.数组的存储表示
-
--    内存中数组元素依次连续存放，中间没有空闲空间
--    数组的地址
-    -    数组的基地址： 数组开始存储的物理位置
-    -    数组首元素的基地址： 数组首个元素开始存储的物理地址，即起始元素的地址编号
-    -    数组首元素的基地址在数值上总是与数组基地址相同
-    -    ```&``` 操作符： ```&a``` 获得数组的基地址；```&a[0]```获得数组首元素的基地址， 实际上这两个数值是相同的
-    -    注意： 当单独出现数组的名称 ```a```的时候，就意味着取这个数组的基地址， 也就是 ```&a``` 和 ```&a[0]```, 所以 & 大部分情况下可以不用写
-    -    设数组基地址为 p， 并设每个元素的存储空间为 m， 则第 i 个元素的基地址为 p + mi
-
-
-
-### 3.数组元素的初始化
-
--    基本初始化格式
-    -    定义格式： ```元素类型 数组名称[元素个数] = { 值1, 值2, 值3...}```
-    -    示例一： ```int a[8] = {1, 2, 3, 4, 5, 6, 7, 8};```
-    -    初始化前4个元素： ```int a[8] = { 1, 2, 3, 4, , , , };```
-    -    初始化后4个元素： ```int a[8] = { , , , , 5, 6, 7, 8};```
--    初始化时省略元素个数表达式
-    -    在全部元素均初始化时，可以不写元素个数， 使用 ```sizeof``` 操作符可以获得元素个数
-    -    示例二： ```int a[] = {1, 2, 3, 4, 5, 6, 7, 8}; int num_of_elements = sizeof(a) / sizeof(a[0]);```
-    -    ```sizeof(a)``` 用于获取数组存储空间的大小（以字节为单位）， ```sizeof(a[0])``` 获取数组首元素的存储空间大小
-    -    数组的存储空间大小，除以数组首元素占用的存储空间大小，就得到了数组的长度
-
-### 4.数组基本操作示例
-
-编写程序，使用数组存储用户输入的5个整数， 并计算他们的和
+### 5.数据结构设计
 
 ```cpp
+/* "point.h" */
+#include "stdbool.h"
+struct POINT;
+typedef struct POINT * PPOINT;
 
+PPOINT PtCreate(int x, int y);
+void PtDestroy(PPOINT point);
+void PtGetValue(PPOINT point, int * x, int * y);
+void PtSetValue(PPOINT point, int x, int y);
+bool PtCompare(PPOINT point1, PPOINT point2);
+char * PtTransformIntoString(PPOINT point);
+void PtPrint(PPOINT point);
+```
+
+```cpp
+/* "point.cpp" */
+#include "point.h"
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <iostream>
 using namespace std;
-int main()
-{
-    int i, a[5], result = 0;
-    //用循环来给数组赋值，不能整体赋值
-    for (i = 0; i < 5; i++)
-    {
-        cout << "Integer No. " << i +1 << ":";
-        cin >> a[i];
-    }
 
-    for (i = 0; i < 5; i ++)
-    {
-        result += a[i];
-    }
-    cout << "The sum of elements of the array is " << result << endl;
-    return 0;
+static char *DuplicateString(const char *s);
+struct POINT {
+  int x, y;
+};
+
+PPOINT PtCreate(int x, int y) {
+  PPOINT t = new POINT;
+  t->x = x;
+  t->y = y;
+  return t;
+}
+
+void PtDestroy(PPOINT point) {
+  if (point) {
+    delete point;
+  }
+}
+
+void PtGetValue(PPOINT point, int *x, int *y) {
+  if (point) {
+    if (x)
+      *x = point->x;
+    if (y)
+      *y = point->y;
+  }
+}
+
+bool PtCompare(PPOINT point1, PPOINT point2) {
+  if (!point1 || !point2) {
+    cout << "PtCompare: Parameter(s) illegal." << endl;
+    exit(1);
+  }
+  return (point1->x == point2->x) && (point1->y == point2->y);
+}
+
+void PtPrint(PPOINT point) {
+  if (point)
+    printf("(%d,%d)", point->x, point->y);
+  else
+    printf("NULL");
+}
+
+char *PtTransformIntoString(PPOINT point){
+  char buf[BUFSIZ];
+  if(point){
+    sprintf(buf, "(%d, %d)", point->x, point->y);
+    return DuplicateString(buf);
+  }
+  else{
+    return "NULL";
+  }
+}
+
+char * DuplicateString(const char* s){
+  unsigned int n = strlen(s);
+  char* t = new char[n+1];
+  for(int i = 0; i < n; i++){
+    t[i] = s[i];
+    t[n] = '\0';
+  }
+  return t;
+}
+```
+
+## II. 链表
+
+### 1.链表
+
+-    链表的意义与性质
+    -    存储顺序访问的数据对象集
+    -    数据对象占用的存储空间总是动态分配的
+-    链表的定义
+    -    元素序列，每个元素与前后元素相链接
+head ---> data | next ----> data | next ----> ... ----> tail
+    -    结点： 链表中的元素 （Node）， 包括两个字段： 数据域 data 和链接域 next
+    -    表头结点，表尾结点： 链表中的头尾结点
+    -    头指针、尾指针： head 和 tail 就是这个链表的表头指针和表尾指针， 分别指向链表的表头结点和表尾结点
+
+### 2.链表的数据结构
+
+-    链表结点： 适用结构体类型表示
+    至少包含两个域： 结点数据域与链接指针域
+
+```cpp
+struct NODE;
+typedef struct NODE * PNODE;
+
+struct NODE{
+PPOINT data; // data filed of current node
+PNODE next; // points to next node , tail is NULL
 }
 
 ```
 
+-    链表结构： 封装结点表示的细节
 
-
-### 5.数组与函数
-
--    数组元素作为函数实际参数
 ```cpp
-int Add(int x, int y)
-{
-    return x + y;
+struct LIST;
+typedef struct LIST * PLIST;
+
+struct LIST{
+    unsigned int count; // the number of nodes
+    PNODE head, tail; // head pointer, tail pointer
 }
 
-int a[2] = {1, 2}, sum;
-sum = Add(a[0], a[1]);
 ```
 
--    数组整体作为函数的形式参数
-    -    基本格式： ```返回值类型 函数名称(元素类型 数组名称[], 元素个数类型 元素个数)```
-    -    示例： ```void GenerateIntegers(int a[], unsigned int n);```
-    -    特别说明： 作为函数的形式参数时， 数组名称后的中括号内不需要列写元素个数，必须使用单独的参数传递元素个数信息
--    代码示例
+-    特别说明
+    -    结点是动态分配内存的，所以结点在逻辑上连续，但是物理上地址空间不一定连续
+    -    时刻注意维护链表的完整性： 一旦头指针head 失去链表表头地址， 整个链表就会丢失; 任一结点 next 域失去下一结点地址， 后续结点就会全部丢失
+    -    单向链表、 双向链表（previous， next）、 循环链表（tail points to head）、双向循环链表
 
-编写函数，随机生成 n 个位于 [lower, upper]区间的整数保存到数组中
+
+
+### 3.抽象链表接口
 
 ```cpp
-void GenerateIntegers(int a[], unsigned int n, int lower, int upper)
-{
+/* list.h */
+#include "point.h"
+
+struct LIST;
+typedef struct LIST * PLIST;
+
+PLIST LICreate();
+
+void LIDestroy(PLIST List);
+
+void LIAppend(PLIST list, PPOINT point);
+
+void LIInsert(PLIST list, PPOINT point, unsigned int pos);
+
+void LIDelete(PLIST list, unsigned int pos);
+
+void LIClear(PLIST list);
+
+void LITraverse(PLIST list);
+
+bool LISearch(PLIST list, PPOINT point);
+
+unsigned int LIGetCount(PLIST list);
+
+bool LIIsEmpty(PLIST list);
+```
+
+### 4.抽象链表实现
+
+#### 链表的构造与销毁
+
+```cpp
+PLIST LICreate() {
+  PLIST p = new LIST;
+  p->count = 0;
+  p->head = NULL;
+  p->tail = NULL;
+  return p;
+}
+
+```
+
+-    Destroy 链表时， 先要清空链表
+-    删除链表结构体
+
+```cpp
+void LIDestroy(PLIST list) {
+  if (list) {
+    LIClear(list);
+    // destroy all the nodes before destroy list
+    // otherwise you will lose all the nodes
+    delete list;
+  }
+}
+
+```
+
+-    清空链表中的所有结点
+
+```cpp
+void LIClear(PLIST list) {
+  if (!list) {
+    cout << "LIClear: Parameter illegal." << endl;
+    exit(1);
+  }
+
+  // destroy all the nodes one by one
+  while (list->head) {
+    PNODE t = list->head;
+    list->head = t->next;
+    PtDestroy(t->data);
+    delete t;
+    list->count--;
+  }
+  list->tail = NULL;
+}
+```
+
+表头结点的删除 LIClear， 先设置临时指针 t， 使其指向链表头头结点， 将链表头结点设置为 t 的后继结点，即原始表头结点的下一结点，那么原头结点， 也就是现在的 t 结点，已经不存在于链表中了，那么我们可以销毁这个结点，在这个结点中，data区是一个指向 point 结构体的指针，我们得先销毁这个data指针，即删除原头结点 data 域所指向的目标数据对象， 然后删除 t 所指向的结点， 即原始表头结点。 然后递减链表的结点数目
+
+#### 结点的追加
+
+-    先new一个 point 的 目标结构体
+-    动态构造一个新结点， 用 t 指向它， 有 data 域， 有 next 域
+-    使 t 的 data 域 指向 point 参数指向的目标数据对象， next 域为 NULL
+-    如果链表的 head 域为 NULL， 则说明当前链表中没有任何结点，将此结点作为链表唯一结点添加到链表中， 此时简单将链表的head域与tail域设为t即可
+-    否则，则就把 t 挂在链表的表尾上去，将当前尾结点的 next 域设为 t， 即使其指向新结点
+-    将链表的 tail 域设为 t， 即将心结点作为链表尾结点
+-    递增链表结点数目
+
+```cpp
+void LIAppend(PLIST list, PPOINT point){
+  PNODE t = new NODE;
+  if(!list || !point){
+    cout << "LIAppend: Parameter illegal." << endl;
+    exit(1);
+  }
+
+  t->data = point;
+  t->next = NULL;
+  if(!list->head){
+    list->head = t;
+    list->tail = t;
+  }else{
+    list->tail->next = t;
+    list->tail = t;
+  }
+  list->count++;
+}
+
+```
+
+#### 结点的插入
+
+将结点插入到链表的中间而不是追加在末尾
+-    表头的插入
+    -    动态构造一个新结点， 用 t 指向它
+    -    使 t 的 data 域指向 point 指向的目标数据对象， next 域为 NULL
+    -    将 t 的 next 域设为list 的 head 的值， 即使得原链表首结点链接到 t 所指向的结点之后
+    -    修改链表的首结点指针， 使其指向新的结点
+    -    递增链表的结点数目
+
+***注意这里步骤不能变！！！*** 比如第三步和第四步，如果交换了顺序，那么实际上是构造了一个新的链表进行了替换，而且只包含了新构造的那个结点， 其他的结点都被弄丢了; 所以在操作链表的时候，不管是结点的插入还是删除，任何时候都要保持链表的链接关系不变
+
+-    链表中间的插入
+    -    动态构造一个新结点， 用 t 指向它
+    -     使 t 的 data 域指向 point 指向的目标数据对象， next 域为 NULL
+    -    从表头开始向后查找待插入位置的前一结点， 用 u 指向它， 那么u就是指向前一个结点的指针， 例如若插入位置为 1, 则用 u 指向 0 号结点
+    -    将 t 的 next 域设为 u 的 next 值，即使得原链表中位置 pos 处的结点链接到 t 所指向的结点之后
+    -    将 u 的 next 域设为 t， 即将 t 指向的结点链接到 u 指向的结点之后递增链表的结点数目
+
+```cpp
+
+void LIInsert(PLIST list, PPOINT point, unsigned int pos){
+  if(!list || !point){
+    cout << "LIInsert: Parameter illegal." << endl;
+    exit(1);
+  }
+
+  if(pos < list->count){
+    // insert into mid of list or the head of list
+    // otherwise it's append
+    PNODE t = new NODE;
+    t->data = point;
+    t->next = NULL;
+    if(pos == 0){
+      // insert into head
+      t->next = list->head;
+      list->head = t;
+    }else{
+      //insert into mid of list
+      unsigned int i;
+      PNODE u = list->head;
+      for(i = 0; i < pos; ++i){
+        // find the previous node of target position
+        u = u -> next;
+      }
+      t->next = u->next;
+      u->next = t;
+    }
+    list->count++;
+  }else{
+    // insert into end of list
+    LIAppend(list, point);
+  }
+}
+```
+
+#### 结点的删除
+
+-    找到待删除结点的前一个结点，用临时指针 u 保存待删除结点前一结点的地址
+-    用 t 指针保存待删除结点的地址
+-    把待删除的结点从链表中拿出来，将 t 的 next 域赋给 u 的next域，这保证 u 跳过 t 指向下一个结点
+-    若 t 的 next 域不再指向其他结点（t 指向的结点本身就是链表尾结点）则将链表尾结点设为 u
+-    释放 t 的 data 域指向的目标数据对象
+-    释放 t 所指向的结点数据对象
+-    递减链表的结点个数
+
+```cpp
+void LIDelete(PLIST list, unsigned int pos){
+  if(!list){
+    cout << "LIDelete: Parameter illegal." << endl;
+    exit(1);
+  }
+
+  if(list->count == 0){
+    // list is empty
+    return;
+  }
+
+  if(pos == 0){
+    // remove head node
+    PNODE t = list->head;
+    list->head = t->next;
+    if(!t->next){
+      // this is no node after head node
+      list->tail = NULL;
+    }
+
+    PtDestroy(t->data);
+    delete t;
+    list->count--;
+
+  }else if(pos < list->count){
     unsigned int i;
-    Randomize();
-    for(i = 0; i < n; i++)
-        a[i] = GenerateRandomNumber(lower, upper);
+    PNODE u = list->head, t;
+    for(i = 0; i < pos -1; ++i){
+      u = u->next;
+    }
+    t = u->next;
+    u->next = t->next;
+    if(!t->next){
+      list->tail = u;
+    }
+    PtDestroy(t->data);
+    delete t;
+    list->count--;
+  }
 }
 
 ```
-数组作为函数参数时有一个巨大的优势，就是能够把函数内部的修改带出去， 调用函数的那个实际的数组，就会被改变; 就是说，数组作为函数参数的时候，不仅仅是函数的输入集的一部分，同时也是函数输出集的一部分， 和普通的量作为函数参数的时候是不一样的。 同时，作为输入，不建议输入数组的长度，比如 int a[8], 则此函数不可复用， 因为在内部 for 循环，循环次数会写死为 8 次。 而且， 直接书写变量也不行， 比如 ```void GenerateIntegers(int a[n], int lower, int upper)```, 原因是数组的元素个数不能为变量， 只能为常数或者是常量， 所以这个是错误的。 因此，最好的解决办法，是像上述代码一样，用另一个变量 int n 来控制数组的元素个数
 
--    调用格式
-    -    使用单独数组名称作为函数的实际参数， 传递数组基地址而不是数组元素值
-    -    形式参数和实际参数实际上对应着同一片的存储区，即使用相同的存储区， 对数组形式参数值的改变会自动反应到实际参数中
+#### 结点的遍历
 
 ```cpp
-#define NUMBER_OF_ELEMENTS 8
-const int lower_bound = 10;
-const int upper_bound = 99;
-int a[NUMBER_OF_ELEMENTS];
-GenerateIntegers(a, NUMBER_OF_ELEMENTS, lower_bound, upper_bound);
-//这个函数调用结束后，数组 a 里的值则会保存在函数中生成的随机整数
+void LITraverse(PLIST list){
+  PNODE t = list->head;
+  if(!list){
+    cout << "LITraverse: Parameter illegal." << endl;
+    exit(1);
+  }
+
+  while(t){
+    cout << PtTransformIntoString(t->data) << "->";
+    t = t -> next;
+  }
+  cout<<"NULL\n";
+}
 
 ```
 
-#### 代码示例
+#### 结点的查找
 
--    编写程序，随机生成 8 个 10-99 之间的整数保存到数组中，然后将这些程序颠倒过来。
--    写一个数组操作库： arrmanip.h 
+```cpp
+bool LISearch(PLIST list, PPOINT point){
+  PNODE t = list->head;
+  if(!list || !point){
+    cout << "LISearch: Parameter illegal." << endl;
+    exit(1);
+  }
+
+  while(t){
+    if(PtCompare(t->data, point))
+      return true;
+    t = t->next;
+  }
+
+  return false;
+}
+```
+
+### 5.链表小结
+
+#### 链表的优点
+
+-    插入和删除操作非常容易，不需要移动数据，只需要修改链表结点指针
+-    与数组比较：数组插入和删除元素操作则需要移动数组元素，效率很低
+
+#### 链表的缺点
+
+-    只能顺序访问，要访问某个结点，必须从前向后查找到该结点，不能直接访问
+
+#### 链表设计缺陷
+
+-    链表要存储点的数据结构，就必须了解点库的接口; 如果要存储其他数据，就必须重新实现链表， 所以事实上是不抽象的
+-    因为链表的实现要包含data数据的头文件（point.h）如果要存储还没有实现的数据结构（没有头文件），怎么办？
+-    链表是一个容器， container， 那么它应该可以抽象成可以储存任何的数据的一个容器
+
+
+## III. 函数指针
+
+### 1.函数指针的目的与意义：抽象数据与抽象代码
+
+-	数据与算法的对立统一， 通过函数指针将两者统一起来
+-	函数的地址：
+	-	函数入口位置， 将该数值作为数据保存起来，就可以通过特殊手段调用该函数;
+	-	有函数入口，就能找到第一条指令，所以函数就能够执行下去直到return语句;
+	-	由于地址是统一编码的，所以不管是数据，代码还是函数，他们的地址对计算机来说是无差别的，所以可以将函数的地址作为数值保存起来，这个就是函数指针，就可以通过这个指针指向那个函数的入口地址，然后通过指针的引领操作符来访问指针所指向的目标函数
+
+```cpp
+typedef void * ADT;
+typdef const void * CADT;
+// void * 是一个哑型指针，用来表达抽象的目标数据对象
+// 由于指针不管指向哪一个数据类型，指针的数据地址存储空间是固定的
+// 所以它可以表达指向任意类型的对象的数据的这样一个概念
+// 所以它就可以代表任何类型的对象
+// 所以哑型指针，就可以充当我们抽象数据类型的概念
+```
+
+-	要将链表所要存储的结点数据对象抽象成通用类型，不允许在链表库中出现与点结构数据相关的任何东西，即在之前的链表实现中，不能有对抽象点库任意的函数调用，也不能适用点库中定义的任意的类型
+-	将原先链表实现中的 ```point*``` 代替成 ```void*```， 那么链表将不再保存指向一个点的结构体的一个指针，而是指向一个哑型的指针
+-	注意 ADT 虽然指向一个哑型指针，但不是说指向无，而是指向一个未知的类型的目标数据对象，这样就实现了抽象编程
+
+### 2.函数指针的定义
+
+-	函数指针的定义格式：
+	-	```数据类型 (* 函数指针数据对象名称) （形式参数列表）;```
+	-	示例： char * （* as_string)(ADT object);
+-	函数指针变量的赋值
+	-	as_string 作为变量可以指向任何带有一个ADT类型的参数的返回值为 char * 类型的函数
+	-	即变量 as_string 是一个指针，指向一个函数，这个函数带有一个 ADT 类型的参数， 函数的返回值为 char *
+	-	如果没有第一个小括号对，那么这个就是一个函数原型的定义，而不是函数指针的定义，所以小括号不可省略
+	-	函数指针变量可以像普通变量一样赋值： ```函数指针数据对象名称``` = ```函数名称```
+	-	只要有函数，其带有一个 ADT 参数， 并且返回值为 char *， 都可以将这样一个函数的入口地址赋给 as_string 作为它的值
+
+```cpp
+// 有一个函数
+char * DoTransfromObjectIntoString(ADT object)
+{
+	// 这里可以转型至 PPOINT
+	return PtTransformIntoString((PPOINT)object);
+}
+
+// 完成函数指针的赋值，只需要函数名即可，这里是传入入口地址
+as_string = DoTransfromObjectIntoString;
+```
+
+### 3.函数指针的使用
+
+-	通过函数指针调用函数
+	-	函数指针被赋值后，即指向实际函数的入口地址
+	-	通过函数指针可以直接调用它所指向的函数
+	-	调用示例
+
+```cpp
+char * returned_value;
+PPOINT pt = PtCreate(10, 20);
+as_string = DoTransfromObjectIntoString;
+
+// 这里可以认为 as_string 就是 DoTransfromObjectIntoString
+returned_value = as_string((ADT)pt);
+```
+
+	-	要区分函数指针调用和函数直接调用，适用下述格式调用函数：
+
+```cpp
+returned_value = (*as_string)((ADT)pt);
+//第一个小括号对不可省略，因为 *as_string 会返回字符串的 0 号字符
+//将字符赋值给一个字符串，赋值不兼容，编译器不通过
+```
+
+####.设计程序
+
+-	设计程序，随机生成8个 10-99 之间的整数，调用 stdlib 库的 qsort 对其进行排序
+-	qsort 函数原型(quick sort)
+
+```cpp
+void qsort(void * base, unsigned int number_of_elements, unsigned int size_of_elements，
+			int(*compare)(const void *, const void *));
+//第一个参数： 需要排序的数组的基地址
+//第二个参数： 数组中包含的元素的个数
+//第三个参数： 每一个元素所占用的存储空间的大小，以字节为单位
+//第四个参数： 函数指针，用于比较两个对象的大小关系
+```
+
+-	调用 qsort 时，需要按照下述的格式实现自己的比较函数：```int(*compare)(const void *, const void *);```
+-	compare 函数参数不是传入两个对象，而是传入两个对象的指针，因为在 compare 这个函数里，不允许通过指针修改目标对的值
+-	比较函数示例： ```int MyCompareFunc(const void * e1, const void * e2);```
+-	比较函数必须返回正负值（一般为正负1）或0, 规则按照题目要求自定义
+
+```cpp
+// main.pp
+#include <cstdlib>
+#include <iostream>
+using namespace std;
+
+#include "arrmanip.h"
+// In order to operate Array
+
+#define NUMBER_OF_ELEMENTS 8
+
+int DoCompareObject(const void *e1, const void *e2);
+
+int main() {
+  int a[NUMBER_OF_ELEMENTS];
+  GenerateIntegers(a, NUMBER_OF_ELEMENTS);
+  cout << "Array generated at random as follows"
+       << "\n";
+  PrintIntegers(a, NUMBER_OF_ELEMENTS);
+  qsort(a, NUMBER_OF_ELEMENTS, sizeof(int), DoCompareObject);
+  cout << "After sorted: "
+       << "\n";
+  PrintIntegers(a, NUMBER_OF_ELEMENTS);
+  return 0;
+}
+
+int DoCompareObject(const void *e1, const void *e2) {
+  return CompareInteger(*(const int *)e1, *(const int *)e2);
+}
+```
+
 ```cpp
 // arrmanip.h
 // header file of arrmanip
-void GenerateIntegers(int a[], unsigned int n, int low, int high);
-void SwapIntegers(int a[], unsigned int i, unsigned int j);
-void ReverseIntegers(int a[], unsigned int n);
+void GenerateIntegers(int a[], unsigned int n);
+
 void PrintIntegers(int a[], unsigned int n);
 
+int CompareInteger(int x, int y);
+
 ```
 
 ```cpp
-
-// arrmanip.cpp
-#include <iostream>
-#include <iomanip>
+// arrmainp.cpp
+#include "arrmanip.h"
 #include "zyrandom.h"
-#include "arrmanip.h"
-using namespace std;
-void GenerateIntegers(int a[], unsigned int n, int low, int high)
-{
-    Randomize();
-    for (unsigned int i = 0; i < n; i++) {
-        a[i] = GenerateRandomNumber(low, high);
-    }
-}
-
-void SwapIntegers(int a[], unsigned int i, unsigned int j)
-{
-    int tmp;
-    tmp = a[i];
-    a[i] = a[j];
-    a[j] = tmp;
-}
-
-void ReverseIntegers(int a[], unsigned int n)
-{
-    for (unsigned int i = 0; i < n / 2; i++) {
-        SwapIntegers(a, i, n - i - 1);
-    }
-}
-
-void PrintIntegers(int a[], unsigned int n)
-{
-    for (unsigned int i = 0; i < n; i++) {
-        cout << setw(3) << a[i];
-    }
-    cout << endl;
-}
-
-```
-
-```cpp
-
-//test.cpp
+#include <iomanip>
 #include <iostream>
-#include "arrmanip.h"
-using namespace std;
 
-#define NUMBER_OF_ELEMENTS 8
-const int lower = 10;
-const int upper = 99;
+static const unsigned int lower_bound = 10;
+static const unsigned int upper_bound = 99;
 
-int main(int argc, char const* argv[])
-{
-    int a[NUMBER_OF_ELEMENTS];
-    GenerateIntegers(a, NUMBER_OF_ELEMENTS, lower, upper);
-    cout << "Array generated as follows: \n";
-    PrintIntegers(a, NUMBER_OF_ELEMENTS);
-    ReverseIntegers(a, NUMBER_OF_ELEMENTS);
-    cout << "After all elements of the array reversed: \n";
-    PrintIntegers(a, NUMBER_OF_ELEMENTS);
+void GenerateIntegers(int a[], unsigned int n) {
+  unsigned int i;
+  Randomize();
+  for (i = 0; i < n; ++i) {
+    a[i] = GenerateRandomNumber(lower_bound, upper_bound);
+  }
+}
+
+int CompareInteger(int x, int y) {
+  if (x > y)
+    return 1;
+  else if (x == y)
     return 0;
+  else
+    return -1;
 }
 
-```
-ps: 在用g++ 编译的时候，需要链接上头文件的实现： ```$ g++ -Wall test.cpp arrmanip.cpp zyrandom.h```
-
-### 6.多维数组
-
-#### 多维数组的定义
--    格式：```元素类型 数组名称[常数表达式1][常数表达式2]...```
--    示例一：```int a[2][2];```: 2×2 个整数元素的二维数组
--    示例二：```int b[2][3][4];```: 2×3×4 个整数元素的三维数组
-
-#### 多维数组的初始化
-
--    与一维数组类似： ```int a[2][3] = {1, 2, 3, 4, 5, 6};```
--    单独初始化每一维： ```int a[2][3] = {{1, 2, 3}, {4, 5, 6}};``` 建议以这种方法写
-
-#### 多维数组的存储布局
-
-同单维数组，先行后列顺序存放： a[1][1]: a[0][0] -> a[0][1] -> a[1][0] -> a[1][1]
-
-一般来说， 两维数组，需要两重for循环来计算，有时候甚至需要三重for循环  
-
-## III.结构体
-
-与数组不同，数组里所有的元素性质必须是相同的，但是结构体里，所有的元素性质可以相同，也可以不同
-
-### 1.结构体的意义和性质
-
-#### 结构体的意义
--    与数组的最大差别： 不同类型数据对象构成的集合
--    也可以为相同类型的但具体意义或解释不同的数据对象集合
-
-#### 结构体的定义： 注意类型后面定义的分号
-
-```
-struct 结构体名称
-{
-    成员类型1 成员名称1;
-    成员类型2 成员名称2;
-    ...
-    成员类型n 成员名称n;
-};
-
-// 注意最后有个分号
-
-```
-
-#### 结构体定义示例
-
-```cpp
-// 日期结构体
-struct DATE
-{
-    int year;
-    int month;
-    int day;
-};
-
-```
-
-```cpp
-
-// 复数结构体
-struct COMPLEX
-{
-    double real;
-    double imag;
-};
-
-```
-
-#### 结构体类型的声明
-
--    在C++中，可以仅仅只引入结构体类型的名称， 而没有给出具体定义， 其具体定义在其他头文件中或本文件后续的位置
--    ```struct COMPLEX;``` ： 注意在这里就直接以分号结尾，这是一个结构体的声明，而不是定义，因为没有花括号对及其语句块
-
-#### 具体示例
-
-如何表示学生信息？其成员如下：
--    整数类型的学号 i
--    字符串类型的姓名 name
--    性别（单独定义枚举类型） gender
--    年龄 age
--    字符串类型的地址 addr
-
-```cpp
-enum GENDER{FEMALE, MALE};
-struct STUDENT
-{
-    int id;
-    STRING name;
-    GENDER gender;
-    int age;
-    STRING addr;
-
-}
-
-// 在这里我们假设已经有了字符串类型的定义
-
-```
-
-### 2.结构体的存储表示
-
--    按照成员定义的顺序存放： 各个成员的存储空间一般连续（不像数组是紧密排放的，结构体不强求紧密排放，一般连续即可，中间可能会出现空洞）
--    特殊情况：
-    -    因为不同硬件和编译器的原因， 不同类型的成员可能会按照字（两个字节) 或双字（四个字节）对齐后排放
-    -    使用 ```sizeof```来获得结构体类型量占用空间的大小（以字节为单位），下述两种使用方式均可：```sizeof date;``` 或 ```sizeof(date);```
-
-### 3.结构体数据对象的访问
-
-#### 结构体类型的变量与常量
--    按照普通格式定义
--    示例一： ```DATE date;```
--    示例二： ```STUDENT zhang_san;```
--    示例三： ```STUDENT student[8];```
-
-#### 结构体类型的变量的初始化
--    示例： ```DATE date = {2008, 8, 8};```
-
-#### 结构体量的赋值
-
--    与数组不同，数组是不可以直接赋值的，而结构体量可以直接赋值， 拷贝过程为逐成员意义复制
--    示例： ```DATE new_date; new_date = date;``` 两个结构体的类型必须一致
-
-#### 结构体数据对象的访问
-
-##### 结构体量成员的访问
-
--    使用点号操作符 ```.``` 解析结构体量的某个特定的成员
--    示例一：
-```cpp
-DATE date;
-date.year = 2008;
-date.month = 8;
-date.day = 8;
-
-```
-
-##### 嵌套结构体成员的访问
-
--    可以连续使用点号进行逐层解析
--    示例二：
-```cpp
-struct FRIEND{
-    int id;
-    STRING name;
-    DATE birthday;
-};
-
-FRIEND friend;
-friend.birthday.year =1998;
-```
-
-##### 复杂结构体成员的访问
-
--    严格按照语法规范进行
--    示例三：
-```cpp
-
-FRIEND friends[4];
-// 成员为数组
-friends[0].birthday.year = 1988;
-
-```
-
-### 4.结构体与函数
-
-编写一函数，使用结构体来存储日期，并返回该日在该年的第几天信息，具体天数从 1 开始计数， 例如 2016年 1 月 20 日返回 20, 2 月 1 日返回 32
-
-```cpp
-
-// a function which can count the number of the date of the year
-struct DATE {
-    int year;
-    int month;
-    int day;
-};
-
-bool IsLeap(int year);
-
-unsigned int GetDateCount(DATE date)
-{
-    static unsigned int days_of_months[13] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-    
-    unsigned int i, date_id = 0;
-    for (i = 1; i < date.month; i++) {
-        date_id += days_of_months[i];
-    }
-    date_id += date.day;
-
-    if (date.month > 2 && IsLeap(date.year)) {
-        date_id++;
-    }
-
-    return date_id;
-}
-
-// IsLeap() 用来判断是不是润年
-bool IsLeap(int year)
-{
-    return year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
-}
-
-```
-由于数组不能整体赋值，所以数组不能作为函数的返回值; 但是结构体可以整体赋值，可以结构体可以作为函数的返回值。
-
-计算机屏幕上的点使用二维坐标描述， 编写函数，随机生成一个屏幕上的点， 设计算机的屏幕分辨率为 1920×1200, 屏幕坐标总是从 0 开始技术
-
-```cpp
-
-struct POINT
-{
-    int x;
-    int y;
-};
-
-const int orignal_point_x = 0;
-const int orignal_point_y = 0;
-const int num_of_pixels_x = 1920;
-const int num_of_pixels_y = 1200;
-
-POINT GeneratePoint()
-{
-    POINT t;
-    t.x = GenerateRandomNumber(orignal_point_x, num_of_pixels_x - 1);
-    t.y = GenerateRandomNumber(orignal_point_y, num_of_pixels_y -1);{{1, 2, 3}}
-    return t;
-
+void PrintIntegers(int a[], unsigned int n) {
+  unsigned int i;
+  for (i = 0; i < n; i++) {
+    std::cout << std::setw(3) << a[i];
+  }
+  std::cout << std::endl;
 }
 
 ```
 
+#### 函数指针的赋值
+-	同类型函数指针可以赋值，不同类型则不能赋值
+-	如何确定函数指针类型是否相同： 函数参数与返回值不完全相同
 
+#### 函数指针类型
+-	用于区分不同类型的函数指针
+-	定义： ```typedef int(* COMPARE_OBJECT)(const void * e1, const void * e2);```
+-	前面添加 typedef 关键字，保证 COMPARE_OBJECT 为函数指针类型，而不是函数指针变量
+-	注意表示类型时，这里 COMPARE_OBJECT全大写，表示变量时，这里全小写
+-	可以像普通类型一样使用函数指针类型定义变量： ```COMPARE_OBJECT compare = DoCompareObject;```
+
+#### qsort 函数简明写法
+```void qsort(void * base, unsigned int number_of_elements, unsigned int size_of_elements, COMPARE_OBJECT compare);```
