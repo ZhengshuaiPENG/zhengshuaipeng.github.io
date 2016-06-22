@@ -688,3 +688,5 @@ void PrintIntegers(int a[], unsigned int n) {
 
 #### qsort 函数简明写法
 ```void qsort(void * base, unsigned int number_of_elements, unsigned int size_of_elements, COMPARE_OBJECT compare);```
+
+
