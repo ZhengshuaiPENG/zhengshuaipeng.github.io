@@ -95,7 +95,7 @@ char ToUpperCase(char c)
     -    ```bool isspace(char c);```
     -    ```bool isupper(char c);```
     -    ```bool tolower(char c);```
-    -    ```bool toupper(char c);```   
+    -    ```bool toupper(char c);```
 
 ## II.数组
 
@@ -202,6 +202,7 @@ void GenerateIntegers(int a[], unsigned int n, int lower, int upper)
 }
 
 ```
+
 数组作为函数参数时有一个巨大的优势，就是能够把函数内部的修改带出去， 调用函数的那个实际的数组，就会被改变; 就是说，数组作为函数参数的时候，不仅仅是函数的输入集的一部分，同时也是函数输出集的一部分， 和普通的量作为函数参数的时候是不一样的。 同时，作为输入，不建议输入数组的长度，比如 int a[8], 则此函数不可复用， 因为在内部 for 循环，循环次数会写死为 8 次。 而且， 直接书写变量也不行， 比如 ```void GenerateIntegers(int a[n], int lower, int upper)```, 原因是数组的元素个数不能为变量， 只能为常数或者是常量， 所以这个是错误的。 因此，最好的解决办法，是像上述代码一样，用另一个变量 int n 来控制数组的元素个数
 
 -    调用格式
@@ -221,7 +222,7 @@ GenerateIntegers(a, NUMBER_OF_ELEMENTS, lower_bound, upper_bound);
 #### 代码示例
 
 -    编写程序，随机生成 8 个 10-99 之间的整数保存到数组中，然后将这些程序颠倒过来。
--    写一个数组操作库： arrmanip.h 
+-    写一个数组操作库： arrmanip.h
 
 ```cpp
 // arrmanip.h
@@ -294,6 +295,7 @@ int main(int argc, char const* argv[])
     return 0;
 }
 ```
+
 ps: 在用g++ 编译的时候，需要链接上头文件的实现：
 ```$ g++ -Wall test.cpp arrmanip.cpp zyrandom.h```
 
@@ -313,7 +315,7 @@ ps: 在用g++ 编译的时候，需要链接上头文件的实现：
 
 同单维数组，先行后列顺序存放： a[1][1]: a[0][0] -> a[0][1] -> a[1][0] -> a[1][1]
 
-一般来说， 两维数组，需要两重for循环来计算，有时候甚至需要三重for循环  
+一般来说， 两维数组，需要两重for循环来计算，有时候甚至需要三重for循环
 
 ## III.结构体
 
@@ -327,7 +329,7 @@ ps: 在用g++ 编译的时候，需要链接上头文件的实现：
 
 #### 结构体的定义： 注意类型后面定义的分号
 
-```
+```cpp
 struct 结构体名称
 {
     成员类型1 成员名称1;
@@ -478,7 +480,7 @@ bool IsLeap(int year);
 unsigned int GetDateCount(DATE date)
 {
     static unsigned int days_of_months[13] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
-    
+
     unsigned int i, date_id = 0;
     for (i = 1; i < date.month; i++) {
         date_id += days_of_months[i];
