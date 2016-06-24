@@ -30,6 +30,10 @@ landing:
   blog: 'Blog'
   contact: 'Contact'
 
+# resource
+resource:
+  resume: 'static/resource/cv/ZhengshuaiPENG.pdf'
+
 # my projects
 project:
   OnlineHiringSystem:
@@ -77,3 +81,9 @@ markdown: kramdown
 kramdown:
   input: GFM
   syntax_highlighter: rouge
+
+# plugins
+gems:
+  - jekyll-seo-tag
+  - jekyll-github-metadata
+  - jekyll-sitemap

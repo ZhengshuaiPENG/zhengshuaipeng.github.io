@@ -13,7 +13,7 @@
   },
   "about_me":{
     "about_me": "About Me",
-    "des": "I am a Java engineer with website development. I love technologies and desire to share amazing world! Anything but ordinary."
+    "des": "I am a Java engineer with website development. I love technologies and desire to share amazing world!"
   },
   "skills":{
     "my_skills": "My Skills"
@@ -37,7 +37,7 @@
     "university": "Bachelor Graduation",
     "university_des": "At Juin 2014,I graduated from Nankai University in major of Electronic Information.",
     "university_date": "Juin 2014",
-    "university_job": "Bachelor of Electornic Information"
+    "university_job": "Bachelor of Electronic Information"
   },
   "blog":{
     "my_blog": "My Blog"
