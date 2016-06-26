@@ -23,6 +23,7 @@ alter user hr account unlock;
 ```
 
 And login in console with
+
 ```bash
 sqlplus hr
 ```
@@ -278,7 +279,7 @@ select ename from emp where ename like '_A%';
 -	Escape: ```\```, ```escape '$'```
 
 ```sql
-# If there is a speical character in the string, use escape '\'
+# If there is a speical character in the string, use escape
 select ename from emp where ename like '_A%\%%';
 
 # If you want to define the escape character, like '$'
