@@ -2,7 +2,7 @@
 layout: post
 title:  "[Oracle Database] Oracle 11g xe tutorial 1 with scott schema"
 date:   2016-06-26
-desc: "Orace 11g xe SQL tutorial1 with scott schema"
+desc: "Orace 11g xe SQL tutorial1 select query with scott schema"
 keywords: "Oracle 11g xe, database, Linux, scott, select, tutorial, SQL"
 categories: [Web]
 tags: [Oracle,Database, SQL]
