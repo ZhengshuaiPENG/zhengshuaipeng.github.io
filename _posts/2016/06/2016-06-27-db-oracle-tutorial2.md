@@ -100,6 +100,7 @@ SQL> select ename, dname, grade from
   6  where ename not like '_A%';
 
 ```
+
 ## II. Execise
 
 ```sql
