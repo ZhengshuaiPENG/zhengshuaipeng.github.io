@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "[Oracle Database] Oracle 11g xe tutorial 2 with scott schema"
+title:  "[Oracle Database] Oracle 11g xe tutorial 2: Subquery, Join"
 date:   2016-06-27
-desc: "Orace 11g xe SQL tutorial2 subquery, join with scott schema"
-keywords: "Oracle 11g xe, database, Linux, scott, subquery, tutorial, SQL"
+desc: "Orace 11g xe SQL tutorial2, how to use subquery, join in oracle"
+keywords: "Oracle 11g xe, database, Linux, scott, subquery, join, tutorial, SQL"
 categories: [Web]
 tags: [Oracle,Database, SQL]
 icon: fa-keyboard-o
@@ -98,5 +98,89 @@ SQL> select ename, dname, grade from
   4  join salgrade s
   5  on (e.sal between s.losal and s.hisal)
   6  where ename not like '_A%';
+
+```
+## II. Execise
+
+```sql
+# Get the employee who has max salary in each department
+SQL> select ename, sal from emp
+  2  join (select max(sal) max_sal, deptno from emp
+  3  group by deptno) t
+  4  on (emp.sal = t.max_sal and emp.deptno = t.deptno);
+
+# Get grade of average salary of each department
+SQL> select avg_sal, grade, deptno from
+  2  (select avg(sal) avg_sal, deptno from emp
+  3  group by deptno) t
+  4  join salgrade
+  5  on (t.avg_sal between salgrade.losal and salgrade.hisal);
+
+# Get average salary grade of each department
+SQL> select avg(grade), deptno from
+  2  (select sal, grade, deptno from emp
+  3  join salgrade s
+  4  on (emp.sal between s.losal and s.hisal))
+  5  group by deptno;
+
+# Get all managers
+SQL> select distinct e2.empno, e2.ename from emp e1
+  2  join emp e2 on
+  3  (e1.mgr = e2.empno);
+SQL> select empno, ename from emp
+  2  where empno in (select distinct mgr from emp);
+
+# Get max salary, can not use max() function
+# Compare it self.
+SQL> select distinct ename, sal from emp where sal not in
+  2  (select distinct e1.sal from emp e1
+  3  join emp e2 on
+  4  (e1.sal < e2.sal));
+
+# Get the number of department who has the max average salary
+SQL> select deptno, avg_sal from
+  2  (select deptno,avg(sal) avg_sal from emp group by deptno)
+  3  where avg_sal =
+  4  (select max(avg_sal) from
+  5  (select avg(sal) avg_sal from emp group by deptno));
+
+# Get the name of department who has the max average salary
+SQL> select dept.deptno, dname, avg_sal from dept
+  2  join (select deptno, avg_sal from
+  3  (select deptno, avg(sal) avg_sal from emp group by deptno)
+  4  where avg_sal =
+  5  (select max(avg_sal) from
+  6  (select deptno, avg(sal) avg_sal from emp group by deptno)))
+  7  t on (t.deptno = dept.deptno);
+# Use Embeded Group Function (two level maximum)
+SQL> select dept.deptno, dname, avg_sal from dept
+  2  join (select deptno, avg_sal from
+  3  (select deptno, avg(sal) avg_sal from emp group by deptno)
+  4  where avg_sal =
+  5  (select max(avg(sal)) from emp group by deptno)) t
+  6  on (t.deptno = dept.deptno);
+
+
+# Get the name of department who has the min grade of average salary
+SQL> select deptno, dname, avg_sal, grade from
+  2  (select dept.deptno, dept.dname, avg_sal from dept
+  3  join (select deptno, avg_sal from
+  4  (select deptno, avg(sal) avg_sal from emp group by deptno)
+  5  where avg_sal =
+  6  (select min(avg_sal) from
+  7  (select deptno, avg(sal) avg_sal from emp group by deptno)))
+  8  t on (t.deptno = dept.deptno))
+  9  t2 join salgrade s on
+ 10  (t2.avg_sal between s.losal and s.hisal);
+# Embeded Group Function
+SQL> select deptno, dname, avg_sal, grade from
+  2  (select dept.deptno, dept.dname, avg_sal from dept
+  3  join (select deptno, avg_sal from
+  4    (select deptno,avg(sal) avg_sal from emp group by deptno)
+  5  where avg_sal =
+  6  (select min(avg(sal)) from emp group by deptno))
+  7  t on (t.deptno = dept.deptno))
+  8  t2 join salgrade s on
+  9  (t2.avg_sal between s.losal and s.hisal);
 
 ```

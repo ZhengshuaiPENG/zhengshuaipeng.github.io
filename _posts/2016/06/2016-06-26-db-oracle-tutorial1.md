@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "[Oracle Database] Oracle 11g xe tutorial 1 with scott schema"
+title:  "[Oracle Database] Oracle 11g xe tutorial 1: Select query"
 date:   2016-06-26
-desc: "Orace 11g xe SQL tutorial1 select query with scott schema"
+desc: "Orace 11g xe SQL tutorial1 how to use select query in oracle"
 keywords: "Oracle 11g xe, database, Linux, scott, select, tutorial, SQL"
 categories: [Web]
 tags: [Oracle,Database, SQL]
@@ -76,6 +76,12 @@ Now we logged into scott account. If you have import two file successfully, you 
 
 ```sql
 select table_name from user_tables;
+```
+
+If you prefer to use vim to edit the sql statement
+
+```sql
+SQL> define_editor=vim
 ```
 
 #### 2. Desc tables
