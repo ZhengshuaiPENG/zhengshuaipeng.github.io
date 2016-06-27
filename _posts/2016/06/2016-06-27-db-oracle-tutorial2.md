@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "[Oracle Database] Oracle 11g xe tutorial 2: Subquery, Join"
+title:  "[Oracle Database] Oracle 11g xe tutorial 2: Subquery, Join, View"
 date:   2016-06-27
-desc: "Orace 11g xe SQL tutorial2, how to use subquery, join in oracle"
-keywords: "Oracle 11g xe, database, Linux, scott, subquery, join, tutorial, SQL"
+desc: "Orace 11g xe SQL tutorial2, how to use subquery, join, view in oracle"
+keywords: "Oracle 11g xe, database, Linux, scott, subquery, join, view, tutorial, SQL"
 categories: [Web]
 tags: [Oracle,Database, SQL]
 icon: fa-keyboard-o
@@ -184,4 +184,68 @@ SQL> select deptno, dname, avg_sal, grade from
   8  t2 join salgrade s on
   9  (t2.avg_sal between s.losal and s.hisal);
 
+
+# Get the manager whose salary is greater than the max salary of normal employees
+# Normal employees means they are not managers
+SQL> select ename, sal from emp
+  2  where empno in (select distinct mgr from emp where mgr is not null)
+  3  and sal >
+  4  (select max(sal) from emp where empno not in
+  5  (select distinct mgr from emp where mgr is not null));
+
+```
+
+## II. View
+
+Create view to repalce some complexe subquery, in fact it's a virtual table.
+
+### 1. View example
+
+To create a view: ```create view v$view_name as subquery```
+
+```sql
+SQL> create view v$dept_avg_sal_info as
+  2  select deptno, grade, avg_sal from
+  3  (select deptno, avg(sal) avg_sal from emp group by deptno) t
+  4  join salgrade s on (t.avg_sal between s.losal and s.hisal);
+create view v$dept_avg_sal_info as
+            *
+ERROR at line 1:
+ORA-01031: insufficient privileges
+```
+
+Here you will see it returns an error, that's because scott user doesn't has privileges to create a view, so we need to grant privileges:
+
+```sql
+SQL> conn sys as sysdba
+Enter password:
+Connected.
+SQL> grant create table, create view to scott;
+
+Grant succeeded.
+```
+
+Now scott account can create view ang table.
+
+
+### 2. Use view
+```sql
+SQL> conn scott/tiger
+Connected.
+SQL> create view v$dept_avg_sal_info as
+  2  select deptno, grade, avg_sal from
+  3  (select deptno, avg(sal) avg_sal from emp group by deptno) t
+  4  join salgrade s on (t.avg_sal between s.losal and s.hisal);
+
+View created.
+
+SQL> select * from v$dept_avg_sal_info;
+
+# Get the name of department who has the min grade of average salary
+SQL> select t1.deptno, dname, avg_sal, grade from
+  2  v$dept_avg_sal_info t1 join dept on
+  3  (t1.deptno = dept.deptno)
+  4  where t1.grade =
+  5  (select min(grade) from v$dept_avg_sal_info)
+  6  ;
 ```
