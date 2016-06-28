@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "[Oracle Database] Oracle 11g xe tutorial 3: Export/Import, Insert, Update, Delete, rownum"
+title:  "[Oracle Database] Oracle 11g xe tutorial 3: Export/Import, Insert, Update, Delete, Transaction Control"
 date:   2016-06-28
-desc: "Orace 11g xe SQL tutorial3, how to use insert, update, delete, rownum in oracle"
-keywords: "Oracle 11g xe, database, Linux, export/import, backup , subquery, join, tutorial, SQL"
+desc: "Orace 11g xe SQL tutorial3, how to use insert, update, delete, rownum, transactional control in oracle"
+keywords: "Oracle 11g xe, database, Linux, export/import, backup , insert, update, delete, transaction, SQL"
 categories: [Web]
 tags: [Oracle,Database, SQL, DML]
 icon: fa-keyboard-o
@@ -243,4 +243,52 @@ SQL> select empno, ename, sal from
   4  where r >= 6 and r <= 10;
 
 
+```
+
+## II. Transaction
+
+
+### 1.Transaction:
+
+-	A transaction is a unit of work that is performed against a database.
+-	A transaction is the propagation of one or more changes to the database.
+-	If you are creating a record or updating a record or deleting a record from the table, then you are performing transaction on the table.
+-	It is important to control transactions to ensure data integrity and to handle database errors
+
+### 2.Transaction Properties (ACID)
+
+-	Atomicity: ensures that all operations within the work unit are completed successfully; otherwise, the transaction is aborted at the point of failure, and previous operations are rolled back to their former state.
+-	Consistency: ensures that the database properly changes states upon a successfully committed transaction.
+-	Isolation: enables transactions to operate independently of and transparent to each other.
+-	Durability: ensures that the result or effect of a committed transaction persists in case of a system failure.
+
+### 3.Transaction Control
+
+Oracle database thinks:
+-	A transaction begins with first DML statement(```insert```, ```update```, ```delete```);
+-	A transaction ends with ```rollback``` or ```commit```
+-	A transaction also ends with executing a DDL(```create```, ```drop```, ```truncate```), DCL (```grant```)statement, all operations will be commited automatically.
+-	A transaction also ends if the database connection unusually disconnected, the transactional will be rollback automatically.
+
+When a transaction begins, Oracle will lock the tables and columns which are operated by DML operations, in order to avoid other DML operations at same time. After a transaction ended, Oracle will release the lock.
+
+```sql
+SQL> update emp set sal = sal*2;
+SQL> delete from dept;
+SQL> insert into salgrade values (6, 10000, 20000);
+
+# Case 1:
+# Here if you rollback, it will rollback these three statements
+# transaction ended;
+SQL> rollback;
+
+# Case 2:
+# If you use commit instead of rollback
+# All the operations will be commited, transaction ended.
+SQL> commit;
+
+# Case 3:
+# If you execute a DDL statement like create table
+# The transaction will be commited automatically
+SQL> create table t;
 ```
