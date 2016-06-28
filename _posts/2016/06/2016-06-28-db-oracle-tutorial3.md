@@ -219,7 +219,7 @@ SQL> select rownum, empno, ename from emp;
 SQL> select empno, ename from emp where rownum <= 5;
 
 # Get last four rows from emp table
-# Because rownum keyword doesn't work with greater than >
+# Because rownum keyword does not work with greater than >
 # So here you must give rownum an alias
 SQL> select empno, ename from
   2  (select rownum r, empno, ename from emp)
