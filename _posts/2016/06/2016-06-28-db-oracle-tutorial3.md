@@ -265,8 +265,9 @@ SQL> select empno, ename, sal from
 ### 3.Transaction Control
 
 Oracle database thinks:
+
 -	A transaction begins with first DML statement(```select```,```insert```, ```update```, ```delete```);
--	A transaction ends with ```rollback``` or ```commit```
+- A transaction ends with ```rollback``` or ```commit```
 -	A transaction also ends with executing a DDL(```create```, ```drop```, ```truncate```), DCL (```grant```)statement, all operations will be commited automatically.
 -	A transaction also ends if the database connection unusually disconnected, the transactional will be rollback automatically.
 
