@@ -273,6 +273,7 @@ When there is a lot of records in database, use index can improve the query spee
 -	Attention, If we add the ```primary key``` or ```unique``` constraints to column, Oracle will create index of this column automatically.
 -	Index will imporve the query speed, but it will decrease write speed
 -	Index will occupy more storage space.
+-	When try to ```optimize database```, first option is to use index!!!
 
 ```sql
 # Create index of email in student table
