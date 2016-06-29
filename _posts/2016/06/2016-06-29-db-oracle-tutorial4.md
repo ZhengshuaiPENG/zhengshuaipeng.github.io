@@ -18,6 +18,7 @@ DDL: Data Definition Language
 ### A. Create Table
 
 #### To create a table:
+
 -	```CREATE TABLE table_name (col_name datatype CONSTRAINT constraint_name DEFAULT default_expression)```
 
 
@@ -179,6 +180,7 @@ SQL> create table student
 ### B. Drop Table
 
 To delete a table
+
 -	```DROP TABLE table_name```
 
 ```sql
@@ -188,6 +190,7 @@ SQL> drop table t;
 ### C. Truncate Table
 
 To empty a table: delete data but keep table structure
+
 -	```TRUNCATE TABLE table_name```
 
 ```sql
@@ -197,6 +200,7 @@ SQL> truncate table t;
 ### D. Alter Table
 
 To modify the structure of existing table
+
 -	Add column: ```ALTER TABLE table_name ADD column_name datatype ...```
 -	Delete column: ```ALTER TABLE table_name DROP COLUMN column_name```
 -	Modify column: ```ALTER TABLE table_name MODIFY column_name datatype...```
