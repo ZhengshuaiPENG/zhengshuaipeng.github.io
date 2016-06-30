@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[Oracle Database] Oracle 11g xe tutorial : How to design a database and normalization"
+title:  "[Oracle Database] Oracle 11g xe tutorial 5: How to design a database and normalization"
 date:   2016-06-30
 desc: "Orace 11g xe SQL tutorial5, how to desgin a database and database normalization"
 keywords: "Oracle 11g xe, database, Linux, table, design, normalization, 1NF, 2NF, 3NF, SQL"

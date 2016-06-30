@@ -2,7 +2,7 @@
 layout: post
 title:  "[Oracle Database] Oracle 11g xe tutorial 4: Table, Create, Constraint, Drop, Alter, Index, View"
 date:   2016-06-29
-desc: "Orace 11g xe SQL tutorial3, how to create, drop, alter, view, index, sequence tables in oracle"
+desc: "Orace 11g xe SQL tutorial4, how to create, drop, alter, view, index, sequence tables in oracle"
 keywords: "Oracle 11g xe, database, Linux, table, create , constraint, drop, alter, index, sequence tutorial, SQL"
 categories: [Web]
 tags: [Oracle,Database, SQL, DDL]
