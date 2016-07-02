@@ -164,7 +164,7 @@ SQL> declare
 
 ```
 
-###IV. Exception
+### IV. Exception
 
 #### Exception Block
 
