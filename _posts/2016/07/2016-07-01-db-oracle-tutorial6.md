@@ -9,7 +9,7 @@ tags: [Oracle,Database, PL/SQL]
 icon: fa-keyboard-o
 ---
 
-# Oracle 11g xe Tutorial 6. PL/SQL Grammer
+# Oracle 11g xe Tutorial 6. PL/SQL Grammar
 
 
 ### I. Block Structure
