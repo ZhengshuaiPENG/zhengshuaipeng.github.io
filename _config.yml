@@ -2,8 +2,8 @@
 
 # SEO settings
 title: "Lovian Blog"
-description: "A programming blog of Zhengshuai PENG, Lovian"
-keywords: "Jekyll, Java, Programming, Linux, IT, C++, Algorithm, PENG Zhengshuai, Lovian"
+description: "A programming blog of Zhengshuai PENG, Lovian Blog"
+keywords: "Jekyll, Java, Programming, Linux, IT, C++, Algorithm, PENG Zhengshuai, Lovian, Lovian Blog"
 
 baseurl: "/"
 url: "blog.lovian.org"
