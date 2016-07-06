@@ -38,7 +38,13 @@ So we could use two dimension array to store these value, and traverse this arra
 
 ```java
 package org.lovian.array;
-
+/**
+ * Yanghui Triangle
+ *
+ * @author PENG Zhengshuai
+ * @lovian.org
+ *
+ */
 public class Yanghui {
 	public static void main(String[] args) {
 		printTriangle(-1);
