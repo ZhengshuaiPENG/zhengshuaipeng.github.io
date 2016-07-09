@@ -70,4 +70,68 @@ static code block --> construction code block --> constructor
 
 | static code block | construction code block --> constructor |
 | -- | -- | -- |
-| Executed only once| Executed when the constructor has been called |
+| Executed only once when the class has been loaded| Executed when the constructor has been called |
+
+Code:
+
+```java
+package org.lovain.codeblock;
+
+/**
+ * Code Block Demo: Student Class
+ * @author PENG Zhengshuai
+ * @lovian.org
+ *
+ */
+public class Student {
+	private String name;
+
+	static {
+		System.out.println("Student staitic code block");
+	}
+
+	{
+		System.out.println("Student construction code block");
+	}
+
+	public Student(String name) {
+		System.out.println("Student" + name + " constructor");
+	}
+}
+
+
+package org.lovain.codeblock;
+
+/**
+ * Code Block Demo: Demo Class
+ * @author PENG Zhengshuai
+ * @lovian.org
+ *
+ */
+public class StudentDemo {
+	static {
+		System.out.println("Demo static code block");
+	}
+
+	public static void main(String[] args) {
+		System.out.println("Demo main method");
+
+		Student s1 = new Student("James");
+		Student s2 = new Student("Xiaoming");
+	}
+}
+
+```
+
+Result:
+
+```
+Demo static code block
+Demo main method
+Student staitic code block
+Student construction code block
+StudentJames constructor
+Student construction code block
+StudentXiaoming constructor
+
+```
