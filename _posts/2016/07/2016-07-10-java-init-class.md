@@ -16,13 +16,13 @@ In Java, we know a class can extend a father class. When we create a instance of
 ## The sequence of initializing a class
 
 -	Initialize member variables first (before constructor)
-	1	Default: null, 0, false
-	2	Assign a value directly
-	3	Through constructor to assign the value
+	-	Default: null, 0, false;  ```private int a;```
+	-	Assign a value directly;  ```private int a = 1;```
+	-	Through constructor to assign the value
 
 -	Multiple level initialization (initialize member variables)
-	1	Initialize father class first
-	2	Then children classes
+	-	Initialize father class first
+	-	Then children classes
 
 # II. Example
 
