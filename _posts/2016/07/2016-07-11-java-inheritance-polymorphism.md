@@ -2,8 +2,8 @@
 layout: post
 title:  "[JAVA] Java 继承与多态"
 date:   2016-07-11
-desc: "Abstract and Interface in Java"
-keywords: "java, class, abstract, interface, implement, inheritance"
+desc: "Inheritance and polymorphism in Java"
+keywords: "java, class, inheritance, polymorphism, inheritance"
 categories: [Java]
 tags: [Java]
 icon: fa-keyboard-o
