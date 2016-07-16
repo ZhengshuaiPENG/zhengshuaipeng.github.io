@@ -204,3 +204,7 @@ public class ArrayToString2 {
 }
 
 ```
+
+## VII. StringBuilder
+
+StringBuilder 是一个可变的字符序列，它提供了一个和 StringBuffer 兼容的 API，但不能保证同步。StringBuilder 被设计用作 StringBuffer 的一个替换类，用在 StringBuffer 被某个单线程适用的时候，建议在不考虑线程安全的情况下，优先使用 StringBuilder， 使用API 和 StringBuffer 相同。因为大多数情况下， StringBuilder 比 StringBuffer 要快
