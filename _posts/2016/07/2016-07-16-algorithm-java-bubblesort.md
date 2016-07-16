@@ -30,15 +30,18 @@ public class BubbleSort {
 	public static void bubbleSort(int[] array){
 		boolean sorted = false;
 		int n = array.length - 1; //防止数组越界
+
 		while(!sorted){
-			sorted = true;
+			//每一次扫描
+			sorted = true;  //假定这次扫描能够完成排序
 			for(int i = 0; i < n; i++){
+				//每一次比较
 				if(array[i] > array[i+1]){
 					swap(array, i, i+1);
-					sorted = false;
+					sorted = false;  //经过一次交换，说明还需要一次扫描
 				}
 			}
-			n--;
+			n--;	//每一次扫描最大值已经就绪，下一次扫描不需要再次比较已经排好位置的最大值
 			printArray(array);
 
 		}
