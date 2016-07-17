@@ -18,6 +18,7 @@ icon: fa-keyboard-o
 #### Date 类
 
 ```java.util.Date```：
+
 -	类 Date 表示特定的瞬间，精确到毫秒
 -	由于 Date 类的格式化和解析字符串 API 不易于实现国际化，所以从 JDK 1.1 开始，应该使用 ```Calendar``` 类
 
@@ -81,11 +82,13 @@ Date类大部分方法现在已经废弃，但还有一些常用方法
 #### DateFormat类
 
 ```java.text.DateFormat```: 抽象类
+
 -	DataFormat 是日期/时间格式化子类的抽象，以与语言无关的方式格式化并解析日期或时间
 -	日期/时间格式化子类（如 SimpleDateFormat）允许进行格式化（日期 -> 文本）、解析（文本-> 日期）和标准化
 -	将日期表示为 Date 对象，或者表示为从 GMT（格林尼治标准时间）1970 年 1 月 1 日 00:00:00 这一刻开始的毫秒数
 
 ```java.text.SimpleDateFormat```：具体子类
+
 -	SimpleDateFormat 是一个以与语言环境有关的方式来格式化和解析日期的具体类
 -	它允许进行格式化（日期 -> 文本）、解析（文本 -> 日期）和规范化
 
