@@ -32,7 +32,7 @@ result
 
 ### 2.BigInteger
 
-```java.math.BigInteger```:
+java.math.BigInteger：
 
 -	是不可变的任意精度的整数
 -	所有的操作都以二进制的补码进行
@@ -126,7 +126,7 @@ result:
 
 由于在运算时，```float``` 类型和 ```double``` 类型很容易丢失精度，为了能够精确的表示、计算浮点数，Java 提供了 ```BigDecimal```.
 
-```java.math.BigDecimal```:
+java.math.BigDecimal:
 
 -	不可变的、任意精度的有符号十进制数
 -	BigDecimal 由任意精度的整数非标度值 和 32 位的整数标度 (scale) 组成。
