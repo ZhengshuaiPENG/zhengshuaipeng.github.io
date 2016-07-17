@@ -157,3 +157,63 @@ random: 100
 random: 54
 
 ```
+
+## IV. Randon 类的使用
+
+java 封装好了一个专门生成随机数的类，用于生成随机数(伪随机数)，有些时候，不如Math.random() 有效率
+
+-	构造方法
+	-	```public Random()``` : 不用给种子， 使用默认的种子，是当前时间的毫秒值
+	-	```public Random(long seed)``` ： 给出指定种子进行随机数生成，每次生成的随机数是相同的
+
+-	成员方法
+	-	```public int nextInt()``` : 返回的是 int 范围的随机数
+	-	```public int nextInt(int n)``` : 返回的是 [0, n) 范围的随机数
+
+```java
+package org.lovian.math;
+
+import java.util.Random;
+
+/**
+ * Random Class demo
+ * @author PENG Zhengshuai
+ * @lovian.org
+ */
+public class RandomClassDemo {
+	public static void main(String[] args) {
+		defaultSeedRandom();
+		randomWithSeed();
+	}
+
+	public static void defaultSeedRandom(){
+		// 默认种子：nanotime
+		Random r = new Random();
+
+		for (int i = 0; i < 5; i++) {
+			// int 范围的随机数
+			System.out.println(r.nextInt());
+		}
+
+		for (int i = 0; i < 5; i++) {
+			// 0-100（不包括100）之间的随机数
+			System.out.println(r.nextInt(100));
+		}
+	}
+
+	public static void randomWithSeed(){
+		// 给定种子
+		Random r = new Random(1000);
+
+		for (int i = 0; i < 5; i++) {
+			// int 范围的随机数
+			System.out.println(r.nextInt());
+		}
+
+		for (int i = 0; i < 5; i++) {
+			// 0-100（不包括100）之间的随机数
+			System.out.println(r.nextInt(100));
+		}
+	}
+}
+```
