@@ -33,6 +33,7 @@ landing:
 # resource
 resource:
   resume: 'static/resource/cv/ZhengshuaiPENG.pdf'
+  resume_cn: 'static/resource/cv/ZhengshuaiPENG_cn.pdf'
 
 # my projects
 project:
