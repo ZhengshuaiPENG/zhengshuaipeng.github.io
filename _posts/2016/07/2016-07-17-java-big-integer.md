@@ -3,7 +3,7 @@ layout: post
 title:  "[JAVA] Java 里的 BigInteger & BigDecimal"
 date:   2016-07-17
 desc: "how to use big integer in Java"
-keywords: "java, system"
+keywords: "java, BigInteger， BigDecimal"
 categories: [Java]
 tags: [Java]
 icon: fa-keyboard-o
