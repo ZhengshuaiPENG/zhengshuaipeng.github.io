@@ -40,7 +40,7 @@ import java.util.Date;
  */
 public class DateDemo {
 	public static void main(String[] args) {
-		// 无参构造器
+		// 无参构造器，默认为当前时间
 		Date date = new Date();
 		System.out.println("date: " + date);
 
@@ -158,4 +158,121 @@ result
 7/18/16 12:11 AM
 2016年07月18日00：11：33
 Fri Aug 08 12:12:12 CEST 2008
+```
+
+### 2.Calendar类
+
+#### Calendar类
+
+java.util.Calendar：
+
+-	抽象类，为特定瞬间与一组如 YEAR， MONTH， DAY_OF_MONTH, HOUR 等日历字段提供了转换方法
+-	瞬间用毫秒值（表示为从 GMT（格林尼治标准时间）1970 年 1 月 1 日 00:00:00 这一刻开始的毫秒数）
+-	提供 ```getInstance``` 方法来获得实例，返回一个 Calendar 对象，（因为是语言环境敏感类）
+-	Calendar 对象能生成特定语言和日历风格的实现 日期 - 格式化 所需的所有日历字段值
+
+#### 生成实例
+
+Calendar 没有公开构造方法，只能通过 getInstance 来获得实例对象，其实获得的是其子类对象
+
+-	```public static Calendar getInstance()```
+-	```public static Calendar getInstance(Locale alocale)```
+-	```public static Calendar getInstance(TimeZone zone)```
+-	```public static Calendar getInstance(TimeZone zone, Locale alocale)```
+
+#### Calendar 实例常见方法
+
+-	```public int get(int filed)```: 返回给定日历字段的值， 日历字段，就是年分秒等字段（Calendar类静态成员变量，int类型），可以直接通过 Calendar 得到
+-	```public void add(int field, int amount)```: 根据日历规则，为给定日历字段添加或者减去指定的时间量
+	-	如 ```add(Calendar.DAY_OF_MONTH, -5)```: 从当前日历减去 5 天
+-	```public final void set(int year, int month, int date)```: 设置当前日历的年月日
+-	```public Date getTime()```: 返回当前Calendar日历时间值的一个Date对象
+-	```public long getTimeInMillis()```: 返回当前 Calendar 的时间值，以毫秒为单位，类似于```System.currentTimeMillis()```
+
+```java
+package org.lovian.calendar;
+
+import java.util.Calendar;
+
+/**
+ * Calendar Class Demo
+ *
+ * @author PENG Zhengshuai
+ * @lovian.org
+ *
+ */
+public class CalendarDemo {
+	public static void main(String[] args) {
+		// get instance of calendar
+		Calendar c = Calendar.getInstance();
+
+		// get year
+		int year = c.get(Calendar.YEAR);
+
+		// get month, Remember month count from 0!!!
+		int month = c.get(Calendar.MONTH);
+
+		// get date
+		int date = c.get(Calendar.DATE);
+		System.out.println("now: " + year + "-" + (month + 1) + "-" + date);
+		System.out.println("===================");
+
+		// today of three years ago
+		c.add(Calendar.YEAR, -3);
+		System.out.println("3 years ago: " + c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH) + 1) + "-"
+				+ c.get(Calendar.DATE));
+
+		// set date as 2011-11-11
+		c.set(2011, 10, 11);
+		System.out.println("single day: " + c.get(Calendar.YEAR) + "-" + (c.get(Calendar.MONTH) + 1) + "-"
+				+ c.get(Calendar.DATE));
+	}
+}
+```
+
+result
+
+```
+now: 2016-7-18
+===================
+3 years ago: 2013-7-18
+single day: 2011-11-11
+```
+
+#### 面试体，获得任意一年的二月的天数
+
+```java
+package org.lovian.date;
+
+import java.util.Calendar;
+
+/**
+ * Get the day numbers of each Feb
+ *
+ * @author PENG Zhengshuai
+ * @lovian.org
+ *
+ */
+public class EachFebrary {
+	public static void main(String[] args) {
+		System.out.println("2014-02 has " + getDaysOfFeb(2014) + "days");
+		System.out.println("2016-02 has " + getDaysOfFeb(2016) + "days");
+	}
+
+	public static int getDaysOfFeb(int year) {
+		Calendar c = Calendar.getInstance();
+		// set year-01-31
+		c.set(year, 2, 1);
+		c.add(Calendar.DATE, -1); // last day of Feb
+		int date = c.get(Calendar.DATE);
+		return date;
+	}
+}
+```
+
+result：
+
+```
+2014-02 has 28days
+2016-02 has 29days
 ```
