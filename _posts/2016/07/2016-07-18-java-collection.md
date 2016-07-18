@@ -21,7 +21,7 @@ icon: fa-keyboard-o
 
 首先先看在 java 中，集合类的关系图(此图来源于网络）：
 
-！[collection](https://zhengshuaipeng.github.io/static/img/blog/2016/07/collection.png)
+![collection](https://zhengshuaipeng.github.io/static/img/blog/2016/07/collection.png)
 
 
 ### 2. 集合类和数组的区别
@@ -41,7 +41,7 @@ icon: fa-keyboard-o
 
 简化上面的集合类关系图(此图来源于网络）：常用集合类
 
-！[collection_img](https://zhengshuaipeng.github.io/static/img/blog/2016/07/collection_img.png)
+![collection_img](https://zhengshuaipeng.github.io/static/img/blog/2016/07/collection_img.png)
 
 我们可以发现，这是一个继承体系，所以我们从最高级的父类 Collection 来学习 Java 集合类
 
