@@ -100,7 +100,7 @@ java.text.SimpleDateFormat：具体子类
 -	```public SimpleDateFormat(Sting pattern)``` : 给定的模式
 
 Date Pattern遵循如下格式：
-！[img]( https://zhengshuaipeng.github.io/static/img/blog/2016/07/java-date-pattern.png )
+![img](https://zhengshuaipeng.github.io/static/img/blog/2016/07/java-date-pattern.png)
 
 常用模式： 年 y 月 M 日 d 时 H 分 m 秒 s
 
