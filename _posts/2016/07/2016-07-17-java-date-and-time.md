@@ -239,7 +239,7 @@ now: 2016-7-18
 single day: 2011-11-11
 ```
 
-#### 面试体，获得任意一年的二月的天数
+#### 面试题，获得任意一年的二月的天数
 
 ```java
 package org.lovian.date;
@@ -266,6 +266,22 @@ public class EachFebrary {
 		c.add(Calendar.DATE, -1); // last day of Feb
 		int date = c.get(Calendar.DATE);
 		return date;
+
+		/*
+		Calendar c = Calendar.getInstance();
+		// set year-02-1
+		c.set(year, 1, 1);
+		long lastDayofJan = c.getTimeInMillis();
+		c.getTime();
+
+		// set year-03-01
+		c.set(year, 2, 1);
+		long firstDayOfMar = c.getTimeInMillis();
+
+		//3月1号 - 1月31 = 二月天数 + 1, 所以这里需要用3月1号-2月1号
+		int date = (int) ((firstDayOfMar - lastDayofJan) / 1000 / 60 / 60 / 24);
+		return date;
+		 */
 	}
 }
 ```
