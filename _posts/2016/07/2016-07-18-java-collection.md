@@ -41,7 +41,7 @@ icon: fa-keyboard-o
 
 简化上面的集合类关系图(此图来源于网络）：常用集合类
 
-![collection_img](https://zhengshuaipeng.github.io/static/img/blog/2016/07/collection_img.png)
+![collectionimg](https://zhengshuaipeng.github.io/static/img/blog/2016/07/collection_img.png)
 
 我们可以发现，这是一个继承体系，所以我们从最高级的父类 Collection 来学习 Java 集合类
 
