@@ -39,9 +39,9 @@ icon: fa-keyboard-o
 
 为了满足不同的存储需求，Java 提供了不同的集合类，这多个集合类的数据结构（数据的存储方式）不同。不管是什么数据结构，所有的集合类都应该提供一些共同的功能比如判断，获取等，把这些共性的地方提取出来，就构成了Java中集合类的继承体系。
 
-简化上面的集合类关系图(此图来源于网络）：常用集合类
+简化上面的集合类关系图：常用集合类
 
-![collectionimg](https://zhengshuaipeng.github.io/static/img/blog/2016/07/collection_img.png)
+![collectionimg](https: zhengshuaipeng.github.io/static/img/blog/2016/07/collection_img.png)
 
 我们可以发现，这是一个继承体系，所以我们从最高级的父类 Collection 来学习 Java 集合类
 
