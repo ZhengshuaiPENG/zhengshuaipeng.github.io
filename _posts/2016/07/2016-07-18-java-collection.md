@@ -1,15 +1,15 @@
 ---
 layout: post
-title:  "[JAVA] Java 中的集合 Collection"
+title:  "[JAVA] Java 中的集合 Collection 和 迭代器 Itrator"
 date:   2016-07-18
 desc: "how to use collection in Java"
-keywords: "java, collection"
+keywords: "java, collection， iterator"
 categories: [Java]
 tags: [Java]
 icon: fa-keyboard-o
 ---
 
-# Java 中的集合 Collection
+# Java 中的集合 Collection 和 迭代器
 
 ## I. Collection 引用
 
@@ -41,7 +41,7 @@ icon: fa-keyboard-o
 
 简化上面的集合类关系图：常用集合类
 
-![collectionimg](https: zhengshuaipeng.github.io/static/img/blog/2016/07/collection_img.png)
+![collectionimg]( https://zhengshuaipeng.github.io/static/img/blog/2016/07/collection_img.png)
 
 我们可以发现，这是一个继承体系，所以我们从最高级的父类 Collection 来学习 Java 集合类
 
@@ -63,7 +63,7 @@ java.util.Collection<E>:
 	-	```boolean addAll(Collection<? extends E> c)``` : 添加一个集合的所有元素
 -	删除功能
 	-	```void clear()``` : 移除本集合内的所有元素
-	-	```boolean remove(Object obj)``` : 移除一个指定的元素
+	-	```boolean remove(Object obj)``` : 移除一个指定的元素（第一次出现的）
 	-	```boolean removeAll(Collection<?> c)``` : 移除在本集合中包含的指定集合中所有元素，只要有一个被移除，就返回 true
 -	判断功能
 	-	```boolean contains(Object obj)``` : 判断集合中是否包含指定的元素
@@ -79,7 +79,15 @@ java.util.Collection<E>:
 	-	```Object[] toArray()``` ： 返回包含集合中所有的元素数组，通过数组进行集合的遍历
 
 
-### 6. Iterator 的使用
+## II. 迭代器
+
+### 1. Iterator 的使用
+
+迭代器，是遍历集合的一种方式，是依赖于集合而存在的
+
+-	```boolean hasNext()``` : 如果仍有元素可以迭代，则返回 true
+-	```E next()``` : 返回迭代的下一个元素
+-	```void remove()``` : 从迭代器指向的 collection 中移除迭代器返回的最后一个元素（可选操作）。每次调用 next 只能调用一次此方法。如果进行迭代时用调用此方法之外的其他方式修改了该迭代器所指向的 collection，则迭代器的行为是不确定的。
 
 ```java
 package org.lovian.collection;
@@ -130,3 +138,99 @@ str: world
 str: hello
 str: world
 ```
+
+### 2. Iterator 原理
+
+因为所有的集合类，内部存储的数据结构是不同的，所以迭代器就应该定义成一个行为接口，让所有的集合类去实现迭代器中的方法，从而提供相同的调用方法。而迭代器接口的真正实现类实在集合子类的内部类当中（看 Iterator JDK 源码和其实现类的源码）
+
+上文提到 Collection 接口还继承了一个接口 ```Iterable```， Iterable 中定义了一个方法 ```Iterator iterator()```, 这个方法是用来得到迭代器的实例的（实际上是 Iterator 的实现类的实例）。这个方法被每个集合具体类所实现，比如 ArrayList。
+
+所以我们打开 ArrayList 的源码， 找到 Iterator 的实现方法：
+
+```java
+    /**
+     * Returns an iterator over the elements in this list in proper sequence.
+     *
+     * <p>The returned iterator is <a href="#fail-fast"><i>fail-fast</i></a>.
+     *
+     * @return an iterator over the elements in this list in proper sequence
+     */
+    public Iterator<E> iterator() {
+        return new Itr();
+    }
+```
+
+我们可以发现，这个方法返回了一个类 ```Itr``` 的对象, 这个类就是 ArrayList 中的内部类，也就是 Iterator 真正的实现类，代码如下：
+
+```java
+ 	/**
+     * An optimized version of AbstractList.Itr
+     */
+    private class Itr implements Iterator<E> {
+        int cursor;       // index of next element to return
+        int lastRet = -1; // index of last element returned; -1 if no such
+        int expectedModCount = modCount;
+
+        public boolean hasNext() {
+            return cursor != size;
+        }
+
+        @SuppressWarnings("unchecked")
+        public E next() {
+            checkForComodification();
+            int i = cursor;
+            if (i >= size)
+                throw new NoSuchElementException();
+            Object[] elementData = ArrayList.this.elementData;
+            if (i >= elementData.length)
+                throw new ConcurrentModificationException();
+            cursor = i + 1;
+            return (E) elementData[lastRet = i];
+        }
+
+        public void remove() {
+            if (lastRet < 0)
+                throw new IllegalStateException();
+            checkForComodification();
+
+            try {
+                ArrayList.this.remove(lastRet);
+                cursor = lastRet;
+                lastRet = -1;
+                expectedModCount = modCount;
+            } catch (IndexOutOfBoundsException ex) {
+                throw new ConcurrentModificationException();
+            }
+        }
+
+        @Override
+        @SuppressWarnings("unchecked")
+        public void forEachRemaining(Consumer<? super E> consumer) {
+            Objects.requireNonNull(consumer);
+            final int size = ArrayList.this.size;
+            int i = cursor;
+            if (i >= size) {
+                return;
+            }
+            final Object[] elementData = ArrayList.this.elementData;
+            if (i >= elementData.length) {
+                throw new ConcurrentModificationException();
+            }
+            while (i != size && modCount == expectedModCount) {
+                consumer.accept((E) elementData[i++]);
+            }
+            // update once at end of iteration to reduce heap write traffic
+            cursor = i;
+            lastRet = i - 1;
+            checkForComodification();
+        }
+
+        final void checkForComodification() {
+            if (modCount != expectedModCount)
+                throw new ConcurrentModificationException();
+        }
+    }
+
+```
+
+
