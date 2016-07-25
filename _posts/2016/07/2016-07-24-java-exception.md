@@ -433,6 +433,7 @@ finally：是 try...catch...finally 的一部分，参与处理异常
 	-	单独使用 try...finally, 不处理异常，目的是为了释放资源
 
 问题：
+
 -	如果 catch 语句块中有 return 语句， 那么 finally 的代码还会执行吗？ 如果会，请问是在 return 前还是在 return 后？
 	-	会执行，在 return 之前
 	-	准确的说，应该是在 return 中
