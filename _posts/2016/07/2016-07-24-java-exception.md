@@ -325,7 +325,9 @@ throws 处理是将异常名抛出到方法声明上，是为了告诉调用者�
 -	throws 后可以跟多个异常名
 
 
-### 3. throw 关键字
+## VI. throw 关键字
+
+### 1. throw
 
 在功能方法中内部出现某种情况，程序不能继续运行，需要进行跳转时，就用 ```throw``` 把异常对象抛出，代码实例如下：
 
@@ -396,7 +398,7 @@ java.lang.Exception: b can't be 0
 	at org.lovian.exception.ThrowDemo.main(ThrowDemo.java:6)
 ```
 
-### 4. throws 和 throw 的区别
+### 2. throws 和 throw 的区别
 
 -	throws:
 	-	用在方法声明后， 跟的是异常类名
@@ -410,7 +412,7 @@ java.lang.Exception: b can't be 0
 	-	throw是抛出了异常，执行throw则一定抛出了某种异常
 
 
-### 5. 怎样处理异常
+## VII. 怎样处理异常
 
 -	原则：
 	-	如果该功能内部可以将问题处理，用 try/catch, 如果处理不了，交由调用者处理，用 throws
@@ -420,7 +422,7 @@ java.lang.Exception: b can't be 0
 	-	顶层调用方法一般用 try/catch 来处理
 
 
-### 6. finally的特点与作用
+## VIII. finally的特点与作用
 
 finally：是 try...catch...finally 的一部分，参与处理异常
 
@@ -472,7 +474,7 @@ result：
 因为在 catch 语句中，```return a;``` 在执行到这一步的时候，这里不是 return a， 而是 ``` return 30;``` 这个返回路径就形成了，但是它又发现 catch 语句块后，还有 finally 语句块，所以就继续执行 finally 的内容，就是 ``` a = 40```, 再次回到以前的返回路径，再此走return 30
 
 
-### 7. 自定义异常
+## IX. 自定义异常
 
 有些时候，在工程上，我们需要定义自己的异常类，用来描述项目中的异常类型，而 Java 不可能提供所有的情况，所以这时候，我们需要自己定义异常：
 
@@ -515,7 +517,7 @@ public class MyException extends Exception{
 }
 ```
 
-### 8. 异常注意事项
+## X. 异常注意事项
 
 -	子类覆写父类方法时，子类的方法必须抛出相同的异常或父类异常的子类
 -	如果父类抛出了多个异常，子类覆写父类时，只能抛出相同的异常或者是它的子集，子类不能抛出父类没有的异常
