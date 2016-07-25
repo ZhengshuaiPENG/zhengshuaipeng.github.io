@@ -73,7 +73,10 @@ icon: fa-keyboard-o
 
 ## V. 树
 
+见 [TreeSet](http://blog.lovian.org/java/2016/07/20/java-set.html) 中解释
+
 ## VI. 哈希表
 
+见 [HashSet](http://blog.lovian.org/java/2016/07/20/java-set.html) 中解释
 
 
