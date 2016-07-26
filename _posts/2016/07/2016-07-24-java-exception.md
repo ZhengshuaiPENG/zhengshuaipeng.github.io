@@ -418,8 +418,8 @@ java.lang.Exception: b can't be 0
 -	原则：
 	-	如果该功能内部可以将问题处理，用 try/catch, 如果处理不了，交由调用者处理，用 throws
 -	区别：
-	-	后续程序需要运行就用 try/catch
-	-	后续程序不需要继续运行就用 throws
+	-	后续程序需要运行就用 try/catch，就是说 try/catch 之后的代码还会执行
+	-	后续程序不需要继续运行就用 throws，如果异常被抛出了，那么发生异常的地方之后的代码不会被执行
 	-	顶层调用方法一般用 try/catch 来处理
 
 
@@ -482,7 +482,7 @@ result：
 -	继承 Exception 类
 -	继承 RuntimeException 类
 
-而自定义异常 ``` MyException``` 时，一般可以不添加任何东西，完全继承于父类的构造方法和成员方法，当然也可以重写这些方法，在使用的时候，可以通过条件判断语句来 ```throw new MyException()```
+而自定义异常 ``` MyException``` 时，一般可以不添加任何东西，完全继承于父类的成员方法，当然也可以重写这些方法，在使用的时候，可以通过条件判断语句来 ```throw new MyException()```
 
 示例代码如下：
 
