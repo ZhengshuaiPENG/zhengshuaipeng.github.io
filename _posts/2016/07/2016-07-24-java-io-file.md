@@ -52,7 +52,7 @@ public class FileDemo {
 -	```public boolean mkdir()``` : 创建此抽象路径名指定的目录
 -	```public boolean mkdirs()``` : 创建此抽象路径名指定的目录，包括所有必须但不存在的父目录
 
-上述方法创建成功返回 true， 否则文件或目录已经存在的化，则不创建且返回 false
+上述方法创建成功返回 true， 如果文件或目录已经存在的话，则不创建且返回 false
 
 ```java
 package org.lovian.io.file;
@@ -109,6 +109,7 @@ mkdirs /home/zhengshuai/io/test: true
 ```
 
 注意：
+
 -	在一个目录 A 下创建文件或子目录，必须要确保 A 目录存在
 -	要明确是创建目录还是文件，不要调错方法
 -	如果创建文件时，```File file = new File("a.txt");```,忘记写盘符或者是目录路径， 当使用 createNewFile 方法时，那么Java会在当前项目目录下创建 ```a.txt``` 文件
@@ -140,6 +141,7 @@ delete test true
 ```
 
 注意：
+
 -	delete 方法删除的文件或目录是永久删除，不进回收站
 -	删除目录时，必须要先删除目录下所有的文件和子目录
 
@@ -166,6 +168,7 @@ delete c.txt true
 ```
 
 注意：
+
 -	重命名相当于复制了一个新文件，删除了原先的旧文件
 
 ### 6. 判断功能
@@ -297,6 +300,7 @@ public class FileDemo3 {
 }
 
 ```
+
 result：
 
 ```java
