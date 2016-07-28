@@ -280,5 +280,108 @@ char:
 ,
 ```
 
-### 4. 字符流的常用子类
+注意：
+
+-	计算机的中文存储：
+	-	两个字节：第一个字节肯定是负数，第二个字节常见的是负数，也有可能是正数
+
+```java
+	public static void main(String[] args) {
+		String s = "我爱你中国";
+		byte[] bys = s.getBytes();
+		System.out.println(Arrays.toString(bys));
+
+		String e = "hello";
+		byte[] bytes = e.getBytes();
+		System.out.println(Arrays.toString(bytes));
+	}
+```
+
+result：
+
+```
+[-26, -120, -111, -25, -120, -79, -28, -67, -96, -28, -72, -83, -27, -101, -67]
+[104, 101, 108, 108, 111]
+```
+
+### 4. 字节缓冲流
+
+-	字节流一次读写一个数组 （```fis.read(byte[] bytes) ```） 的速度，明显比读写一个字节 （```fis.read() ```）的速度快很多，这是加入了数组当作缓冲区的效果
+-	java 考虑到这样的设计思想（装饰设计模式），所以提供了字节缓冲区流
+-	字节缓冲输出流： ```BufferedOutputStream```
+-	字节缓冲输入流： ```BufferedInputStream```
+-	效率比字符流要高
+-	构造方法： 可以指定缓冲区大小，但一般用默认的缓冲区大小，即默认构造即可(传入一个字符流对象)
+-	使用方法： 与字符流大致相同，释放资源时只需要 close 字节缓冲流对象即可
+
+### 5. 字符流的常用子类
+
+字节流操作中文不是特别方便，如下代码所示
+
+```java
+	public static void main(String[] args) throws IOException {
+		// file content: hello你好
+		FileInputStream fis = new FileInputStream("file.txt");
+		int bt = 0;
+		while((bt = fis.read()) != -1){
+			System.out.print((char) bt);
+		}
+		System.out.println();
+		FileInputStream fis2 = new FileInputStream("file.txt");
+		byte[] bytes = new byte[1024];
+		int len = 0;
+		while((len = fis2.read(bytes)) != -1){
+			System.out.println(new String(bytes, 0, len));
+		}
+
+		fis.close();
+		fis2.close();
+	}
+```
+
+result：
+
+```
+helloä½ å¥½
+hello你好
+```
+
+我们可以发现，这里出现了编码问题。所以 Java 为了方便就提供了转换流， 把字节转换成字符，所以 ```字符流 = 字节流 + 编码表```
+
+java 使用 unicode 的编码，unicode 是国际标准码，所有文字多用两个字节来表示，但有时候还是不够，所以有了 UTF-8 来当作 unicode 的实现， 最多可以用三个字节表示一个字符。
+
+编码解码：String 类的方法
+
+-	编码： String --> byte[]
+	-	```byte[] getBytes(String charsetName)```:  通过指定的字符集合把字符串编码为字符数组
+-	解码： byte[] --> String
+	-	```String(byte[] bytes, String charsetName)```: 通过指定的字符集解码字符数组
+
+所以，编码不一样，比如 “GBK” 和 “UTF-8” ,那么解码的时候得到的结果就会出错，所以要保证编码解码的字符集相同
+
+#### OutputStreamReader
+
+
+
+#### OutputStreamWriter
+
+java.io.OutputStreamWriter:
+
+-	字符流转换成字节流：可使用指定的 charset 将要写入流中的字符编码成字节
+-	字符流 = 字节流 + 编码表
+-	它使用的字符集可以由名称指定或显式给定，否则将接受平台默认的字符集
+
+常用构造方法：
+
+-	```public OutputStreamWriter(OutputStream out)``` ：创建使用默认字符编码的 OutputStreamWriter
+-	```public OutputStreamWriter(OutputStream out, String charsetName) throws UnsupportedEncodingException``` ：创建使用指定字符集的 OutputStreamWriter
+
+常用方法：
+
+-	```public void write(int c) throws IOException``` ：  写入单个字符
+-	```public void write(char[] cbuf, int off, int len) throws IOException``` ：  写入字符数组的某一部分
+-	```public void write(String str, int off, int len) throws IOException``` ： 写入字符串的某一部分
+-	```public String getEncoding()``` ：  返回此流使用的字符编码的名称
+-	```public void flush() throws IOException``` ：刷新该流的缓冲
+-	```public void close() throws IOException```： 关闭此流，但要先刷新它。在关闭该流之后，再调用 write() 或 flush() 将导致抛出 IOException。关闭以前关闭的流无效
 
