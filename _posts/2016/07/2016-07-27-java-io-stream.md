@@ -38,6 +38,11 @@ icon: fa-keyboard-o
 
 ### 3. 字节流的常用子类
 
+常用子类体系图示：
+
+![ioimg]( https://zhengshuaipeng.github.io/static/img/blog/2016/07/iostream.png)
+
+
 #### FileOutputStream
 
 java.io.FileOutputStream
@@ -359,8 +364,39 @@ java 使用 unicode 的编码，unicode 是国际标准码，所有文字多用�
 
 所以，编码不一样，比如 “GBK” 和 “UTF-8” ,那么解码的时候得到的结果就会出错，所以要保证编码解码的字符集相同
 
-#### OutputStreamReader
+#### InputStreamReader
 
+java.io.InputStreamReader:
+
+-	字节流转换字符流：它使用指定的 charset 读取字节并将其解码为字符
+-	它使用的字符集可以由名称指定或显式给定，否则将接受平台默认的字符集
+
+常用构造方法：
+
+-	```public InputStreamReader(InputStream in)```： 创建一个使用默认字符集的 InputStreamReader
+-	```public InputStreamReader(InputStream in, String charsetName) throws UnsupportedEncodingException```：创建使用指定字符集的 InputStreamReader
+
+常用方法：
+
+-	```public int read() throws IOException``` ：读取单个字符
+-	```public int read(char[] cbuf, int offset, int length) throws IOException``` ：将字符读入数组中的某一部分
+-	```public void close() throws IOException``` ：关闭该流并释放与之关联的所有资源
+-	```public String getEncoding()``` ：  返回此流使用的字符编码的名称
+
+
+#### FileReader
+
+java.io.FileReader:
+
+-	用来读取字符文件的便捷类
+-	FileReader 用于读取字符流。要读取原始字节流，请考虑使用 FileInputStream
+
+构造方法：
+
+-	```public FileReader(File file) throws FileNotFoundException``` ：在给定从中读取数据的 File 的情况下创建一个新 FileReader
+-	```public FileReader(String fileName) throws FileNotFoundException``` ：在给定从中读取数据的文件名的情况下创建一个新 FileReader
+
+使用方法和 InputStreamReader 相同
 
 
 #### OutputStreamWriter
@@ -379,9 +415,64 @@ java.io.OutputStreamWriter:
 常用方法：
 
 -	```public void write(int c) throws IOException``` ：  写入单个字符
+-	```public void write(char[] cbuf) throws IOException``` ：  写入字符数组
 -	```public void write(char[] cbuf, int off, int len) throws IOException``` ：  写入字符数组的某一部分
+-	```public void write(String str) throws IOException``` ： 写入字符串
 -	```public void write(String str, int off, int len) throws IOException``` ： 写入字符串的某一部分
 -	```public String getEncoding()``` ：  返回此流使用的字符编码的名称
--	```public void flush() throws IOException``` ：刷新该流的缓冲
+-	```public void flush() throws IOException``` ：刷新该流的缓冲，write的东西是先写在缓冲区中
 -	```public void close() throws IOException```： 关闭此流，但要先刷新它。在关闭该流之后，再调用 write() 或 flush() 将导致抛出 IOException。关闭以前关闭的流无效
 
+
+其实 ```OutputStreamWriter = FileOutputStream + 编码表```
+
+#### FileWriter
+
+java.io.FileWriter
+
+-	OutputStreamWriter 的子类，用来写入字符文件的快捷类
+-	此类的构造方法假定默认字符编码和默认字节缓冲区大小都是可接受的
+-	如果要写入字节流，用FileOutputStream
+
+构造方法：
+
+-	```public FileWriter(File file) throws IOException``` ：根据给定的 File 对象构造一个 FileWriter 对象
+-	```public FileWriter(File file, boolean append) throws IOException``` ：  根据给定的 File 对象构造一个 FileWriter 对象
+-	```public FileWriter(String fileName) throws IOException``` ：    根据给定的文件名构造一个 FileWriter 对象
+-	```public FileWriter(String fileName, boolean append) throws IOException``` ：根据给定的文件名以及指示是否附加写入数据的 boolean 值来构造 FileWriter 对象
+
+
+方法和 ```OutputStreamWriter``` 一样，等同于 ```FilleWriter = FileOutputStream + 编码表```
+
+
+```java
+// 复制文件的内容
+public static void main(String[] args) throws IOException{
+	// 封装数据源
+	FileReader fd = new FileReader("file.txt");
+	FileReader fd2 = new FileReader("file.txt");
+	// 数据目的地
+	FileWriter  fr = new FileWriter("a.txt");
+	FileWriter  fr2 = new FileWriter("b.txt");
+
+	// 读写数据,一次读写一个字符
+	int ch = 0;
+	while((ch = fd.read()) != -1){
+		// 把读出来的字符写入目的文件
+		fr.write(ch);
+	}
+
+	// 读写数据，一次读写一个字符数组
+	char[] chars = new char[10];
+	int len = 0;
+	while((len = fd2.read(chars))!= -1){
+		// 把读出来的字符数组写入目的文件
+		fr2.write(chars, 0, len);
+	}
+
+	fr.close();
+	fr2.close();
+	fd.close();
+	fd2.close();
+}
+```
