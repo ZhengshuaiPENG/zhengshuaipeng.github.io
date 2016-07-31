@@ -476,3 +476,42 @@ public static void main(String[] args) throws IOException{
 	fd2.close();
 }
 ```
+
+#### BufferedReader 和 BufferedWriter
+
+加入缓冲区的 Reader 和 Writer， 效率比 FileReader/FileWriter 效率高。使用的时候，构造器需要传入一个 Writer 或 Reader 的对象。
+
+特殊方法：
+
+-	BufferedReader:
+	-	```public String readLine() throws IOException```
+	-	读取一个文本行。通过下列字符之一即可认为某行已终止：换行 ('\n')、回车 ('\r') 或回车后直接跟着换行
+	-	返回包含该行内容的字符串，不包含任何行终止符，如果已到达流末尾，则返回 null
+-	BufferedWriter：
+	-	```public void newLine() throws IOException```
+	-	写入一个行分隔符。行分隔符字符串由系统属性 line.separator 定义，并且不一定是单个新行 ('\n') 符。
+
+```java
+// 复制文件
+public static void main(String[] args) throws IOException{
+	// 封装数据源
+	BufferedReader br = new BufferedReader(new FileReader("file.txt"));
+	// 封装目的地
+	BufferedWriter bw = new BufferedWriter(new FileWriter("a.txt"));
+
+	// 读写数据
+	String line = null;
+	while((line = br.readLine()) != null){ // 读取每一行
+		// 写入读到的每一行
+		bw.write(line);
+		// 加入系统默认换行符
+		bw.newLine();
+		// 刷新写入流
+		bw.flush();
+	}
+
+	// 关闭资源
+	br.close();
+	bw.close();
+}
+```
