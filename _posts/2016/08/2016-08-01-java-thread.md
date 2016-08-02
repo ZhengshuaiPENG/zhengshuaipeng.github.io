@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[JAVA] Java 中的多线程编程一"
+title:  "[JAVA] Java 中的多线程编程 （一） 基本概念和使用"
 date:   2016-08-01
 desc: "how to use thread in Java"
 keywords: "java, thread"
@@ -9,7 +9,7 @@ tags: [Java]
 icon: fa-keyboard-o
 ---
 
-# Java 中多线程编程一
+# Java 中多线程编程一： 多线程的基本概念和使用
 
 ## I. 单线程程序和多线程程序的引入
 
@@ -122,17 +122,15 @@ JDK 提供了两种创建新执行线程的方法
 
 #### 方法一
 
--	自定义继承 Thread 的子类
--	在子类中重写 run() 方法
+-	自定义继承 ```Thread``` 类的子类
+-	在子类中重写 ```run()``` 方法
 -	创建子类的实例对象
 -	启动线程
 
-为什么要在子类中重写 run() 方法？
+```为什么要在子类中重写 run() 方法？```
 
 因为不是类中的所有方法都需要被线程执行的，而这个时候，为了区分哪些代码能够被线程执行， java 提供了 Thread 类中的 run() 用来包含那些被线程执行的代码。换句话说，线程只需要执行 run() 方法内的代码。
 
-
-#### 方法二
 
 #### 方法一实现实例
 
@@ -176,14 +174,14 @@ result:
 
 这里我们看到执行 run 方法，我们得到的是单线程的结果，为什么呢？ 因为 run 方法直接调用其实就相当于普通的方法调用，所以结果是单线程的。
 
-要想看到多线程的效果，就必须使用 ```start()``` 方法：
+要想看到多线程的效果，就必须使用 ```start()``` 方法来启用线程：
 
 -	```public void start()``` ：使该线程开始执行；Java 虚拟机调用该线程的 run 方法
 
 结果是两个线程并发地运行；当前线程（从调用返回给 start 方法）和另一个线程（执行其 run 方法）。```多次启动一个线程是非法的```。特别是当线程已经结束执行后，不能再重新启动。
 
 
-注意： start() 和 run() 的区别
+注意： ```start() 和 run() 的区别```
 
 -	run(): 仅仅是封装被线程执行的代码，直接调用就是普通方法
 -	start(): 首先启动了线程，然后由 jvm 去调用该线程的 run() 方法
@@ -240,6 +238,74 @@ result：
 ```
 
 这里我们可以看出两个线程是交替执行的，这里是并发执行！同一段时间内，两个线程交替执行。
+
+
+#### 方法二
+
+-	声明实现类实现 ```Runable``` 接口
+-	实现类重写 ```run()``` 方法
+-	创建实现类的实例对象 A
+-	创建 ```Thread``` 类的对象 B，并把实现类的实例 A 作为 B 的构造方法的参数传递
+-	启动 B 的线程
+
+当然这里可以使用匿名内部类，这样就可以通过不同的 Thread 的构造方法来构造多个 run() 方法不同的线程对象，而不用像方式一一样，每一种线程都需要写一个 Thread 子类。
+
+#### 方法二实现实例
+
+```java
+package org.lovian.thread;
+
+public class MyRunable implements Runnable {
+
+	@Override
+	public void run() {
+		for(int i = 0; i < 5; i++){
+			System.out.println(Thread.currentThread().getName() + ": " + i);
+		}
+	}
+}
+
+package org.lovian.thread;
+
+public class MyRunableTest {
+	public static void main(String[] args) {
+		MyRunable mr = new MyRunable();
+		Thread th1 = new Thread(mr);
+		Thread th2 = new Thread(mr);
+
+		th1.setName("安拉");
+		th2.setName("耶稣");
+
+		th1.start();
+		th2.start();
+	}
+}
+```
+
+result：
+
+```
+耶稣: 0
+安拉: 0
+耶稣: 1
+安拉: 1
+耶稣: 2
+安拉: 2
+安拉: 3
+安拉: 4
+耶稣: 3
+耶稣: 4
+```
+
+#### 方法一和方法二的关系
+
+为什么有了方法一还要有方法二来创建线程对象呢？
+
+使用实现 Runable接口的好处：
+
+-	因为 Java 中只能单继承，接口方式可以避免单继承的局限性
+-	适合多个相同程序的代码去处理同一个资源的情况，把线程同程序的代码，数据有效分离，体现了面向对象的设计思想
+
 
 ### 4. 设置和获取线程名称
 
@@ -449,3 +515,340 @@ result：
 -	线程优先级高仅仅表示线程获取的 CPU 时间片的几率高，但是要在次数比较多，或者多次运行的时候才能看到比较好的效果（因为存在随机性）
 
 ### 6. 线程控制
+
+#### 线程休眠 sleep
+
+使用 Thread 类中的静态方法 ```sleep()``` 方法可以使正在执行的线程进行休眠（暂停执行）
+
+-	```public static void sleep(long millis) throws InterruptedException``` ：在指定的毫秒数内进行休眠
+-	```public static void sleep(long millis, int nanos) throws InterruptedException``` ：在在指定的毫秒数加指定的纳秒数内进行休眠
+
+
+在 ```run()``` 方法内，可以加入 ```Thread.sleep(long millis)``` 进行当前线程的休眠
+
+#### 线程加入 join
+
+使用线程的 ```join()``` 方法。使用了 join() 方法的线程必须执行完毕，或执行了相应时间之后，其他的线程才能继续执行。 ```join()``` 方法必须在 ```start()``` 方法之后使用
+
+-	```public final void join() throws InterruptedException```： 等待该线程终止
+-	```public final void join(long millis) throws InterruptedException```： 等待该线程终止的时间最长为 millis 毫秒。超时为 0 意味着要一直等下去
+-	```public final void join(long millis, int nanos) throws InterruptedException```：等待该线程终止的时间最长为 millis 毫秒 + nanos 纳秒
+
+```java
+package org.lovian.thread.control;
+
+public class ThreadJoin extends Thread{
+
+	@Override
+	public void run() {
+		for(int i = 0; i < 5; i++){
+			System.out.println(getName() + ": " + i);
+
+			try {
+				// sleep 1 sec
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
+
+package org.lovian.thread.control;
+
+public class ThreadJoinDemo {
+	public static void main(String[] args) {
+		ThreadJoin tj1 = new ThreadJoin();
+		ThreadJoin tj2 = new ThreadJoin();
+		ThreadJoin tj3 = new ThreadJoin();
+
+		tj1.setName("爸爸");
+		tj2.setName("儿子");
+		tj3.setName("女儿");
+
+		tj1.start();
+		try {
+			tj1.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+		tj2.start();
+		tj3.start();
+	}
+}
+```
+
+result：
+
+```
+爸爸: 0
+爸爸: 1
+爸爸: 2
+爸爸: 3
+爸爸: 4
+儿子: 0
+女儿: 0
+儿子: 1
+女儿: 1
+儿子: 2
+女儿: 2
+...
+```
+
+这里，在爸爸线程 start 之后，执行了 join 方法，那么在爸爸线程执行完毕之前，儿子线程和女儿线程就不能启动; 当爸爸线程执行完毕，儿子线程和女儿线程就开始执行。因为 run() 方法中使用了 ```Thread.sleep(1000)```, 所以控制台的输出是每一秒钟一个线程输出一行
+
+#### 线程礼让 yield
+
+线程礼让，就是暂停当前正在执行的线程，并执行其他线程。通俗的说，就是我先停会儿，你们先走。使用 Thread 类中的 ```yield()``` 方法
+
+-	```public static void yield()``` ：暂停当前正在执行的线程对象，并执行其他线程
+
+```java
+package org.lovian.thread.control;
+
+public class ThreadYield extends Thread {
+	@Override
+	public void run() {
+		for (int i = 0; i < 5; i++) {
+			System.out.println(getName() + ": " + i);
+
+			// 暂停线程，让其他线程先执行
+			Thread.yield();
+		}
+	}
+}
+package org.lovian.thread.control;
+
+public class ThreadYieldDemo {
+	public static void main(String[] args) {
+		ThreadYield ty1 = new ThreadYield();
+		ThreadYield ty2 = new ThreadYield();
+
+		ty1.setName("哥哥");
+		ty2.setName("弟弟");
+
+		ty1.start();
+		ty2.start();
+	}
+}
+```
+
+result：
+
+```
+哥哥: 0
+弟弟: 0
+哥哥: 1
+弟弟: 1
+哥哥: 2
+弟弟: 2
+哥哥: 3
+弟弟: 3
+哥哥: 4
+弟弟: 4
+```
+
+我们可以看出，当哥哥线程执行到了 yield() 方法，它会等待弟弟线程的执行，于是弟弟线程执行。同理当弟弟线程执行到了 yield() 方法，弟弟线程暂停，等待哥哥线程执行。但是注意，虽然使用 yield() 方法能够使多线程的执行更和谐，但是并不能保证是一个线程各执行一次这样交替执行
+
+#### 后台线程 setDaemon
+
+线程分为守护线程和用户线程，使用 ```setDaemon()``` 方法将所执行的线程标记为守护线程或者用户线程。当正在运行的线程都是守护线程时， Java虚拟机退出。该方法必须在启动线程前调用，即 start() 方法之前。
+
+-	```public final void setDaemon(boolean on)``` ： true 标记线程为守护进程，false标记为用户线程
+
+可以用 ```isDaemon()``` 方法去测试线程是否是守护线程
+
+```java
+package org.lovian.thread.control;
+
+public class ThreadDaemon extends Thread {
+	@Override
+	public void run() {
+		for (int i = 0; i < 50; i++) {
+			System.out.println(getName() + ": " + i);
+		}
+	}
+}
+
+package org.lovian.thread.control;
+
+public class ThreadDaemonTest extends Thread{
+	public static void main(String[] args) {
+		ThreadDaemon td1 = new ThreadDaemon();
+		ThreadDaemon td2 = new ThreadDaemon();
+
+		td1.setName("关羽");
+		td2.setName("张飞");
+
+		// 设置守护线程
+		td1.setDaemon(true);
+		td2.setDaemon(true);
+
+		td1.start();
+		td2.start();
+
+		// 主线程
+		Thread.currentThread().setName("刘备");
+		for(int i = 0; i < 5; i++){
+			System.out.println(Thread.currentThread().getName() + ": " + i);
+		}
+	}
+}
+```
+
+result：
+
+```
+刘备: 0
+刘备: 1
+张飞: 0
+关羽: 0
+张飞: 1
+刘备: 2
+张飞: 2
+关羽: 1
+张飞: 3
+刘备: 3
+张飞: 4
+关羽: 2
+张飞: 5
+刘备: 4	// 刘备死了
+张飞: 6
+张飞: 7
+张飞: 8
+张飞: 9
+张飞: 10
+张飞: 11
+关羽: 3
+张飞: 12
+关羽: 4
+张飞: 13
+关羽: 5
+张飞: 14
+关羽: 6	// 关羽死了
+张飞: 15
+张飞: 16	// 张飞死了
+```
+
+这里我们设置了张飞线程和关羽线程为守护线程，而刘备实际上就是主线程，也就是守护线程。当刘备线程执行完毕，那么当前 JVM 中，就只剩两个守护线程张飞和关羽了，所以JVM就结束退出了。但是我们可以从结果中看到当刘备死了之后，张飞和关羽还活了一会，那是因为在刘备死的那一刻，张飞关羽才自杀，中间存在一个短暂的时间差，所以从结果上看来他们就又执行了一会。
+
+举个通俗的例子：
+Dota中有一个大本营，有5个英雄。大本营是一建立就一直存在，直到被对面英雄推掉。生命周期从建立到被推掉，就是说肯定大本营会死。那么把大本营看作一个用户线程，建立当作是线程的执行，被推掉相当于线程执行结束。5个英雄是为了保护大本营存在的，就看作守护线程。当大本营没了，就只剩5个英雄没有东西守护了，游戏就结束了，就相当于用户线程没有了，只剩守护线程了，那么 JVM 就退出了。
+
+
+#### 中断线程 stop/interrupt
+
+线程中断就是结束线程的执行，通过 ```stop()``` 方法或者 ```interrupt()``` 方法用中断线程。其中 stop() 方法现在已经废弃了，更多的使用 interrupt() 方法
+
+-	```public final void stop()``` ：
+-	```public final void stop(Throwable obj)``` ：
+-	```public void interrupt()```：
+
+我们通过代码来看两种方法的区别：先构造一个睡觉的线程类，线程执行，睡10秒之后醒来，如果中间被人叫醒，那么就打印被人叫醒了，一旦醒了打印醒了
+
+```java
+package org.lovian.thread.control;
+
+import java.util.Date;
+
+public class ThreadStop extends Thread {
+	@Override
+	public void run() {
+		System.out.println(getName() + ": 开始睡觉： " + new Date());
+
+		// 休眠线程10秒
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e) {
+			System.out.println(getName() + ": 被人叫醒了");
+		}
+
+		System.out.println(getName() + ": 醒了：" + new Date());
+	}
+}
+```
+
+使用 ```stop()``` 方法来打断睡觉的这个线程
+
+```java
+package org.lovian.thread.control;
+
+public class ThreadStopTest {
+	public static void main(String[] args) {
+		ThreadStop ts = new ThreadStop();
+		ts.setName("猪");
+		// 猪开始睡觉
+		ts.start();
+		// 三秒之后叫醒猪
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		// 唤醒
+		ts.stop();;
+	}
+```
+
+result:
+
+```
+猪: 开始睡觉： Tue Aug 02 22:59:21 CEST 2016
+```
+
+结果就只执行了一行，3秒后程序停止了。那么说明，```stop()``` 中断这个线程，在 ts 这个对象的 run() 方法中，sleep() 方法之后的所有代码都没有被执行，包括 try/catch 代码块都没有捕获到异常。所以这个方法不安全。
+
+我们再来看用 ```interrupt()``` 方法：
+
+```java
+package org.lovian.thread.control;
+
+public class ThreadStopTest {
+	public static void main(String[] args) {
+		ThreadStop ts = new ThreadStop();
+		ts.setName("猪");
+		// 猪开始睡觉
+		ts.start();
+		// 三秒之后叫醒猪
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		// 唤醒
+		ts.interrupt();
+	}
+```
+
+result：
+
+```
+猪: 开始睡觉： Tue Aug 02 23:02:21 CEST 2016
+猪: 被人叫醒了
+猪: 醒了：Tue Aug 02 23:02:24 CEST 2016
+```
+
+从结果中我们可以看到，ts 线程中 run() 方法中的所有代码，在被 interrupt() 方法中断之后，得到了执行。
+
+```interrupt()``` 方法的思想：
+如果线程在调用 Object 类的 wait()、wait(long) 或 wait(long, int) 方法，或者该类的 join()、join(long)、join(long, int)、sleep(long) 或 sleep(long, int) 方法过程中受阻，则其中断状态将被清除，它还将收到一个 InterruptedException。 而 interrupt() 方法就是使这些方法受阻的方法，所以 interrupt() 不仅把线程的状态终止了，而且还抛出了一个 InterruptedException 对象。这也就是上述代码 catch 语句中的代码得到执行的原因
+
+
+### 7. 线程的生命周期
+
+一个正常的线程的生命周期有下面四个阶段：
+
+-	```新建```：创建线程对象
+-	```就绪```：有执行资格
+-	```运行```：有执行资格
+-	```死亡```：线程对象变成垃圾，等待被GC
+
+但是在线程的运行期间，由于某些操作，线程可能会被```阻塞```，处于阻塞的状态。处于阻塞状态的线程没有执行资格，没有执行权。但另一些操作可以把阻塞的线程激活，被激活后线程就处于```就绪```状态
+
+图示如下：
+
+![threadlife]( https://zhengshuaipeng.github.io/static/img/blog/2016/08/threadlife.png)
+
+
+
