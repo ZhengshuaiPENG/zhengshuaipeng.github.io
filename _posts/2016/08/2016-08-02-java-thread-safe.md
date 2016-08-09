@@ -473,7 +473,8 @@ Lili -- 18
 
 那么应用等待唤醒机制，修改代码：
 
-Student类
+Student类:
+
 
 ```java
 package org.lovian.thread.communication.waitnotify;
@@ -509,7 +510,9 @@ public class Student {
 }
 ```
 
+
 生产者 SetThread 类：
+
 
 ```java
 package org.lovian.thread.communication.waitnotify;
