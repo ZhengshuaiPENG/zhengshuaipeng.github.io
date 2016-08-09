@@ -218,6 +218,8 @@ public class SellTicket implements Runnable {
 
 这里使用了 ```try/finally``` 语句块，是因为无论同步代码块有没有出问题，锁都是要释放的
 
+
+
 ### 3. 死锁问题
 
 -	同步的弊端：
@@ -289,3 +291,317 @@ else LOCK_B
 ```
 
 从结果我们可以看出，程序卡在这里了，线程1执行了 if 语句块中的 A 锁，而线程2 执行了 else 语句块的 B 锁， 所以线程1 在等 B 锁的释放，而线程2在等 A 锁的释放，结果两个线程都卡在这里了，造成了死锁
+
+
+
+## IV. 线程间通信
+
+```线程间通信问题，其实就是不同种类的线程之间针对一个资源的操作。```
+
+举个例子， 早餐店卖包子，至少有做新包子和顾客买包子两种操作，那么包子就是资源，两个线程一个增加资源，一个减少资源。所以线程间通信，其实就是通过```设置线程``` （生产者）和```获取线程```（消费者）针对同一个对象进行操作。
+
+### 1.代码示例
+
+我们以学生类（student）作为资源类来进行线程间通信的演示，首先分析关系：
+
+-	资源类： Student
+-	设置学生数据： SetThread （设置线程，生产者）
+-	获取学生数据： GetThread （获取线程，消费者）
+-	测试类： StudentDemo
+
+Student 类代码：
+
+```java
+package org.lovian.thread.communication;
+
+public class Student {
+	private String name;
+	private int age;
+
+	...
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	...
+}
+
+```
+
+SetThread 类代码：
+
+```java
+package org.lovian.thread.communication;
+
+public class SetThread implements Runnable {
+
+	private Student s;
+	private int count = 0;
+
+	public SetThread(Student s) {
+		this.s = s;
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			synchronized (s) {
+				if (count % 2 == 0) {
+					s.setName("James");
+					s.setAge(25);
+				} else {
+					s.setName("Lili");
+					s.setAge(18);
+				}
+			}
+			count++;
+		}
+	}
+}
+```
+
+GetThread 类代码：
+
+```java
+package org.lovian.thread.communication;
+
+public class GetThread implements Runnable {
+
+	private Student s;
+
+	public GetThread(Student s) {
+		this.s = s;
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			synchronized (s) {
+				System.out.println(s.getName() + " -- " + s.getAge());
+			}
+		}
+	}
+
+}
+```
+
+测试类：
+
+```java
+package org.lovian.thread.communication;
+
+public class StudentDemo {
+	public static void main(String[] args) {
+
+		// 创建资源
+		Student s = new Student();
+
+		// 设置线程
+		SetThread st = new SetThread(s);
+		Thread t1 = new Thread(st, "SetStudent");
+
+		// 获取线程
+		GetThread gt = new GetThread(s);
+		Thread t2 = new Thread(gt, "GetStudent");
+
+		t1.start();
+		t2.start();
+	}
+}
+```
+
+result：
+
+```
+null -- 0
+null -- 0
+...
+Lili -- 18
+Lili -- 18
+Lili -- 18
+...
+```
+
+注意：
+
+-	资源类 student 的对象 s， 必须被设置线程和获取线程共有
+	-	通过构造器参数传入
+	-	通过 set 方法
+-	由于现在资源类对象 s 被两个线程同时拥有，而且还同时被两个线程操作，就会出现线程安全问题
+	-	设置线程和获取线程要同时上锁
+	-	两个线程必须上同一把锁，这里的锁就是传入的资源类 Student 的对象 s
+-	问题：
+	-	如结果所示，获取线程可能在设置线程之前得到了 CPU 的执行权，所以结果为 null -- 0
+	-	而且可能每个线程都连续的获得了 CPU 的执行权，无论是生产者还是消费者，这都是不合理的
+-	解决问题思路：
+	-	生产者：先看是否有资源，有就等待，没有就生产，生产完通知消费者来消费
+	-	消费者：先看是否有资源，有就消费，没有就等待，通知生产者生产数据
+-	为了解决这个问题，java 提供了```等待唤醒机制```
+
+
+### 2.等待唤醒机制
+
+```等待唤醒机制``` 使用了 ```Object``` 类中提供的方法：
+
+-	```wait()``` : 在其他线程调用此对象的 notify 方法时， 导致当前线程等待，等待的时候，会将锁释放
+-	```notify()``` ： 唤醒此对象监视器上等待的单个线程
+-	```notifyAll()``` ： 唤醒此对象监视器上等待的所有线程
+
+为什么这些方法不定义在```Thread``` 类中呢？
+因为，这些方法应该是```锁对象```来调用的，然而在多线程中，锁对象可能是任意一个对象，所以，就把方法定义在所有类的超类 Object 里。
+
+```等待唤醒机制思想```：
+
+-	生产者：先看是否有资源，有就等待，没有就生产，生产完通知消费者来消费
+-	消费者：先看是否有资源，有就消费，没有就等待，通知生产者生产数据
+-	线程执行时，要保证必须先有资源
+
+那么应用等待唤醒机制，修改代码：
+
+Student类
+```java
+package org.lovian.thread.communication.waitnotify;
+
+public class Student {
+	private String name;
+	private int age;
+	private boolean flag; // 是否有数据，有 true， 没有 false
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public boolean isFlag() {
+		return flag;
+	}
+
+	public void setFlag(boolean flag) {
+		this.flag = flag;
+	}
+}
+
+```
+
+生产者 SetThread 类：
+
+```java
+package org.lovian.thread.communication.waitnotify;
+
+public class SetThread implements Runnable {
+
+	private Student s;
+	private int count = 0;
+
+	public SetThread(Student s) {
+		this.s = s;
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			synchronized (s) {
+				if(s.isFlag()){ // 判断是否有资源 --> 有
+					try {
+						s.wait(); // 生产者线程等待，释放锁;被唤醒后，生产者继续从这里执行
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+
+				if (count % 2 == 0) {
+					s.setName("James");
+					s.setAge(25);
+				} else {
+					s.setName("Lili");
+					s.setAge(18);
+				}
+				count++;
+
+				// 生产资源了，改标记
+				s.setFlag(true);
+				// 唤醒消费者线程
+				s.notify();
+			}
+		}
+	}
+}
+```
+
+消费者 GetThread 类：
+
+```java
+package org.lovian.thread.communication.waitnotify;
+
+public class GetThread implements Runnable {
+
+	private Student s;
+
+	public GetThread(Student s) {
+		this.s = s;
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			synchronized (s) {
+				if(!s.isFlag()){ // 判断是否有资源 --> 没有
+					try {
+						s.wait(); // 消费者等待，释放锁;
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				System.out.println(s.getName() + " -- " + s.getAge());
+				// 消费完资源，修改标记
+				s.setFlag(false);
+				// 唤醒生产者线程
+				s.notify();
+			}
+
+		}
+	}
+}
+```
+
+测试类代码不变， 结果：
+
+```
+James -- 25
+Lili -- 18
+James -- 25
+Lili -- 18
+James -- 25
+Lili -- 18
+...
+```
+
+从结果可以看见这里生产者线程和消费者线程就交替执行了。注意，在 ```wait()``` 方法被执行时，会同时释放锁，让另一个拥有此锁的线程可以被执行。 当线程被唤醒时，代码从 ```wait()``` 代码处继续开始执行，但是，被唤醒后，```线程不是立刻执行的```，它还需要抢夺 CPU 的执行权。
+
+### 3. 线程状态转换图
+
+![thread_state]( https://zhengshuaipeng.github.io/static/img/blog/2016/08/thread-state.png)

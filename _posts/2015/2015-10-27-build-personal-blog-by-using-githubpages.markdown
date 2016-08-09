@@ -29,7 +29,7 @@ And also some drawback with Pages:
 *	No comment, no search function, but there will be some ways to figure it out
 *	Based on Git, you need some background about this
 
-## II. Use Github to get your Github-Pages 
+## II. Use Github to get your Github-Pages
 Note that this tutorial based on Linux ubuntu distribution, other OS is similar.
 
 ### 1. Preparing work
@@ -46,11 +46,11 @@ You need some environment on your OS and some basic background as following:
 
 3.	Open Terminal:
 	*	change directory to your folder
-		```shell
+		```
 		cd /path/directory
 		```
 	*	init the the git repository
-		```shell
+		```
 		git init
 		```
 	*	create your site by using jekyll
@@ -67,52 +67,52 @@ You need some environment on your OS and some basic background as following:
 
 5. Return your terminal
 	*	save the modified in your local repository
-		```shell
-		git add . 
 		```
-	*	commit your modified 
-		```shell
+		git add .
+		```
+	*	commit your modified
+		```
 		git commit -m " first post"
 		```
 	*	Add a reference of remote repository to local repository
-		```shell
+		```
 		git remote add orgin https://github.com/username/projectName.git
 		```
 	*	push your commit, after it will let you input Username and password
-		```shell
+		```
 		git push origin master
 		```
 	*	After push, open a browser, and type the URL as follow:
-		```shell
+		```
 		http://username.github.io
 		```
 		you will see your blog in the website
-		
+
 ## III. Bind a domain name
 1.  First your should have a domain name, I would recommand to register one in Godaddy. Let's suppose that you have ```example.org```
 2.  Go to your DNS Manager or DNS provider, we need to set the A record and CName here. As to what is A record and what is CName, please google it. My DNS manager is provided by Linode, So here I will use Linode DNS manager as example.
     *   Go to Linode DNS manager, first your should create a domain zone with ```example.org```
     *   Edit your domain done, in A/AAAA Records section, add the following ip addresses by add new A record:
-    ```shell
+    ```
     192.30.252.153
     192.30.252.154
     ```
-    
+
     *   Then go to CNAME Records section, Add new CNAME record:
-    ```shell
+    ```
     Hostname: blog
     Aliases to: username.github.io
     TTL: Default
     ```
-    
-    *   Save the changes in your domain zone, now we need to check your domain name by using  
-    ```shell
+
+    *   Save the changes in your domain zone, now we need to check your domain name by using
+    ```
     dig username.github.io +nostats +nocomments +nocmd
     dig blog.example.org +nostats +nocomments +nocmd
     ```
-    
+
     if you see something like
-    ```shell
+    ```
     ➜  ~ dig zhengshuaipeng.github.io +nostats +nocomments +nocmd
 
     ; <<>> DiG 9.10.4-P1 <<>> zhengshuaipeng.github.io +nostats +nocomments +nocmd
@@ -131,11 +131,11 @@ You need some environment on your OS and some basic background as following:
 
     ```
     your setting should be okay.
-    
+
     *   now ```blog.example.org``` should be binded to ```usernamae.github.io```. Next we need to go to your site folder, create a new file ```CNAME```, add ```blog.example.org```
     *   In your ```_config.yml```file, you should add following code:
-    ```shell
+    ```
     url: blog.example.org
     domain: example.org
     ```
-    
+
