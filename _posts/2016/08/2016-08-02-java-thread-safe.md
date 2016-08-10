@@ -607,6 +607,174 @@ Lili -- 18
 
 从结果可以看见这里生产者线程和消费者线程就交替执行了。注意，在 ```wait()``` 方法被执行时，会同时释放锁，让另一个拥有此锁的线程可以被执行。 当线程被唤醒时，代码从 ```wait()``` 代码处继续开始执行，但是，被唤醒后，```线程不是立刻执行的```，它还需要抢夺 CPU 的执行权。
 
+
+修改版代码：
+
+```java
+package org.lovian.thread.communication.waitnotify;
+
+public class Student {
+	private String name;
+	private int age;
+	private boolean flag; // 是否有数据，有 true， 没有 false， 默认 false
+
+	public synchronized void set(String name, int age) {
+		if (this.flag) { // 有数据
+			try {
+				this.wait(); // 生产者等待
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// 没有数据， 生产数据
+		this.name = name;
+		this.age = age;
+		// 修改标记，唤醒消费者线程
+		this.flag = true;
+		this.notify();
+	}
+
+	public synchronized void get() {
+		if (!this.flag) { // 没有数据
+			try {
+				this.wait(); // 消费者等待
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// 有数据，消费数据
+		System.out.println("name: " + this.name + " age: " + this.age);
+		// 修改标记， 唤醒生产者去生产
+		flag = false;
+		this.notify();
+	}
+}
+
+package org.lovian.thread.communication.waitnotify;
+
+public class SetThread implements Runnable {
+
+	private Student s;
+	private int count = 0;
+
+	public SetThread(Student s) {
+		this.s = s;
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+				if (count % 2 == 0) {
+					s.set("James", 25); // 生产者生产数据
+				} else {
+					s.set("Lili", 18); // 生产者生产数据
+				}
+				count++;
+		}
+	}
+}
+
+package org.lovian.thread.communication.waitnotify;
+
+public class GetThread implements Runnable {
+
+	private Student s;
+
+	public GetThread(Student s) {
+		this.s = s;
+	}
+
+	@Override
+	public void run() {
+		while (true) {
+			s.get(); //消费者获取数据
+		}
+	}
+}
+```
+
+这个版本代码，将设置（生产者生产）和获取（消费者消费）的操作封装成学生类（资源）里的功能，并加了同步，这是消费者线程和生产者线程只需要调用方法即可，代码更为简洁，耦合度更低。
+
 ### 3. 线程状态转换图
 
 ![thread_state]( https://zhengshuaipeng.github.io/static/img/blog/2016/08/thread-state.png)
+
+
+## V. 线程组
+
+Java 中用 ```java.lang.ThreadGroup``` 来表示线程组：
+
+-	它可以对一批线程进行分类管理， Java允许程序直接对线程组进行控制
+-	默认情况下，所有的线程都属于主线程组
+-	获取线程组： ```public final ThreadGroup getThreadGroup()```
+-	设置线程组： ```Thread(ThreadGroup group, Runnable target, String threadName)```
+
+我们可以用 ThreadGroup 来把线程分到特定的组里，然后通过这个组，统一的进行线程的操作：
+
+-	```public final void setDaemon(boolean daemon)``` ： 将线程组中的线程全部设置成守护线程
+-	```public final void setMaxPriority(int pri)``` ： 设置线程组中线程最大的优先级（应该在 [Thread.MIN_PRIORITY,  Thread.MAX_PRIORITY] 范围中)
+-	```public final void interrupt()``` : 中断此线程组中的所有线程
+
+
+```java
+package org.lovian.thread.group;
+
+public class ThreadGroupDemo {
+	public static void main(String[] args) {
+		System.out.println("Get ThreadGroup Demo:");
+		getThreadGroupDemo();
+		System.out.println("====================");
+		System.out.println("Set ThreadGroup Demo: ");
+		setThreadGroupDemo();
+
+	}
+
+	private static void getThreadGroupDemo(){
+		MyRunnable mr = new MyRunnable();
+		Thread t1 = new Thread(mr, "T1");
+		Thread t2 = new Thread(mr, "T2");
+
+		// Get thread group of threads
+		ThreadGroup tg1 = t1.getThreadGroup();
+		ThreadGroup tg2 = t2.getThreadGroup();
+
+		// Get the name of thread group
+		String name1 = tg1.getName();
+		String name2 = tg2.getName();
+		System.out.println("Tg1: " + name1 + " Tg2: " + name2); // default is 'main'
+		System.out.println("main thread: " + Thread.currentThread().getThreadGroup().getName());
+
+	}
+
+	private static void setThreadGroupDemo(){
+		// Change the thread group of threads
+		// new a ThreadGroup
+		ThreadGroup tg = new ThreadGroup("Group_1");
+
+		MyRunnable mr = new MyRunnable();
+		Thread t1 = new Thread(tg, mr, "T1");
+		Thread t2 = new Thread(tg, mr, "T2");
+
+		// Get the name of thread group
+		System.out.println("Tg1: " + t1.getThreadGroup().getName() + " Tg2: " + t2.getThreadGroup().getName());
+		System.out.println("main thread: " + Thread.currentThread().getThreadGroup().getName());
+
+	}
+}
+```
+
+result：
+
+```
+Get ThreadGroup Demo:
+Tg1: main Tg2: main
+main thread: main
+====================
+Set ThreadGroup Demo:
+Tg1: Group_1 Tg2: Group_1
+main thread: main
+```
+
+
