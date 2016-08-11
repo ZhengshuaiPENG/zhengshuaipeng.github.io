@@ -475,8 +475,8 @@ public class ThreadPriorityDemo {
 		System.out.println(tp3.getPriority());
 
 		// 设置线程默认优先级 1-10，默认5
-		tp1.setPriority(Thread.NORM_PRIORITY); // 最高优先级：10
-		tp2.setPriority(Thread.MAX_PRIORITY);  // 默认优先级：5
+		tp1.setPriority(Thread.NORM_PRIORITY); // 默认优先级：5
+		tp2.setPriority(Thread.MAX_PRIORITY);  // 最高优先级：10
 		tp3.setPriority(Thread.MIN_PRIORITY);  // 最小优先级1
 
 		tp1.start();

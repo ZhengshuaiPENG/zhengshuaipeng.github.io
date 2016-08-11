@@ -152,7 +152,7 @@ public class SellTicket implements Runnable {
 
 我们知道 Java 中有一些类是线程安全的，比如 ```StringBuffer```, ```Vector```, 和 ```Hashtable```， 他们中的成员方法大多数都被 ```synchronized``` 标注了。但是安全的同时，效率会更低。
 
-即使我们有 ```Vector``` 和 ```Hashtable```， 但是实际上开发的时候，也不会去用它们，而是使用 ```Coollections``` 工具类提供的返回线程安全的 list 集合等，比如：
+即使我们有 ```Vector``` 和 ```Hashtable```， 但是实际上开发的时候，也不会去用它们，而是使用 ```Collections``` 工具类提供的返回线程安全的 list 集合等，比如：
 
 -	```public static <T> List<T> synchronizedList(List<T> list)``` ： 返回指定列表支持的同步（线程安全的）列表
 -	```public static <K,V> SortedMap<K,V> synchronizedSortedMap(SortedMap<K,V> m)``` ： 返回由指定映射支持的同步（线程安全的）映射
@@ -225,7 +225,7 @@ public class SellTicket implements Runnable {
 -	同步的弊端：
 	-	效率低
 	-	如果出现了同步嵌套，就容易产生死锁问题
--	```死锁问题``：
+-	```死锁问题```：
 	-	是指两个或者两个以上的线程在执行的过程中， 因争夺资源产生的一种互相等待的现象
 
 
