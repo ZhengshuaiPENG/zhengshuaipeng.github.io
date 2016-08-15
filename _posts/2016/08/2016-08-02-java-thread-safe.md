@@ -5,7 +5,7 @@ date:   2016-08-02
 desc: "how to use thread in Java"
 keywords: "java, thread"
 categories: [Java]
-tags: [Java]
+tags: [Java， Thread]
 icon: fa-keyboard-o
 ---
 

@@ -3,9 +3,9 @@ layout: post
 title:  "[JAVA] Java 网络编程"
 date:   2016-08-11
 desc: "network programming in Java"
-keywords: "java, thread， thread pool， timer"
+keywords: "java, udp， tcp， network, io"
 categories: [Java]
-tags: [Java]
+tags: [Java, NetWork, TCP, UDP, IO]
 icon: fa-keyboard-o
 ---
 
@@ -332,6 +332,7 @@ public class UDPReceiver {
 -	```receive(DatagramPacket dp)``` 方法在接收到数据前一直处于阻塞状态
 -	如果接收到的信息比接收数据包的长度长，那么该信息将被截短
 -	在运行发送端之前，必须先运行接收端
+-	多次启用接受端会报端口被占用异常
 
 result：
 
@@ -339,4 +340,471 @@ result：
 Received: hello, this is udp sender!; From host: zhengshuai.lovian.xmi IP: 127.0.0.1
 ```
 
+### 4. UDP 广播案例
+
+接收键盘输入，通过udp来发送广播
+
+接收端：
+
+```java
+package org.lovian.network.udp;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.util.Date;
+
+public class BroadcastReceiver {
+	public static void main(String[] args) throws IOException {
+		// 创建接收端 socket 对象
+		DatagramSocket ds = new DatagramSocket(10086);
+
+		// 接收数据
+		while (true) {
+			byte[] buf = new byte[1024];
+			DatagramPacket dp = new DatagramPacket(buf, buf.length);
+			ds.receive(dp);
+			// 处理翻译数据
+			String s = new String(dp.getData(), 0, dp.getLength());
+			System.out.println("Recieved From: " + dp.getAddress().getHostAddress() + " Time: " + new Date() + " Data: " + s);
+			// 结束
+			if(s.equals("bye")){
+				System.out.println("Terminated");
+				break;
+			}
+		}
+		ds.close();
+	}
+}
+```
+
+发送端：
+
+```java
+package org.lovian.network.udp;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.util.Date;
+
+public class BroadcastSender {
+	public static void main(String[] args) throws IOException{
+		//创建 socket 对象
+		DatagramSocket ds = new DatagramSocket();
+
+		// 创建键盘输入对象
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String line = null;
+		// 读取键盘数据
+		while((line = br.readLine()) != null){
+			System.out.println("Send From: " + InetAddress.getByName("localhost") + " Time: " + new Date());
+			byte[] buf = line.getBytes();
+			// 发送到广播地址： x.x.x.255, port: 10086
+			DatagramPacket dp = new DatagramPacket(buf, buf.length, InetAddress.getByName("10.30.167.255"), 10086);
+			// 发送数据
+			ds.send(dp);
+			//如果字符为 bye， 结束
+			if(line.equals("bye")){
+				System.out.println("Terminated");
+				break;
+			}
+		}
+		ds.close();
+	}
+}
+```
+
+result：
+
+
+```
+// 发送端：
+hello
+Send From: localhost/127.0.0.1 Time: Mon Aug 15 12:27:16 CEST 2016
+how are you
+Send From: localhost/127.0.0.1 Time: Mon Aug 15 12:27:23 CEST 2016
+bye
+Send From: localhost/127.0.0.1 Time: Mon Aug 15 12:27:30 CEST 2016
+Terminated
+
+// 接收端：
+Recieved From: 10.30.164.189 Time: Mon Aug 15 12:27:16 CEST 2016 Data: hello
+Recieved From: 10.30.164.189 Time: Mon Aug 15 12:27:23 CEST 2016 Data: how are you
+Recieved From: 10.30.164.189 Time: Mon Aug 15 12:27:30 CEST 2016 Data: bye
+Terminated
+```
+
 ## IV. TCP 编程
+
+### 1. TCP传输
+
+-	```java.net.Socket```
+	-	此类实现 TCP 客户端套接字
+	-	套接字的实际工作由 SocketImpl 类的实例执行
+-	```java.net.ServerSocket```
+	-	此类实现 TCP 服务器套接字
+	-	服务器套接字等待请求通过网络传入
+	-	服务器套接字的实际工作由 SocketImpl 类的实例执行
+-	TCP 传输思路
+	-	建立客户端和服务器端
+	-	建立连接后，通过Socket中的IO流进行数据的传输
+	-	建立客户端和服务器端关闭socket
+	-	建立客户端和服务器端同样，客户端与服务器端是两个独立的应用程序。
+
+
+### 2. TCP传输--客户端思路
+
+-	建立客户端的Socket服务,并明确要连接的服务器
+-	如果连接建立成功,就表明,已经建立了数据传输的通道.就可以在该通道通过IO进行数据的读取和写入.该通道称为Socket流,Socket流中既有读取流,也有写入流
+-	通过Socket对象的方法,可以获取这两个流
+-	通过流的对象可以对数据进行传输
+-	如果传输数据完毕,关闭资源
+
+```java
+package org.lovian.network.tcp;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.Socket;
+
+/*
+ * TCP协议发送数据：
+ * A: 创建发送端的socket对象
+ *        这一步成功，就说明连接已经建立成功了
+ * B：获取输出流，写数据
+ * C: 释放资源
+ */
+public class Client {
+	public static void main(String[] args) throws IOException{
+		// 创建客户端的 Socket 对象, 两种主要构造方法
+		// Socket(InetAddress address, int port);
+		// Socket(String host, int port);
+		Socket socket =  new Socket("localhost", 10086);
+
+		// 获取输出流
+		OutputStream os = socket.getOutputStream();
+		// 写数据
+		os.write("hello, this is TCP client".getBytes());
+
+		// 释放资源
+		socket.close();
+	}
+}
+```
+
+
+### 3. TCP传输--服务器端思路
+
+-	建立服务器端的socket服务，需要一个端口
+-	服务端没有直接流的操作,而是通过accept方法获取客户端对象，在通过获取到的客户端对象的流和客户端进行通信
+-	通过客户端的获取流对象的方法,读取数据或者写入数据
+-	如果服务完成,需要关闭客户端,然后关闭服务器，但是,一般会关闭客户端,不会关闭服务器,因为服务端是一直提供服务的
+
+```java
+package org.lovian.network.tcp;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Date;
+
+/*
+ * TCP协议接收数据
+ * A: 创建接收端的 ServerSocket 对象
+ * B: 监听客户端，返回一个对象的 Socket 对象
+ * C: 获取输入流读取数据，并处理显式
+ * D: 释放资源
+ */
+public class Server {
+	public static void main(String[] args) throws IOException{
+		//创建接收端的 ServerSocket 对象
+		// ServerSocket(int port);
+		ServerSocket ss = new ServerSocket(10086);
+
+		// 监听客户端，返回一个对象的 Socket 对象
+		// public Socket accept()： 阻塞式方法
+		Socket socket = ss.accept();
+
+		// 获取输入流，读取数据并显示在控制台
+		InputStream is = socket.getInputStream();
+
+		byte[] buf = new byte[1024];
+		int length = 0;
+		while((length = is.read(buf)) != -1){
+			String str = new String(buf, 0, length);
+			System.out.println("From: " + socket.getInetAddress().getHostAddress() + " Time: " + new Date());
+			System.out.println("Data: " + str);
+		}
+		// 释放资源 (关闭客户端的)
+		socket.close();
+		ss.close(); // 服务器端应该一直处于监听状态，不应该关闭
+	}
+}
+```
+
+result：
+
+```
+From: 127.0.0.1 Time: Mon Aug 15 14:54:09 CEST 2016
+Data: hello, this is TCP client
+```
+
+注意：
+
+-	要先运行服务器端进行监听， 再运行客户端，否则会出现连接被拒绝的错误
+-	服务器端一般来说是一直运行的
+	-	所以要关闭客户端的连接，释放资源
+	-	服务器端可以不关闭
+-	```serverSocket.accept()```:
+	-	是一个阻塞方法， 用来接收客户端连接
+	-	连接成功则建立通道
+		-	通过 OutputStream 和 write 方法来发送数据
+		-	通过 InputStream 和 read 方法来接收数据， read也是阻塞方法
+	-	如果没有客户端连接，则服务器就阻塞在这
+
+
+### 4. TCP 传输实例
+
+客户端键盘录入数据，服务器输出到控制台
+
+客户端：
+
+```java
+package org.lovian.network.tcp;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+import java.util.Date;
+
+public class TcpClient {
+	public static void main(String[] args) throws IOException {
+		Socket socket = new Socket("localhost", 10086);
+
+		// 键盘录入数据
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		// 包装 TCP 通道内的字节流 --> 字符流 --> 高效字符流
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+		String line = null;
+		while ((line = br.readLine()) != null) {
+			bw.write(line);
+			bw.newLine();
+			bw.flush();
+			System.out.println("From: " + socket.getInetAddress().getHostAddress() + " Time: " + new Date());
+			if ("bye".equals(line)) {
+				// 键盘录入数据要自定义结束标记
+				System.out.println("Termiated");
+				break;
+			}
+		}
+		socket.close();
+	}
+}
+```
+
+服务器端：
+
+```java
+package org.lovian.network.tcp;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.Date;
+
+public class TcpServer {
+	public static void main(String[] args) throws IOException{
+		ServerSocket ss = new ServerSocket(10086);
+		// 监听客户端
+		Socket socket = ss.accept();
+
+		// 包装通道内的输入字节流 --> 输入字符流 --> 高效字符流
+		BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		String line = null;
+		while((line = br.readLine()) != null){
+			System.out.println("From: " + socket.getInetAddress().getHostAddress() + " Time: " + new Date());
+			System.out.println("Data: " + line);
+			if("bye".equals(line)){
+				System.out.println("Termiated");
+				break;
+			}
+		}
+
+		socket.close();
+		ss.close();
+	}
+}
+```
+
+result：
+
+```
+// 客户端：
+hello
+From: 127.0.0.1 Time: Mon Aug 15 16:00:14 CEST 2016
+how are you
+From: 127.0.0.1 Time: Mon Aug 15 16:00:28 CEST 2016
+bye
+From: 127.0.0.1 Time: Mon Aug 15 16:00:34 CEST 2016
+Termiated
+
+// 服务器端：
+From: 127.0.0.1 Time: Mon Aug 15 16:00:14 CEST 2016
+Data: hello
+From: 127.0.0.1 Time: Mon Aug 15 16:00:28 CEST 2016
+Data: how are you
+From: 127.0.0.1 Time: Mon Aug 15 16:00:34 CEST 2016
+Data: bye
+Termiated
+```
+
+
+## V. 多线程网络编程
+
+一个网络应用程序，实际上，是由 ```多线程```， ```网络编程``` 和 ```IO流``` 组成。因为同一台服务器也许要同时处理很多个客户端连接，而这些客户端可能是并发的连接到服务器的。
+
+下面看一个多客户端上传文件的案例：
+
+客户端代码：
+
+```java
+package org.lovian.network.tcp;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+
+public class UploadClient {
+	public static void main(String[] args) throws IOException {
+		// 创建客户端socket对象，指定服务器的 host 和端口
+		Socket s = new Socket("localhost", 10086);
+
+		// 封装要上传的文本文件
+		BufferedReader br = new BufferedReader(new FileReader("text.txt"));
+
+		// 封装通道内的客户端的输出流
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
+
+		// 读取文件内容
+		String line = null;
+		while ((line = br.readLine()) != null) {
+			// 通过通道输出流传送文件内容
+			bw.write(line);
+			bw.newLine();
+			bw.flush();
+		}
+
+		// 发送传输结束标志，发送结束之前的所有内容
+		s.shutdownOutput();
+
+		// 通过客户端输入流获取服务器的反馈信息
+		BufferedReader brClient = new BufferedReader(new InputStreamReader(s.getInputStream()));
+		String serverFeedBack = brClient.readLine(); // 阻塞方法，有反馈就执行，没有反馈就阻塞
+		System.out.println(serverFeedBack);
+
+		br.close();
+		s.close();
+	}
+}
+```
+
+处理线程代码：
+
+```java
+package org.lovian.network.tcp;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.Socket;
+
+public class processThread implements Runnable {
+
+	private Socket s;
+
+	// 通过构造方法传入每一个客户端线程的 socket 对象
+	public processThread(Socket s) {
+		this.s = s;
+	}
+
+	@Override
+	public void run() {
+		BufferedWriter bw = null;
+		try {
+			// 上传文件，相当于读取文件-->发送数据到服务器-->服务器把数据写入服务器中的文件
+			// 为了防止名称冲突，使用时间作为存储文件名（小规模并发）
+			bw = new BufferedWriter(new FileWriter(System.currentTimeMillis() + "_text.txt"));
+			// 封装通道输入流用来读取客户端发来的数据
+			BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+
+			// 读取数据
+			String line = null;
+			while ((line = br.readLine()) != null) { // 阻塞方法
+				// 将读取到的数据写入服务器
+				bw.write(line);
+				bw.newLine();
+				bw.flush();
+			}
+			// 当服务器收到客户端发来的结束信号，读取操作停止
+
+			// 给出上传成功反馈
+			BufferedWriter bwServer = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
+			bwServer.write("File uploaded successfully");
+			bwServer.newLine();
+			bwServer.flush();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				bw.close();
+				s.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+}
+```
+
+服务器端代码：
+
+```java
+package org.lovian.network.tcp;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class UploadServer {
+	public static void main(String[] args) throws IOException{
+		// 创建TCP服务器 Socket 对象，指定监听端口
+		ServerSocket ss = new ServerSocket(10086);
+
+		while(true){
+			// 监听客户端连接
+			Socket s = ss.accept(); // 阻塞方法，成功则建立通道
+			// 执行每一个客户端的线程
+			new Thread(new processThread(s)).start();
+		}
+	}
+}
+```

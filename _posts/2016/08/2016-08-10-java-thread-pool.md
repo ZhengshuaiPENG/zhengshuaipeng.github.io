@@ -5,7 +5,7 @@ date:   2016-08-10
 desc: "how to use thread pool in Java"
 keywords: "java, thread， thread pool， timer"
 categories: [Java]
-tags: [Java]
+tags: [Java， Thread]
 icon: fa-keyboard-o
 ---
 

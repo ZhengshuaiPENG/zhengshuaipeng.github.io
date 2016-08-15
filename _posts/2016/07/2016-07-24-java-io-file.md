@@ -5,7 +5,7 @@ date:   2016-07-24
 desc: "how to use io-file in Java"
 keywords: "java, io, File"
 categories: [Java]
-tags: [Java]
+tags: [Java， IO]
 icon: fa-keyboard-o
 ---
 
