@@ -15,6 +15,7 @@ icon: fa-keyboard-o
 
 装饰者模式（Decorator Pattern）：
 
+-	结构型模式
 -	装饰模式就是使用被装饰类的一个子类的实例，在客户端将这个子类的实例交给装饰类
 -	是继承的替代方案
 -	装饰者模式通过组合的方式扩展对象的特性
@@ -255,3 +256,32 @@ Note7 plays music
 ```
 
 我们可以看到，我们不需要改 ```Phone``` 的接口，也不需要更改其实现类的方法实现，就可以实现添加功能，这个就是装饰者模式
+
+
+## VI. 装饰者模式在 Java IO 中的应用
+
+我们直到 IO 的 API， 分为字节流和字符流两种，比如 ```InputStream``` 就是一个字节流，来读取字节：
+
+```java
+InputStream is = System.in;
+```
+
+而如果我们想要其读取字符呢？就要装饰一下这个 ```is``` ：
+
+```java
+InputStreamReader isr = new InputStreamReader(is);
+```
+
+现在，这个 ```isr``` 可以读取字符了，但不能直接读取字符串，那我们再装饰一下这个 ```isr```：
+
+```java
+BufferedReader br = new BufferedReader(isr);
+```
+
+得到的这个 ```br``` 就可以直接读取字符串了。再使用的时候，我们如果这样写：
+
+```java
+BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+```
+
+这个 br 就可以直接获取键盘输入了。由此可知， Java 中 ```Scanner``` 类，其实也是 IO 的一个装饰类
