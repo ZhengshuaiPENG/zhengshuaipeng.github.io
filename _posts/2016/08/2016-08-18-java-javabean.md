@@ -107,12 +107,17 @@ public class Student {
 
 -	在 JEE 开发中，经常要使用 JavaBean
 -	JDK中提供了一些对 JavaBean 进行操作的一些API，这套API就称为```内省， IntroSpector```，我们可以通过 API 来访问私有变量
+-	采用遍历 ```BeanInfo``` 的所有属性方式来查找和设置 JavaBean 类实例对象的属性
+	-	在程序中把一个类当作 JavaBean 来看，就是调用 ```Introspector.getBeanInfo()``` 方法
+	-	得到的 ```BeanInfo``` 对象封装了把这个类当作JavaBean 的结果信息
 
 代码实例，通过 API 对 Student 类进行操作：
 
 ```java
 package org.lovian.entity;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 
@@ -124,21 +129,35 @@ public class Test {
 
 		// 使用 getter 方法得到属性值
 		System.out.println("Id: " + s.getId() + " Name: " + s.getName());
+		System.out.println("-----------------------");
 
-		// 使用 API 获取值
+		// 使用 PropertyDescriptor API 获取属性值
 		String idPropertyName = "id";
 		PropertyDescriptor pd = new PropertyDescriptor(idPropertyName, s.getClass());
 		Method methodGetId = pd.getReadMethod();
 		Object idVal = methodGetId.invoke(s, null);
 		System.out.println("Id: " + idVal);
 
-		// 使用 API 设置并获取值
+		// 使用 PropertyDescriptor API 设置并获取属性值
 		PropertyDescriptor pd2 = new PropertyDescriptor("name", Student.class);
 		Method methodSetName = pd2.getWriteMethod();
 		methodSetName.invoke(s, "Shen");
 		Method methodGetName = pd2.getReadMethod();
 		Object nameVal = methodGetName.invoke(s, null);
 		System.out.println("Name: " + nameVal);
+		System.out.println("-----------------------");
+
+		// 使用 Introspector 类来把一个类当作 JavaBean 类来处理
+		BeanInfo bi = Introspector.getBeanInfo(s.getClass());
+		PropertyDescriptor[] allProperies = bi.getPropertyDescriptors();
+		for (PropertyDescriptor propertyDescriptor : allProperies) {
+			if(propertyDescriptor.getName().equals("id")){
+				Method getId = propertyDescriptor.getReadMethod();
+				Object val = getId.invoke(s, null);
+				System.out.println("Id: " + val);
+				break;
+			}
+		}
 	}
 }
 ```
@@ -147,6 +166,58 @@ result：
 
 ```
 Id: 8532 Name: PENG
+-----------------------
 Id: 8532
 Name: Shen
+-----------------------
+Id: 8532
+```
+
+## IV. 使用 BeanUtils 工具包来操作 JavaBean
+
+```org.apache.commons.beanutils.BeanUtils``` 是 apache 提供的一个第三方的工具包，用来操作 JavaBean 的。注意它依赖于 apache 提供的日志包 ```
+
+```java
+package org.lovian.entity;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
+
+public class BeanUtilsDemo {
+	public static void main(String[] args) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+		Student s  = new Student();
+
+		// 通过 BeanUtils 来设置 id 属性， id 是 int 类型变量
+		// 注意这里传入了一个字符串，但是，它可以被设置成功
+		BeanUtils.setProperty(s, "id", "8532");
+		// 注意这里返回的是也是一个字符串
+		String id = BeanUtils.getProperty(s, "id");
+		System.out.println("Id: " + id);
+
+		// 通过 PropertyUtils 来设置 id 属性
+		// 注意这里，不能传入字符串，必须传入 int 值
+		PropertyUtils.setProperty(s, "id", 10086);
+		Object idVal = PropertyUtils.getProperty(s, "id");
+		System.out.println("IdVal: " + idVal + " Type: " + idVal.getClass().getName());
+
+		// 用 BeanUtils 操作 map 的 key-value
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("name", "PENG");
+		BeanUtils.setProperty(map, "name", "Shen");
+		System.out.println("Name in Map: " + BeanUtils.getProperty(map, "name"));
+
+	}
+}
+```
+
+result：
+
+```
+Id: 8532
+IdVal: 10086 Type: java.lang.Integer
+Name in Map: Shen
 ```
