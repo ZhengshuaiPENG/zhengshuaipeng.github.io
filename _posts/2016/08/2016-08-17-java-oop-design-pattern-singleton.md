@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "[Design Pattern] 设计模式之单例模式"
-date:   2016-08-11
+date:   2016-08-17
 desc: "OOP singleton programming"
 keywords: "java, design pattern， oop， singleton"
 categories: [Programming]
@@ -133,7 +133,7 @@ true
 
 ### 2. 懒汉式
 
-懒汉式线程不安全，所以我们可以改进懒汉式让它变成线程安全的单例模式
+懒汉式是懒加载（延迟加载的思想），懒汉式线程不安全，所以我们可以改进懒汉式让它变成线程安全的单例模式
 
 ```java
 package org.lovian.designpattern.singleton;

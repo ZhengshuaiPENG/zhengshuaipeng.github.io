@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "[Design Pattern] 设计模式之工厂模式"
-date:   2016-08-11
+date:   2016-08-17
 desc: "OOP factory pattern programming"
 keywords: "java, design pattern， oop， factory"
 categories: [Programming]
@@ -133,6 +133,9 @@ result：
 -	创建型模式
 -	工厂方法模式中抽象工厂类负责定义创建对象的接口，让工厂接口的实现类绝对实例化哪一个类
 -	工厂方式使一个类的实例化延迟到其子类
+
+工厂方法模式的组成：
+
 -	```工厂接口```或抽象类
 	-	工厂方法模式的核心，用来提供产品
 -	```工厂接口实现```
