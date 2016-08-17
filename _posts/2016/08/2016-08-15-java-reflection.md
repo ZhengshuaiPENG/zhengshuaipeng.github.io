@@ -366,7 +366,30 @@ name: null age: 0
 	-	在properties文件中配置className，methodName， fieldName, constructorName
 	-	用 ```Properties```类来获取定义好的这些属性
 	-	用反射调用指定类的方法
-	-	框架中大多数使用此方法
+
+```java
+// 读取 propeties 配置文件
+// 注意： 在加载配置文件的时候，路径可以用绝对路径，也可以使用默认的项目下路径
+// 还可以使用反射的方式： 当前类.class.getClassLoader.getResourceAsStream("config.properties") 来加载
+InputStream is = new FileInputStream("config.properties");
+Properties props = new Properties();
+// 加载 inputstream
+props.load(is);
+ips.close();
+
+// 获取配置的 className
+String className = props.getProperty("className");
+// 获取相应的 class 文件
+Class c = Class.forName(className);
+// 创建配置的 className 的实例对象
+c.newInstance();
+```
+
+
+
+-	```框架一般使用反射来调用用户写的类```
+	-	框架需要调用用户写的类，而工具类则是被用户调用的类
+	-	框架在实现的时候，用户的类不存在，不能用 new 方法来调用， 那框架怎么调用用户的类？使用反射
 
 示例： 有一个 ```ArrayList<Integer>``` 集合对象，在这个集合中添加一个字符串，如何实现？
 
