@@ -120,3 +120,7 @@ Tomcat 的配置文件位于 Tomcat 目录下的 ```conf/server.xml```, 这个�
 -	不可以直接在 webapps 目录下部署单个的 web 文件
 -	WEB-INF目录里面的资源不能通过浏览器直接访问
 -	如果希望访问到WEB-INF里面的资源，就必须把资源配置到一个叫web.xml的文件中。
+
+### 5. 使用开发工具
+
+当然我们可以使用 Eclipse Jee 版本，或者 IDEA 来添加 Tomcat 服务器，进行开发的测试，这个非常简单，这里不做介绍
