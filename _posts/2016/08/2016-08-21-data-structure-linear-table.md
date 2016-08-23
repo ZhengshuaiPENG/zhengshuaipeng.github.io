@@ -76,6 +76,8 @@ endADT
 
 ### 2. 顺序表的实现
 
+代码请参见 [DataStructure-Java/src/org/lovian/datastructure/linearlist/sequencelist](https://github.com/ZhengshuaiPENG/DataStructure-Java/tree/master/src/org/lovian/datastructure/linearlist/sequencelist)
+
 由于顺序表在内存中是连续的，而且存放的是相同数据类型的数据元素，所以可以用 ```一维数组``` 来实现顺序表结构：
 
 -	一维数组可以是静态分配的
@@ -290,5 +292,3 @@ public boolean ListDelete(int i, DataType removedEle) {
 	-	插入和删除操作需要移动大量的元素，从而保持逻辑上和物理上的连续性
 	-	当线性表长度变化较大时，难以确定存储空间的容量
 
-
-## III. 链表
