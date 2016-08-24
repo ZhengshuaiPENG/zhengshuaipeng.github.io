@@ -450,6 +450,7 @@ public void reverseList() {
 
 ![空双向链表]( https://zhengshuaipeng.github.io/static/img/blog/2016/08/doublelinkedlist2.png)
 
+双向链表的代码实现请参考 [https://github.com/ZhengshuaiPENG/DataStructure-Java/tree/master/src/org/lovian/datastructure/linearlist/doublelinkedlist](https://github.com/ZhengshuaiPENG/DataStructure-Java/tree/master/src/org/lovian/datastructure/linearlist/doublelinkedlist)
 
 #### 双向链表的操作
 
