@@ -57,7 +57,6 @@ icon: fa-keyboard-o
 
 ## II 栈的实现
 
-栈实现的代码请参考 [https://github.com/ZhengshuaiPENG/DataStructure-Java/tree/master/src/org/lovian/datastructure/stack](https://github.com/ZhengshuaiPENG/DataStructure-Java/tree/master/src/org/lovian/datastructure/stack)
 
 ### 1. 栈的抽象数据类型
 
@@ -84,6 +83,8 @@ endADT
 ```
 
 ### 2. 栈的顺序存储结构
+
+栈的顺序存储结构代码： [https://github.com/ZhengshuaiPENG/DataStructure-Java/tree/master/src/org/lovian/datastructure/stack/sequencestack](https://github.com/ZhengshuaiPENG/DataStructure-Java/tree/master/src/org/lovian/datastructure/stack/sequencestack)
 
 在栈的顺序结构中我们用数组来当作栈的底层， 下标为 0 的一端作为栈底。
 
@@ -149,6 +150,8 @@ push 和 pop 操作的复杂度都是 O(1)
 
 
 ### 3. 栈的链式存储结构
+
+栈的链式存储结构代码： [https://github.com/ZhengshuaiPENG/DataStructure-Java/tree/master/src/org/lovian/datastructure/stack/linkedstack](https://github.com/ZhengshuaiPENG/DataStructure-Java/tree/master/src/org/lovian/datastructure/stack/linkedstack)
 
 由于顺序的栈结构的大小是固定的，所以有时侯不知道数组的长度，就有了栈的链式存储结构，简称为```链栈```：
 
