@@ -134,9 +134,9 @@ public class SequenceQueue {
 
 	public SequenceQueue(int maxSize) {
 		// 初始化一个新的空队列
-		this.data = new IntDataType[maxSize];
-		int font = 0;
-		int rear = 0;
+			this.data = new IntDataType[maxSize];
+		this.front = 0;
+		this.rear = 0;
 	}
 }
 ```
@@ -152,18 +152,18 @@ public int length(){
 #### 入列操作
 
 ```java
-	public boolean enQueue(DataType element) {
-		// 如果队列满了
-		if (((rear + 1) % data.length) == front)
-			return false;
-		// 插入新元素到队尾
-		data[rear].SetData(element);
-		// 后移rear指针
-		// 若到了数组末尾则前移动到数组头部
-		rear = (rear + 1) % data.length;
-		return true;
-	}
+public boolean enQueue(DataType element) {
+	// 如果队列满了
+	if (((rear + 1) % data.length) == front)
+		return false;
+	// 插入新元素到队尾
+	data[rear].SetData(element);
+	// 后移rear指针
+	// 若到了数组末尾则前移动到数组头部
+	rear = (rear + 1) % data.length;
+	return true;
 }
+
 ```
 时间复杂度 O(1)
 
@@ -182,3 +182,107 @@ public boolean deQueue(DataType element) {
 	return true;
 }
 ```
+
+时间复杂度 O(1)
+
+
+### 4. 队列的链式存储结构
+
+
+队列的链式存储结构，其实就是线性表的单链表，只不过只能```尾进头出``` 而已，我们把它简称为```链队列``` ：
+
+-	队头指针 front： 链表头结点
+-	队尾指针 rear： 链表终端结点
+
+为了操作的方便，我们将队头指针指向链队列的头结点，队尾指针指向终端节点
+
+![linkedqueue]( https://zhengshuaipeng.github.io/static/img/blog/2016/08/queue9.png)
+
+当链队列为空时，front 和 rear 都指向头结点
+
+![linkedqueue2]( https://zhengshuaipeng.github.io/static/img/blog/2016/08/queue10.png)
+
+链队列代码实现： [https://github.com/ZhengshuaiPENG/DataStructure-Java/tree/master/src/org/lovian/datastructure/queue/linkedqueue](https://github.com/ZhengshuaiPENG/DataStructure-Java/tree/master/src/org/lovian/datastructure/queue/linkedqueue)
+
+#### 链队列的存储结构代码
+
+```java
+package org.lovian.datastructure.queue.linkedqueue;
+
+import org.lovian.datastructure.data.DataType;
+
+public class LinkedQueue {
+
+private Node front; // 头指针，指向头结点
+	private Node rear; // 尾指针，指向终端结点
+
+	public LinkedQueue() {
+		// 初始化空链队列，实际上只有一个队列对象
+		this.front = new Node();
+		// front = rear 时，队列为空
+		this.rear = front;
+	}
+}
+
+class Node {
+	private DataType data;
+	private Node next;
+
+	public DataType getData() {
+		return data;
+	}
+
+	public void setData(DataType data) {
+		this.data = data;
+	}
+
+	public Node getNext() {
+		return next;
+	}
+
+	public void setNext(Node next) {
+		this.next = next;
+	}
+}
+```
+
+#### 链队列的入列操作
+
+```java
+public boolean enQueue(DataType element) {
+	// 新建结点
+	Node s = new Node();
+	s.setData(element);
+	// 将结点插入队尾
+	rear.setNext(s);
+	// 将尾指针后移
+	rear = s;
+	return true;
+}
+```
+
+时间复杂度 O(1)
+
+#### 链队列的出对列操作
+
+```java
+public boolean deQueue(DataType element) {
+	// 如果队列为空，则 dequeue 失败
+	if (front.equals(rear))
+		return false;
+	// 如果不为空，拿到第一个结点
+	Node p = front.getNext();
+	// 得到要删除的值
+	element.SetData(p.getData().getData());
+
+	// 如果删除的是最后一个结点，那么需要重置 front 和 rear 的值
+	if (p.getNext() == null) {
+		front = rear;
+		return true;
+	}
+	front.setNext(p.getNext());
+	return true;
+}
+```
+
+时间复杂度 O(1)
