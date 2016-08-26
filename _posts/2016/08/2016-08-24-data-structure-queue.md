@@ -3,7 +3,7 @@ layout: post
 title:  "[Date Structure] 数据结构之队列"
 date:   2016-08-24
 desc: "queue of data structure"
-keywords: "java, data structure, stack"
+keywords: "java, data structure, queue"
 categories: [Algorithm]
 tags: [Algorithm, Data Structure]
 icon: fa-keyboard-o
