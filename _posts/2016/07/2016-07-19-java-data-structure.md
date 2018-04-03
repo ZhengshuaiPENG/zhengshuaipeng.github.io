@@ -4,7 +4,7 @@ title:  "[Date Structure] 数据结构简介"
 date:   2016-07-19
 desc: "introduction the data structure"
 keywords: "java, data structure"
-categories: [algorithm]
+categories: [data_structure]
 ---
 
 # 数据结构简介
