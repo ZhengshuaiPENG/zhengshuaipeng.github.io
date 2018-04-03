@@ -6,7 +6,7 @@ github: https://github.com/ZhengshuaiPENG
 about: A Small Developer
 
 baseurl: ""
-url: "blog.lovian.org"
+# url: "blog.lovian.org"
 # url: "http://127.0.0.1:4000"
 
 allowsearch: true
