@@ -1,0 +1,32 @@
+title: Lovian Blog
+description:  Personal Blog of Zhengshuai PENG
+author: Zhengshuai PENG
+logo: /static/img/avatar.png
+github: https://github.com/ZhengshuaiPENG
+about: A Small Developer
+
+baseurl: ""
+url: "blog.lovian.org"
+# url: "http://127.0.0.1:4000"
+
+allowsearch: true
+
+disqus_shortname: blog-lovian
+google_analytics: UA-75834843-2
+
+share:
+  twitter_username: \#
+  fb_appid: 000000000000
+
+# share
+bshare:
+  uuid: 99b5a665-de2c-4135-a5ea-7686e7fa9290
+
+enableTags: true
+tagarray: []
+
+paginate: 20
+per_page: 20
+paginate_path: "/page:num/"
+markdown: kramdown
+plugins: [jekyll-paginate, jekyll-gist]

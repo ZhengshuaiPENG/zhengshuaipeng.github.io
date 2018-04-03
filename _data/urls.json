@@ -1,0 +1,28 @@
+[
+  {
+    "text": "Posts",
+    "url": "/",
+    "icon": "fa-home",
+    "layout": "post"
+  },
+  {
+    "text": "Category",
+    "url": "/posts_by_category",
+    "icon": "fa-feed"
+  },
+  {
+    "text": "Projects",
+    "url": "/projects",
+    "icon": "fa-desktop"
+  },
+  {
+    "text": "Resume",
+    "url": "/resume",
+    "icon": "fa-graduation-cap"
+  },
+  {
+    "text": "About",
+    "url": "/about/",
+    "icon": "fa-comments"
+  }
+]
