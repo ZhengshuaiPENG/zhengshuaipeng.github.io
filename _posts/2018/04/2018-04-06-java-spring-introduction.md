@@ -7,13 +7,11 @@ keywords: "java, spring"
 categories: [java, web]
 ---
 
-# Sprint Introduction
-
-## I. Spring 简介
+# I. Spring 简介
 
 Spring  是一个java 的开源框架，用来解决企业级应用开发而创建的，目的是为了简化Java的开发。使用 Spring 可以使简单的 JavaBean 实现以前只有 EJB 才能实现的功能。项目网站： [sping.io](http://spring.io/)
 
-### 1.Spring 具体描述
+## 1.Spring 具体描述
 
 Spring 特性：
 -	***轻量级***： 基于 POJO 的轻量级和最小侵入式编程
@@ -22,12 +20,12 @@ Spring 特性：
 -	***容器***: spring 是一个容器，它包含并管理应用对象的生命
 
 
-### 2. Spring 模块
+## 2. Spring 模块
 
 Spring 模块图如下所示：
 ![Spring-Model](/assets/blog/2018/04/spring_model.png)
 
-## II. Sping Hello World 示例
+# II. Sping Hello World 示例
 
 首先在IDE中创建一个简单的maven项目，叫做spring-demo，结构大概如下：
 
