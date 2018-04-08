@@ -4,7 +4,7 @@ title:  "[JAVA_SSH] Spring 简介"
 date:   2018-04-06
 desc: "Spring 框架简介"
 keywords: "java, spring"
-categories: [java, web]
+categories: [java, web, spring]
 ---
 
 # I. Spring 简介
