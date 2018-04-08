@@ -516,7 +516,8 @@ Process finished with exit code 0
     </bean>
 ```
 
-```注意```：
+***注意***：
+
 -   必须要先在 person bean 中声明 car bean，才能给 car 的属性赋值
 -   如果不先声明 car bean，那么Spring不会自动创建一个 car 的 bean 对象，会报错 
 -   在 Person 类中必须要由 car 属性的 getter 方法，并且 Car 类中要有 maxSpeed 的 setter 方法才可以，否则会报错。
