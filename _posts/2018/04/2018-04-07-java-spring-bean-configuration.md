@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[JAVA_SSH] Spring 中 Bean 的配置"
+title:  "[JAVA_Spring] Spring 中 Bean 的配置"
 date:   2018-04-07
 desc: "Spring Bean 配置"
 keywords: "java, spring, IOC, DI, Bean"
@@ -782,6 +782,12 @@ MapPerson{name='Jerry', age=17, cars={First Car=Car{brand='AUDI', model='A6L', p
     </bean>
 ```
 
+注意需要在```<beans>```的属性中加入下面的util 命名空间
+
+```xml
+xmlns:util="http://www.springframework.org/schema/util"
+```
+
 这里我们可以看到，Person中本来应该设置 ```List<Car>``` 的地方，我们引用了上面 ```util:list``` 定义的 bean，执行一些 main 方法得到结果如下：
 
 ```
@@ -796,3 +802,8 @@ Person{name='Jack', age=23, cars=[Car{brand='BWM', model='<525>', price='400000'
 ```xml
 <bean id="Rose" class="org.lovian.sping.bean.collections.Person" p:name="Rose" p:age="22" p:cars-ref="bba-cars"/>
 ```
+注意在 ```<beans>``` 的属性里应该加入下面的p 命名空间
+
+```xml
+ xmlns:p="http://www.springframework.org/schema/p"
+ ```

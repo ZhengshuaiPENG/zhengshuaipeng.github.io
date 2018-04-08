@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[JAVA_SSH] Spring IOC 容器"
+title:  "[JAVA_Spring] Spring IOC 容器"
 date:   2018-04-06
 desc: "Spring IOC 容器"
 keywords: "java, spring"

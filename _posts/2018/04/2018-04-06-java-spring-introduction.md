@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[JAVA_SSH] Spring 简介"
+title:  "[JAVA_Spring] Spring 简介"
 date:   2018-04-06
 desc: "Spring 框架简介"
 keywords: "java, spring"
