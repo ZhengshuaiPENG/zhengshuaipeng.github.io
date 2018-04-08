@@ -11,7 +11,7 @@ categories: [java, web, spring]
 
 ##  1. 基于 XML 文件的方式
 
-在上一节[Spring Introduction](/_posts/2018/04/2018-04-06-java-spring-introduction.md)中的hello world 示例中，已经用到了xml的方式去配置一个bean
+在上一节[Spring Introduction](http://blog.lovian.org/java/web/spring/2018/04/06/java-spring-introduction.html)中的hello world 示例中，已经用到了xml的方式去配置一个bean
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
