@@ -588,4 +588,271 @@ Person{name='zhshpeng', age='24', car=Car{brand='AUDI', model='A6L', price='0', 
 ```
 
 ### d.集合属性
-4：20.57
+在 Java 中集合有 Collection 和 Map，同样的 Spring 也支持集合属性，在 Spring中可以通过一组内置的 xml 标签(例如: ```<list>```, ```<set>``` 或 ```<map>```) 来配置集合属性
+
+***对于 List， Array 和 Set的集合属性：***
+
+-   配置 ```java.util.List``` 类型的属性, 需要指定 ```<list>```  标签, 在标签里包含一些元素. 这些标签可以通过 ```<value>``` 指定简单的常量值, 通过 ```<ref>``` 指定对其他 Bean 的引用. 通过 ```<bean>``` 指定内置 Bean 定义. 通过 ```<null/>``` 指定空元素. 甚至可以内嵌其他集合.
+-   数组 ```Array``` 的定义和 ```List``` 一样, 都使用 ```<list>```
+-   配置 ```java.util.Set``` 需要使用 ```<set>``` 标签, 定义元素的方法与 List 一样.
+
+集合属性示例如下，先重新写一个类 Person, 包括了一个 ```List<Car>```成员变量：
+
+```java
+package org.lovian.sping.bean.collections;
+
+import org.lovian.sping.bean.Car;
+
+import java.util.List;
+
+/**
+ * Author: PENG Zhengshuai
+ * Date: 4/7/18
+ * lovian.org
+ */
+public class Person {
+    private String name;
+    private int age;
+    private List<Car> cars;
+
+    public Person() {
+
+    }
+
+    public Person(String name, int age, List<Car> cars) {
+        this.name = name;
+        this.age = age;
+        this.cars = cars;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public List<Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(List<Car> cars) {
+        this.cars = cars;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", cars=" + cars +
+                '}';
+    }
+}
+```
+
+那么接下来就需要在 application_context.xml 中配置这个 Person 类的bean，并让它拥有两个我们之前配置好的 Car bean 对象
+
+```xml
+    <bean id="Tom" class="org.lovian.sping.bean.collections.Person">
+        <property name="name" value="Tom" />
+        <property name="age" value="18"/>
+        <property name="cars">
+            <list>
+                <ref bean="BMW 525"/>
+                <ref bean="Audi A6L"/>
+            </list>
+        </property>
+    </bean>
+```
+
+执行 main 方法：
+
+```java
+    public static void main(String[] args) {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("config/application_context.xml");
+
+        Person tom = (Person) applicationContext.getBean("Tom");
+        System.out.println(tom.toString());
+    }
+```
+
+打印结果如下：
+
+```
+Person{name='Tom', age=18, cars=[Car{brand='BWM', model='<525>', price='400000', maxSpeed='0.0'}, Car{brand='AUDI', model='A6L', price='0', maxSpeed='250.0'}]}
+```
+
+从这个结果来看，我们用了 ```<list>```来给 Person 类中 ```List<Car>``` 成员变量添加了两个值。但实际上我们并没有显式的让这个成员变量初始化，Spring 自动的给 new 出了一个 List 对象，并把关联的两个 Car 对象添加了进去。
+
+
+***对于 Map 和 Properties 的集合属性：***
+
+-   ```Java.util.Map``` 通过 ```<map>``` 标签定义, ```<map>``` 标签里可以使用多个 ```<entry>``` 作为子标签. 每个条目包含一个键和一个值 
+-   必须在 ```<key>``` 标签里定义键
+-   因为键和值的类型没有限制, 所以可以自由地为它们指定 ```<value>```, ```<ref>```, ```<bean>``` 或 ```<null/>``` 元素
+-   可以将 Map 的键和值作为 ```<entry>``` 的属性定义: 简单常量使用 ```key``` 和 ```value``` 来定义; Bean 引用通过 ```key-ref``` 和 ```value-ref``` 属性定义
+-   使用 ```<props```> 定义 ```java.util.Properties```, 该标签使用多个 ```<props>``` 作为子标签. 每个 ```<property>``` 标签必须定义 key 属性
+
+示例如下，同样新建一个包含 Map 成员变量的 MapPerson 类：
+
+```java
+package org.lovian.sping.bean.collections;
+
+import org.lovian.sping.bean.Car;
+
+import java.util.Map;
+
+/**
+ * Author: PENG Zhengshuai
+ * Date: 4/8/18
+ * lovian.org
+ */
+public class MapPerson {
+    private String name;
+    private int age;
+
+    private Map<String, Car> cars;
+
+    public MapPerson() {
+    }
+
+    public MapPerson(String name, int age, Map<String, Car> cars) {
+        this.name = name;
+        this.age = age;
+        this.cars = cars;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Map<String, Car> getCars() {
+        return cars;
+    }
+
+    public void setCars(Map<String, Car> cars) {
+        this.cars = cars;
+    }
+
+    @Override
+    public String toString() {
+        return "MapPerson{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", cars=" + cars +
+                '}';
+    }
+}
+
+```
+
+接下来就在application_context.xml中添加 MapPerson bean的定义：
+
+```xml
+<bean id="Jerry" class="org.lovian.sping.bean.collections.MapPerson">
+        <property name="name" value="Jerry"/>
+        <property name="age" value="17"/>
+        <property name="cars">
+            <map>
+                <entry key="First Car" value-ref="Audi A6L"/>
+                <entry key="Second Car" value-ref="BMW 525"/>
+            </map>
+        </property>
+    </bean>
+```
+
+我们在 Map 中定义了两条 entry， key 是一个 String， 而 value 则是一个 bean 的引用，执行一下 main 方法看看结果：
+
+```java
+    public static void main(String[] args) {
+        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("config/application_context.xml");
+
+        MapPerson jerry = (MapPerson) applicationContext.getBean("Jerry");
+        System.out.println(jerry.toString());
+    }
+```
+
+结果如下：
+
+```
+MapPerson{name='Jerry', age=17, cars={First Car=Car{brand='AUDI', model='A6L', price='0', maxSpeed='250.0'}, Second Car=Car{brand='BWM', model='<525>', price='400000', maxSpeed='0.0'}}}
+```
+
+我们可以看到和 List 的示例一样，Map 被初始化且添加了两个键值对。而对于```java.util.Properties```用法和```java.util.Map```相似，xml示例如下：
+
+```xml
+<bean id="properties" class="xxxxxxx">
+    <property name="properties">
+        <props>
+            <prop key="user">root</prop>
+            <prop key="password">pna</prop>
+        </props>
+    </property>
+</bean>
+```
+
+### e.使用  Utility Schema 定义集合
+
+由于使用基本的集合标签定义集合时, 不能将集合作为独立的 ```Bean``` 定义, 导致其他 ```Bean``` 无法引用该集合, 所以无法在不同 ```Bean``` 之间共享集合.就如上小节的例子中，我们在 Person 或者是 MapPerson 的 bean 中定义了集合的成员变量，但这些集合是无法被其他 bean 所引用的，如果由其他类需要引用这些集合，那怎么处理？
+
+可以使用 ```utility schema``` 里的集合标签定义独立的集合 ```Bean```. 需要注意的是, 必须在 ```<beans>``` 根元素里添加 ```utility schema``` 定义。通俗的来说，就是把我们之前定义的那些集合单独拿出来，当作一个 bean 来配置，也就是说，我们```需要配置单例的集合 bean，从而供多个 bean 进行引用```
+
+示例如下，我们在 application_context.xml 中添加一个 ```util:list``` 和一个集合 Person bean
+
+```xml
+    <util:list id="bba-cars">
+        <ref bean="BMW 525"/>
+        <ref bean="Audi A6L"/>
+        <bean id="Benz C200" class="org.lovian.sping.bean.Car">
+            <constructor-arg value="BENZ" type="java.lang.String"/>
+            <constructor-arg value="C200" type="java.lang.String"/>
+            <constructor-arg value="240"  type="double"/>
+            <property name="price" value="300000"/>
+        </bean>
+    </util:list>
+
+    <bean id="Jack" class="org.lovian.sping.bean.collections.Person">
+        <property name="name" value="Jack" />
+        <property name="age" value="23"/>
+        <property name="cars">
+            <ref bean="bba-cars"/>
+        </property>
+    </bean>
+```
+
+这里我们可以看到，Person中本来应该设置 ```List<Car>``` 的地方，我们引用了上面 ```util:list``` 定义的 bean，执行一些 main 方法得到结果如下：
+
+```
+Person{name='Jack', age=23, cars=[Car{brand='BWM', model='<525>', price='400000', maxSpeed='0.0'}, Car{brand='AUDI', model='A6L', price='0', maxSpeed='250.0'}, Car{brand='BENZ', model='C200', price='300000', maxSpeed='240.0'}]}
+```
+
+
+## 6. 使用 p 命名空间
+
+为了简化 XML 文件的配置，越来越多的 XML 文件采用属性而非子元素配置信息。从 Sping 2.5 版本开始引入了一个新的 ```p 命名空间（p namespace）```，可以通过 ```<bean>``` 元素属性的方式来配置 Bean 的属性，我们可以可以把上面那个 ```Jack``` 那个 bean 改写成如下方式：
+
+```xml
+<bean id="Rose" class="org.lovian.sping.bean.collections.Person" p:name="Rose" p:age="22" p:cars-ref="bba-cars"/>
+```
