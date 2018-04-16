@@ -1,6 +1,6 @@
-i---
+---
 layout: post
-title:  "[Linux] Linux find command"
+title:  "[Linux] find command"
 date:   2018-04-16
 desc: "find commands in Linux"
 keywords: "Linux, shell, find"
