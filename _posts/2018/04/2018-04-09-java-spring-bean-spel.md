@@ -78,16 +78,19 @@ SPEL， Spring 表达式语言(```Spring Expression Language```), 是一个支�
 ## 2. SPEL 引用 Bean、 属性和方法
 
 -   引用其他对象
+
 ```xml
 <!--通过 value 属性和 SPEL 配置 Bean 之间的应用关系-->
 <property name="perfix" value="#{prefixGenerator}"/>
 ```
 -   引用其他对象的属性
+
 ```xml
 <!--通过 value 属性和 SPEL 配置 suffix 值为另一个 Bean 的suffix 属性值-->
 <property name="suffix" value="#{sequenceGenerator2.suffix}"/>
 ```
 -   调用其他方法，还可以链式操作
+
 ```xml
 <!--通过 value 属性和 SPEL 配置 suffix 值为另一个 Bean 的suffix 返回值-->
 <property name="suffix" value="#{sequenceGenerator2.toString()}"/>
@@ -96,6 +99,7 @@ SPEL， Spring 表达式语言(```Spring Expression Language```), 是一个支�
 <property name="suffix" value="#{sequenceGenerator2.toString().toUpperCase()}"/>
 ```
 -   调用静态方法或者静态属性： 通过``` T()``` 调用一个类的```静态方法```，它将返回一个 ```Class Object```，然后再调用相应的方法和属性
+
 ```xml
 <propery name="piValue" value="#{T(java.lang.Math).PI}"/>
 ```
