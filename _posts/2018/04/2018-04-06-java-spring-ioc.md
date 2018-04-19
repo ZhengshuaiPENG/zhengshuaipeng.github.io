@@ -4,7 +4,7 @@ title:  "[JAVA_Spring] Spring IOC 容器"
 date:   2018-04-06
 desc: "Spring IOC 容器"
 keywords: "java, spring"
-categories: [java, web, spring]
+categories: [java, spring]
 ---
 
 # I. Spring 中 ICO 和 DI 的概述

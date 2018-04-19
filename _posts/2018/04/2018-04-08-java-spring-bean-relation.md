@@ -4,7 +4,7 @@ title:  "[JAVA_Spring] Spring 中 Bean 之间的关系以及作用域"
 date:   2018-04-08
 desc: "Spring Bean relation and scope"
 keywords: "java, spring, Bean Relation, Bean Scope"
-categories: [java, web, spring]
+categories: [java, spring]
 ---
 
 # I. Bean 之间的关系

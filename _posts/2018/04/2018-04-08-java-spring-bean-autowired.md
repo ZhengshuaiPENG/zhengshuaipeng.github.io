@@ -4,7 +4,7 @@ title:  "[JAVA_Spring] Spring 中 Bean 的自动装配"
 date:   2018-04-08
 desc: "Spring Bean 配置"
 keywords: "java, spring, Bean，Autowire"
-categories: [java, web, spring]
+categories: [java,spring]
 ---
 
 # I. Bean 的装配与自动装配
