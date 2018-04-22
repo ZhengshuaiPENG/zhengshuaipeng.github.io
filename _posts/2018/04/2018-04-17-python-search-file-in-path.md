@@ -9,7 +9,7 @@ categories: [python]
 
 # I. Search file in a give path by using python
 
-Sometimes we need to process files in server(linux env). Faced on many files, sometimes you may want to search just one file in a given path recursively. Below is a implementation script snippets by using Python.
+Sometimes we need to process files in a server(Linux env). Faced with many files, sometimes you may want to search just one file in a given path recursively. Below is an implementation script snippets by using Python.
 
 ```python
 def search(rdf_raw_data_path, target_file):
@@ -19,4 +19,4 @@ def search(rdf_raw_data_path, target_file):
             return complete_path[0]
 ```
 
-Here ```target_file``` accept wildcard character
+Here ```target_file``` accepts wildcard character
