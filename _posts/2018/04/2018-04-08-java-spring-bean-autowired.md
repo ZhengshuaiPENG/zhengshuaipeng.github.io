@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[JAVA_Spring] Spring 中 Bean 的自动装配"
+title:  "[JAVA_Spring] Spring 中 Bean 以XML的方式自动装配"
 date:   2018-04-08
 desc: "Spring Bean 配置"
 keywords: "java, spring, Bean，Autowire"
@@ -20,6 +20,8 @@ categories: [java,spring]
 我们显式的指明了，将 ```bba-cars``` 这个 bean 装配给了 ```Rose``` 这个 Person bean，那么什么是```自动装配（Autowire）```呢，就是说我这里不需要显示的写明，```bba-cars``` 这个bean是装配给```Rose```的，它去自己给我装配好，那么如果实现呢？
 
 ## 1.XML 配置里的 Bean 自动装配
+
+```本文所讲的自动装配特指以 XML 的方式进行自动装配```
 
 -   Spring IOC 容器可以自动装配 Bean. 需要做的仅仅是在 ```<bean>``` 的 ```autowire``` 属性里```指定自动装配的模式```
     -   ```byType(根据类型自动装配)```: 若 IOC 容器中有多个与目标 Bean 类型一致的 Bean. 在这种情况下, Spring 将无法判定哪个 Bean 最合适该属性, 所以不能执行自动装配
