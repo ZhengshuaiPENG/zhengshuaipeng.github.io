@@ -4,7 +4,7 @@ title:  "[JAVA_Spring] Spring 中通过工厂方法装配 Bean"
 date:   2018-04-17
 desc: "Spring Bean wired by factory"
 keywords: "java, spring, Bean，factory"
-categories: [java, spring]
+categories: [spring]
 ---
 
 # I. Bean 的装配方式

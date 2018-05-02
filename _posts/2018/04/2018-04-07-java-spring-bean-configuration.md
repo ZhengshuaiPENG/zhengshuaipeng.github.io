@@ -4,7 +4,7 @@ title:  "[JAVA_Spring] Spring 中 Bean 的配置"
 date:   2018-04-07
 desc: "Spring Bean 配置"
 keywords: "java, spring, IOC, DI, Bean"
-categories: [java, spring]
+categories: [spring]
 ---
 
 # I. Spring Bean 的配置形式

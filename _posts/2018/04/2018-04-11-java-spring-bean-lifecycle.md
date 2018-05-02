@@ -4,7 +4,7 @@ title:  "[JAVA_Spring] Spring 中 Bean 的生命周期"
 date:   2018-04-11
 desc: "Spring Bean Life Cycle"
 keywords: "java, spring, Bean，Life Cycle"
-categories: [java, spring]
+categories: [spring]
 ---
 
 # I. 传统 Java 中 Bean 对象的生命周期

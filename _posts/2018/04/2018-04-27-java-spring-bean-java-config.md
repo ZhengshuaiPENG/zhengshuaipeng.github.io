@@ -4,7 +4,7 @@ title:  "[JAVA_Spring] Spring 使用 Java Config 自动装配 Bean"
 date:   2018-04-27
 desc: "Spring autowired bean by java config"
 keywords: "java, spring, Bean， annotation, java config， autowired"
-categories: [java, spring]
+categories: [spring]
 ---
 
 # I. Spring Bean 的装配机制

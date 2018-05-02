@@ -4,7 +4,7 @@ title:  "[JAVA_Spring] Spring 泛型依赖注入"
 date:   2018-04-22
 desc: "Spring generic dependency injection"
 keywords: "java, spring, Bean， generic, dependency injection"
-categories: [java, spring]
+categories: [spring]
 ---
 
 # I.范型依赖注入

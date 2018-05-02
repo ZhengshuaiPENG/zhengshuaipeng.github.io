@@ -4,7 +4,7 @@ title:  "[JAVA_Spring] Spring 中通过注解配置 Bean"
 date:   2018-04-18
 desc: "Spring Bean wired by java annotation"
 keywords: "java, spring, Bean，annotation"
-categories: [java, spring]
+categories: [spring]
 ---
 
 # I. 基于注解方式配置 Bean

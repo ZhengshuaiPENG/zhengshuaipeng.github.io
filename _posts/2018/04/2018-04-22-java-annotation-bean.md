@@ -4,7 +4,7 @@ title:  "[JAVA_Spring] Spring 中通过注解装配 Bean 与 Bean 之间的关�
 date:   2018-04-22
 desc: "Spring Bean wired by java annotation"
 keywords: "java, spring, Bean，annotation"
-categories: [java, spring]
+categories: [spring]
 ---
 
 # I. 组件装配
