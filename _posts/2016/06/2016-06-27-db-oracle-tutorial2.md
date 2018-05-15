@@ -4,7 +4,7 @@ title:  "[Oracle Database] Oracle 11g xe tutorial 2: Subquery, Join, View"
 date:   2016-06-27
 desc: "Orace 11g xe SQL tutorial2, how to use subquery, join, view in oracle"
 keywords: "Oracle 11g xe, database, Linux, scott, subquery, join, view, tutorial, SQL"
-categories: [sql]
+categories: [oracle_db]
 ---
 
 # Oracle 11g xe Tutorial 2

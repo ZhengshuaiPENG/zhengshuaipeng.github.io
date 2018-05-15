@@ -4,7 +4,7 @@ title:  "[Oracle Database] Oracle 11g xe tutorial 7: PL/SQL Advance"
 date:   2016-07-02
 desc: "Orace 11g xe SQL tutorial6, how to programming with PL/SQL"
 keywords: "Oracle 11g xe, database, Linux, PL, SQL, Cursor, procedure, function, trigger"
-categories: [sql]
+categories: [oracle_db]
 ---
 
 # Oracle 11g xe Tutorial 7. PL/SQL Cursor, Procedure, Function, Trigger

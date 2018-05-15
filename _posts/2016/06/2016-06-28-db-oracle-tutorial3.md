@@ -4,7 +4,7 @@ title:  "[Oracle Database] Oracle 11g xe tutorial 3: Export/Import, Insert, Upda
 date:   2016-06-28
 desc: "Orace 11g xe SQL tutorial3, how to use insert, update, delete, rownum, transactional control in oracle"
 keywords: "Oracle 11g xe, database, Linux, export/import, backup , insert, update, delete, transaction, SQL"
-categories: [sql]
+categories: [oracle_db]
 ---
 # Oracle 11g xe Tutorial 3
 

@@ -1,6 +1,6 @@
 ---
 layout: posts_by_category
-categories: sql
-title: sql
-permalink: /category/sql
+categories: oracle_db
+title: oracle_db
+permalink: /category/oracle_db
 ---

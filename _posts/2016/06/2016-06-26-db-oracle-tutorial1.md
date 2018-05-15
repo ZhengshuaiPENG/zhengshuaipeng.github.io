@@ -4,7 +4,7 @@ title:  "[Oracle Database] Oracle 11g xe tutorial 1: Select query"
 date:   2016-06-26
 desc: "Orace 11g xe SQL tutorial1 how to use select query in oracle"
 keywords: "Oracle 11g xe, database, Linux, scott, select, tutorial, SQL"
-categories: [sql]
+categories: [oracle_db]
 ---
 
 # Oracle 11g xe Tutorial 1

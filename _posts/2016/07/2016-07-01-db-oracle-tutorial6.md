@@ -4,7 +4,7 @@ title:  "[Oracle Database] Oracle 11g xe tutorial 6: PL/SQL Fundamental"
 date:   2016-07-01
 desc: "Orace 11g xe SQL tutorial6, how to programming with PL/SQL"
 keywords: "Oracle 11g xe, database, Linux, PL, SQL"
-categories: [sql]
+categories: [oracle_db]
 ---
 
 # Oracle 11g xe Tutorial 6. PL/SQL Grammar
