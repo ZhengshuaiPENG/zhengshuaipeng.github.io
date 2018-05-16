@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[Mysql] Mysql 基础入门"
+title:  "[Mysql] Mysql 基础入门"
 date:   2018-05-15
 desc: "Mysql introduction"
 keywords: "Mysql, database, Linux,  tutorial, SQL"
