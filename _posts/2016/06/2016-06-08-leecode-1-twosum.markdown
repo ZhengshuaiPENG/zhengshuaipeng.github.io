@@ -1,10 +1,10 @@
 ---
 layout: post
-title:  "[LeetCode] 1. TwoSum"
+title:  "[LeetCode] TwoSum"
 date:   2016-06-08
-desc: "LeetCode 1. TwoSum C++ solution"
+desc: "LeetCode  TwoSum C++ solution"
 keywords: "LeetCode, TwoSum, C++, Algorithm"
-categories: [algorithm]
+categories: [leetcode]
 ---
 
 ## Q:1 Two sum
