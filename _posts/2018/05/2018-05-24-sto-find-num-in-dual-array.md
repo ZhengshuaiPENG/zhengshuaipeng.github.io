@@ -26,7 +26,7 @@ Given target = 5, return true.
 Given target = 20, return false.
 ```
 
-[OJ: NowCoder](https://www.nowcoder.com/practice/623a5ac0ea5b4e5f95552655361ae0a8?tpId=13&tqId=11203&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
+[OJ: NowCoder](https://www.nowcoder.com/practice/abc3fe2ce8e146608e868a70efebf62e?tpId=13&tqId=11154&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
 # II. 思路
 
@@ -38,6 +38,8 @@ Given target = 20, return false.
 
 在一个二维矩阵 matrix 中, 每一行都递增, 每一列都递增, 那么要能够使得 N 可以找到下一个比 N 小的值并且可以找到下一个比 N 大的值, 那么起始点就应该从矩阵的右上角开始, 也就是这个 N,应该是 ```matrix[0][col.length-1]```, 它的左边都比它小,它的下边都比它大,这样就可以应用二分法的思想来解决了
 
+时间复杂度为 O(M+N)
+空间复杂度为 O(1)
 
 # III. Java 实现
 
