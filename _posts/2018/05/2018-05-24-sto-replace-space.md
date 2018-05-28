@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "[Sword_To_Offer] Array - 替换空格"
+title:  "[Sword_To_Offer] String - 替换空格"
 date:   2018-05-25
-desc: "Replace "
-keywords: "Algorithm, Sword_To_Offer, Array, Find, Two-Dimension"
+desc: "Replace space in a string"
+keywords: "Algorithm, Sword_To_Offer, String, replace white space"
 categories: [sword_to_offer]
 ---
 
