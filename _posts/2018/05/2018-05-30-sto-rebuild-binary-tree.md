@@ -34,7 +34,7 @@ inorder =  [9,3,15,20,7]
 
 [OJ: NowCoder](https://www.nowcoder.com/practice/8a19cbe657394eeaac2f6ea9b0f6fcf6?tpId=13&tqId=11157&tPage=1&rp=1&ru=/ta/coding-interviews&qru=/ta/coding-interviews/question-ranking)
 
-关于二叉树的数据结构,可以参考 [[Date Structure] 数据结构之树](https://blog.lovian.org/data_structure/2016/08/24/data-structure-tree.html#tocAnchor-1-1-3)
+关于二叉树的数据结构,可以参考 [[Date Structure] 数据结构之树](https://blog.lovian.org/data_structure/2016/08/24/data-structure-tree.html#tocAnchor-1-1-3)
 
 # II. 思路
 
@@ -51,7 +51,7 @@ inorder =  [9,3,15,20,7]
 -   已知```前序遍历```序列和```后续序遍历```序列，```不能确定```一个二叉树
 
 
-由于二叉树的特性, ```前序遍历的第一个值,肯定就是 root 节点```.由于题目假设二叉树的数字没有重复, 那么肯定能够根据这个 root 节点的值来找到root节点在中序遍历中的位置.从而根据中序遍历的特性, ```root 节点可以把中序遍历序列分为左子树和右子树```, 那么 root 节点的左子节点就是左子树的 root 节点, 而 root 节点的右子节点,就是右子树的 root 节点, 然后就可以```递归```的将树还原出来
+由于二叉树的特性, ```前序遍历的第一个值,肯定就是 root 节点```.由于题目假设二叉树的数字没有重复, 那么肯定能够根据这个 root 节点的值来找到root节点在中序遍历中的位置.从而根据中序遍历的特性, ```root 节点可以把中序遍历序列分为左子树和右子树```, 那么 root 节点的左子节点就是左子树的 root 节点, 而 root 节点的右子节点,就是右子树的 root 节点, 然后就可以```递归```的将树还原出来
 
 
 # III. Java 实现
