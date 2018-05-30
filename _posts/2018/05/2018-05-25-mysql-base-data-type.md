@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "[Mysql] Mysql Fundamental- Data Type"
-date:   2018-05-15
+date:   2018-05-25
 desc: "Mysql data type introduction"
 keywords: "Mysql, database, Linux,  tutorial, data type"
 categories: [mysql]
