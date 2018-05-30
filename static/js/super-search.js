@@ -4,12 +4,20 @@ MIT Licensed
 */
 (function () {
 	var searchFile = (baseurl || '') + '/sitemap.xml',
-		searchEl,
-		searchInputEl,
-		searchResultsEl,
+		searchEl = '#js-search',
+		searchInputEl = '#js-search__input',
+		searchResultsEl = '#js-search__results',
 		currentInputValue = '',
 		lastSearchResultHash,
 		posts = [];
+
+
+        superSearch({
+            searchFile:  (baseurl || '') + '/sitemap.xml',
+            searchSelector: '#js-search', // CSS Selector for search container element.
+            inputSelector: '#js-search__input', // CSS selector for <input>
+            resultsSelector: '#js-search__results' // CSS selector for results container
+        });
 
 	// Changes XML to JSON
 	// Modified version from here: http://davidwalsh.name/convert-xml-json
@@ -28,7 +36,7 @@ MIT Licensed
         } else if (xml.nodeType == 3) { // text
             obj = xml.nodeValue;
         }
-        
+
 		// do children
 		// If all text nodes inside, get concatenated text from them.
 		var textNodes = [].slice.call(xml.childNodes).filter(function (node) { return node.nodeType === 3; });
