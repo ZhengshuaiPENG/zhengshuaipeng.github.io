@@ -89,7 +89,7 @@ update emp set sal = 4000 where ename = 'lisa';
 
 
 -- 将表 dept 中的 deptname 设置为出现在 emp 表中相同 deptno 的 ename
--- 同时将 emp 中的 sal 设置为原先的 sal 和其 deptno 的乘积
+-- 同时将 emp 中的 sal 设置为原先的 sal 和其 deptno 的乘积
 update emp a, dept b 
 set
     a.sal = a.sal*b.deptno,

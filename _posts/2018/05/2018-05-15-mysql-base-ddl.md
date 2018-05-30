@@ -81,7 +81,7 @@ desc table_name;
 
 ```sql
 show create table table_name \G;
---可以看到表的定义
+--可以看到表的定义
 --可以看到表的 engine (存储引擎)
 --可以看到表的 charset
 --\G 选项的含义是使得记录能够按照字段竖向排列
@@ -97,7 +97,7 @@ drop table table_name;
 
 ## 5.修改表
 
-对于已经创建好的表,尤其是在已经有数据的情况下, 如果需要做一些结构上的改变,一般有两种方式:
+对于已经创建好的表,尤其是在已经有数据的情况下, 如果需要做一些结构上的改变,一般有两种方式:
 1.   可以先将表 drop, 然后按照新的表定义重建表,然后重新导入数据
 2.   可以直接哦通过 alter table 语句来更改表结构
 
@@ -124,7 +124,7 @@ alter table emp add column age int(3);
 -   删除表字段
 
 ```sql
---语法
+--语法
 ALTER TABLE  table_name DROP[COLUMN] column_name;
 
 -- 比如将 emp 表中字段 age 删除
@@ -141,7 +141,7 @@ ALTER TABLE  table_name CHANGE[COLUMN] old_col_name column_definition [FIRST|AFT
 alter table emp change age age1 int(4);
 
 -- 注意
--- CHANGE 和 MODIFY 都可以修改表的定义, 但是 CHANGE 后面需要写两次列名
+-- CHANGE 和 MODIFY 都可以修改表的定义, 但是 CHANGE 后面需要写两次列名
 -- CHANGE 的优点可以修改列名称, MODIFY 不能
 ```
 
