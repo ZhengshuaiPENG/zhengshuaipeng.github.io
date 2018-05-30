@@ -60,7 +60,14 @@
 
     function getPostsFromXml(xml) {
         var json = xmlToJson(xml);
-        return json.channel.item;
+		// Atom 1.0 format
+		if (json.entry && json.entry instanceof Array) {
+			return json.entry;
+		}
+		// Atom 2.0 format
+		else {
+			return json.channel.item;
+		}
     }
 
     var xmlhttp=new XMLHttpRequest();
