@@ -1,30 +1,26 @@
-/* super-search
-Author: Kushagra Gour (http://kushagragour.in)
-MIT Licensed
+/*  Super Search
+    Author: Kushagra Gour (http://kushagragour.in)
+    MIT Licensed
 */
+
 (function () {
-	var searchFile = (baseurl || '') + '/sitemap.xml',
-		searchEl = '#js-search',
-		searchInputEl = '#js-search__input',
-		searchResultsEl = '#js-search__results',
-		currentInputValue = '',
-		lastSearchResultHash,
-		posts = [];
+    var isSearchOpen = false,
+        searchEl = document.querySelector('#js-search'),
+        searchInputEl = document.querySelector('#js-search__input'),
+        searchResultsEl = document.querySelector('#js-search__results'),
+        currentInputValue = '',
+        lastSearchResultHash,
+        posts = [],
+        sitemap = (baseurl || '') + '/sitemap.xml';
 
+    // Changes XML to JSON
+    // Modified version from here: http://davidwalsh.name/convert-xml-json
+    function xmlToJson(xml) {
 
-        superSearch({
-            searchFile:  (baseurl || '') + '/sitemap.xml',
-            searchSelector: '#js-search', // CSS Selector for search container element.
-            inputSelector: '#js-search__input', // CSS selector for <input>
-            resultsSelector: '#js-search__results' // CSS selector for results container
-        });
+        // Create the return object
+        var obj = {};
 
-	// Changes XML to JSON
-	// Modified version from here: http://davidwalsh.name/convert-xml-json
-	function xmlToJson(xml) {
-		// Create the return object
-		var obj = {};
-		if (xml.nodeType == 1) { // element
+        if (xml.nodeType == 1) { // element
             // do attributes
             if (xml.attributes.length > 0) {
             obj["@attributes"] = {};
@@ -37,42 +33,46 @@ MIT Licensed
             obj = xml.nodeValue;
         }
 
-		// do children
-		// If all text nodes inside, get concatenated text from them.
-		var textNodes = [].slice.call(xml.childNodes).filter(function (node) { return node.nodeType === 3; });
-		if (xml.hasChildNodes() && xml.childNodes.length === textNodes.length) {
-			obj = [].slice.call(xml.childNodes).reduce(function (text, node) { return text + node.nodeValue; }, '');
-		}
-		else if (xml.hasChildNodes()) {
-			for(var i = 0; i < xml.childNodes.length; i++) {
-				var item = xml.childNodes.item(i);
-				var nodeName = item.nodeName;
-				if (typeof(obj[nodeName]) == "undefined") {
-					obj[nodeName] = xmlToJson(item);
-				} else {
-					if (typeof(obj[nodeName].push) == "undefined") {
-						var old = obj[nodeName];
-						obj[nodeName] = [];
-						obj[nodeName].push(old);
-					}
-					obj[nodeName].push(xmlToJson(item));
-				}
-			}
-		}
-		return obj;
-	}
+        // do children
+        // If all text nodes inside, get concatenated text from them.
+        var textNodes = [].slice.call(xml.childNodes).filter(function (node) { return node.nodeType === 3; });
+        if (xml.hasChildNodes() && xml.childNodes.length === textNodes.length) {
+            obj = [].slice.call(xml.childNodes).reduce(function (text, node) { return text + node.nodeValue; }, '');
+        }
+        else if (xml.hasChildNodes()) {
+            for(var i = 0; i < xml.childNodes.length; i++) {
+                var item = xml.childNodes.item(i);
+                var nodeName = item.nodeName;
+                if (typeof(obj[nodeName]) == "undefined") {
+                    obj[nodeName] = xmlToJson(item);
+                } else {
+                    if (typeof(obj[nodeName].push) == "undefined") {
+                        var old = obj[nodeName];
+                        obj[nodeName] = [];
+                        obj[nodeName].push(old);
+                    }
+                    obj[nodeName].push(xmlToJson(item));
+                }
+            }
+        }
+        return obj;
+    }
 
-	function getPostsFromXml(xml) {
-		var json = xmlToJson(xml);
-		// Atom 1.0 format
-		if (json.entry && json.entry instanceof Array) {
-			return json.entry;
-		}
-		// Atom 2.0 format
-		else {
-			return json.channel.item;
-		}
-	}
+    function getPostsFromXml(xml) {
+        var json = xmlToJson(xml);
+        return json.channel.item;
+    }
+
+    var xmlhttp=new XMLHttpRequest();
+    xmlhttp.open("GET",sitemap);
+    xmlhttp.onreadystatechange = function () {
+        if (xmlhttp.readyState != 4) return;
+        if (xmlhttp.status != 200 && xmlhttp.status != 304) { return; }
+        var node = (new DOMParser).parseFromString(xmlhttp.responseText, 'text/xml');
+        node = node.children[0];
+        posts = getPostsFromXml(node);
+    }
+    xmlhttp.send();
 
     window.toggleSearch = function toggleSearch() {
         _gaq.push(['_trackEvent', 'supersearch', searchEl.classList.contains('is-active')]);
@@ -89,74 +89,45 @@ MIT Licensed
         }, 210);
     }
 
-	function handleInput() {
-		var currentResultHash, d;
+    window.addEventListener('keyup', function onKeyPress(e) {
+        if (e.which === 27) {
+            toggleSearch();
+        }
+    });
+    window.addEventListener('keypress', function onKeyPress(e) {
+        if (e.which === 47 && !searchEl.classList.contains('is-active')) {
+            toggleSearch();
+        }
+    });
 
-		currentInputValue = (searchInputEl.value + '').toLowerCase();
-		if (!currentInputValue || currentInputValue.length < 3) {
-			lastSearchResultHash = '';
-			searchResultsEl.classList.add('is-hidden');
-			return;
-		}
-		searchResultsEl.style.offsetWidth;
+    searchInputEl.addEventListener('input', function onInputChange() {
+        var currentResultHash, d;
 
-		var matchingPosts = posts.filter(function (post) {
-			// Search `description` and `content` both to support 1.0 and 2.0 formats.
-			if ((post.title + '').toLowerCase().indexOf(currentInputValue) !== -1 || ((post.description || post.content) + '').toLowerCase().indexOf(currentInputValue) !== -1) {
-				return true;
-			}
-		});
-		if (!matchingPosts.length) {
-			searchResultsEl.classList.add('is-hidden');
-		}
-		currentResultHash = matchingPosts.reduce(function(hash, post) { return post.title + hash; }, '');
-		if (matchingPosts.length && currentResultHash !== lastSearchResultHash) {
-			searchResultsEl.classList.remove('is-hidden');
-			searchResultsEl.innerHTML = matchingPosts.map(function (post) {
-				d = new Date(post.pubDate);
-				return '<li><a href="' + post.link + '">' + post.title + '<span class="super-search__result-date">' + d.toUTCString().replace(/.*(\d{2})\s+(\w{3})\s+(\d{4}).*/,'$2 $1, $3') + '</span></a></li>';
-			}).join('');
-		}
-		lastSearchResultHash = currentResultHash;
-	}
+        currentInputValue = (searchInputEl.value + '').toLowerCase();
+        if (!currentInputValue || currentInputValue.length < 3) {
+            lastSearchResultHash = '';
+            searchResultsEl.classList.add('is-hidden');
+            return;
+        }
+        searchResultsEl.style.offsetWidth;
 
-	function init(options) {
-		searchFile = options.searchFile || searchFile;
-		searchEl = document.querySelector(options.searchSelector || '#js-search');
-		searchInputEl = document.querySelector(options.inputSelector || '#js-search__input');
-		searchResultsEl = document.querySelector(options.resultsSelector || '#js-search__results');
-
-		var xmlhttp=new XMLHttpRequest();
-		xmlhttp.open('GET', searchFile);
-		xmlhttp.onreadystatechange = function () {
-			if (xmlhttp.readyState != 4) return;
-			if (xmlhttp.status != 200 && xmlhttp.status != 304) { return; }
-			var node = (new DOMParser).parseFromString(xmlhttp.responseText, 'text/xml');
-			node = node.children[0];
-			posts = getPostsFromXml(node);
-		}
-		xmlhttp.send();
-
-		// Toggle on ESC key
-		window.addEventListener('keyup', function onKeyPress(e) {
-			if (e.which === 27) {
-				toggleSearch();
-			}
-		});
-		// Open on '/' key
-		window.addEventListener('keypress', function onKeyPress(e) {
-			if (e.which === 47 && !searchEl.classList.contains('is-active')) {
-				toggleSearch();
-			}
-		});
-
-		searchInputEl.addEventListener('input', function onInputChange() {
-			handleInput();
-		});
-	}
-
-	init.toggle = toggleSearch;
-
-	window.superSearch = init;
+        var matchingPosts = posts.filter(function (post) {
+            if ((post.title + '').toLowerCase().indexOf(currentInputValue) !== -1 || (post.description + '').toLowerCase().indexOf(currentInputValue) !== -1) {
+                return true;
+            }
+        });
+        if (!matchingPosts.length) {
+            searchResultsEl.classList.add('is-hidden');
+        }
+        currentResultHash = matchingPosts.reduce(function(hash, post) { return post.title + hash; }, '');
+        if (matchingPosts.length && currentResultHash !== lastSearchResultHash) {
+            searchResultsEl.classList.remove('is-hidden');
+            searchResultsEl.innerHTML = matchingPosts.map(function (post) {
+                d = new Date(post.pubDate);
+                return '<li><a href="' + post.link + '">' + post.title + '<span class="search__result-date">' + d.toUTCString().replace(/.*(\d{2})\s+(\w{3})\s+(\d{4}).*/,'$2 $1, $3') + '</span></a></li>';
+            }).join('');
+        }
+        lastSearchResultHash = currentResultHash;
+    });
 
 })();
