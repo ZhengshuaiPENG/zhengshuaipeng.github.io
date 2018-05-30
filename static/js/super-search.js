@@ -75,7 +75,6 @@
     xmlhttp.send();
 
     window.toggleSearch = function toggleSearch() {
-        _gaq.push(['_trackEvent', 'supersearch', searchEl.classList.contains('is-active')]);
         searchEl.classList.toggle('is-active');
         if (searchEl.classList.contains('is-active')) {
             // while opening
