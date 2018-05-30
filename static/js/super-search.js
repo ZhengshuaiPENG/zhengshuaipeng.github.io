@@ -3,7 +3,7 @@ Author: Kushagra Gour (http://kushagragour.in)
 MIT Licensed
 */
 (function () {
-	var searchFile = '/feed.xml',
+	var searchFile = (baseurl || '') + '/sitemap.xml',
 		searchEl,
 		searchInputEl,
 		searchResultsEl,
@@ -16,10 +16,19 @@ MIT Licensed
 	function xmlToJson(xml) {
 		// Create the return object
 		var obj = {};
-		if (xml.nodeType == 3) { // text
-			obj = xml.nodeValue;
-		}
-
+		if (xml.nodeType == 1) { // element
+            // do attributes
+            if (xml.attributes.length > 0) {
+            obj["@attributes"] = {};
+                for (var j = 0; j < xml.attributes.length; j++) {
+                    var attribute = xml.attributes.item(j);
+                    obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+                }
+            }
+        } else if (xml.nodeType == 3) { // text
+            obj = xml.nodeValue;
+        }
+        
 		// do children
 		// If all text nodes inside, get concatenated text from them.
 		var textNodes = [].slice.call(xml.childNodes).filter(function (node) { return node.nodeType === 3; });
@@ -57,19 +66,20 @@ MIT Licensed
 		}
 	}
 
-	window.toggleSearch = function toggleSearch() {
-		searchEl.classList.toggle('is-active');
-		if (searchEl.classList.contains('is-active')) {
-			// while opening
-			searchInputEl.value = '';
-		} else {
-			// while closing
-			searchResultsEl.classList.add('is-hidden');
-		}
-		setTimeout(function () {
-			searchInputEl.focus();
-		}, 210);
-	}
+    window.toggleSearch = function toggleSearch() {
+        _gaq.push(['_trackEvent', 'supersearch', searchEl.classList.contains('is-active')]);
+        searchEl.classList.toggle('is-active');
+        if (searchEl.classList.contains('is-active')) {
+            // while opening
+            searchInputEl.value = '';
+        } else {
+            // while closing
+            searchResultsEl.classList.add('is-hidden');
+        }
+        setTimeout(function () {
+            searchInputEl.focus();
+        }, 210);
+    }
 
 	function handleInput() {
 		var currentResultHash, d;
@@ -104,9 +114,9 @@ MIT Licensed
 
 	function init(options) {
 		searchFile = options.searchFile || searchFile;
-		searchEl = document.querySelector(options.searchSelector || '#js-super-search');
-		searchInputEl = document.querySelector(options.inputSelector || '#js-super-search__input');
-		searchResultsEl = document.querySelector(options.resultsSelector || '#js-super-search__results');
+		searchEl = document.querySelector(options.searchSelector || '#js-search');
+		searchInputEl = document.querySelector(options.inputSelector || '#js-search__input');
+		searchResultsEl = document.querySelector(options.resultsSelector || '#js-search__results');
 
 		var xmlhttp=new XMLHttpRequest();
 		xmlhttp.open('GET', searchFile);
