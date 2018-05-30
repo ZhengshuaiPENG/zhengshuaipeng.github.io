@@ -356,7 +356,7 @@ SELET * FROM table_n;
 注意 ```UNION | UNION ALL``` 联合的相同字段的结果集
 
 ```sql
---将 emp 和 dept表中部门编号的集合显示出来
+--将 emp 和 dept表中部门编号的集合显示出来
 select deptno from emp
 union all
 select deptno from dept;
