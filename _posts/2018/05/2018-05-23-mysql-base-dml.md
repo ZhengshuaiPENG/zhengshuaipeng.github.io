@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "[Mysql] Mysql Fundamental- DML Statement"
-date:   2018-05-15
+date:   2018-05-23
 desc: "Mysql DML statement introduction"
 keywords: "Mysql, database, Linux,  tutorial, SQL, DML"
 categories: [mysql]
@@ -88,8 +88,8 @@ UPDATE t1, t2, ..., tn set t1.field1=expr1, ..., tn.fieldn=exprn [WHERE CONDITIO
 update emp set sal = 4000 where ename = 'lisa';
 
 
--- 将表 dept 中的 deptname 设置为出现在 emp 表中相同 deptno 的 ename
--- 同时将 emp 中的 sal 设置为原先的 sal 和其 deptno 的乘积
+-- 将表 dept 中的 deptname 设置为出现在 emp 表中相同 deptno 的 ename
+-- 同时将 emp 中的 sal 设置为原先的 sal 和其 deptno 的乘积
 update emp a, dept b 
 set
     a.sal = a.sal*b.deptno,
@@ -126,7 +126,7 @@ delete from table_name;
 ## 2.用法示例
 
 ```sql
--- 在 emp 中将 ename = 'lovian' 的记录全部删除
+-- 在 emp 中将 ename = 'lovian' 的记录全部删除
 delete from emp where ename = 'lovian';
 
 -- 同时删除表 emp 和 dept 中 deptno = 3 的记录
@@ -164,7 +164,7 @@ select distinct deptno from emp;
 
 ## 3. 条件查询
 
-通过 ```where clause``` 来设置查询条件从而查出我们想要的值
+通过 ```where clause``` 来设置查询条件从而查出我们想要的值
 
 ```sql
 -- 查出 deptno = 1 的记录
@@ -245,7 +245,7 @@ FROM table_name
 ```
 
 -   ```fun_name``` 表示要做的聚合操作, 也就是聚合函数, 常有的有 ```sum(), count(*), max(), min()```
--   ```GROUP BY``` 关键字表示要进行分类聚合的字段, 比如要按照部门分类统计员工数量, 部门就应该写在 group by 后面
+-   ```GROUP BY``` 关键字表示要进行分类聚合的字段, 比如要按照部门分类统计员工数量, 部门就应该写在 group by 后面
 -   ```WITH ROLLUP``` 是可选语法, 表明是否对分类聚合后的结果进行再汇总
 -   ```HAVING``` 关键字表示对分类后的结果再进行过滤
 
@@ -258,7 +258,7 @@ select deptno, count(1) from emp group by deptno;
 
 -- 既统计各部门人数, 又要统计总人数
 select deptno, count(1) from emp group by deptno with rollup;
--- 查询结果示例, 最后一行结果是 with rollup 的效果:
+-- 查询结果示例, 最后一行结果是 with rollup 的效果:
 -- deptno | count(1)
 --      1 | 2 
 --      2 | 1
@@ -277,27 +277,27 @@ select sum(sal), max(sal), min(sal) from emp;
 
 ## 7.表连接
 
-当需要同时显示多个表中的字段时, 就可以用表连接来实现这样的功能. 
+当需要同时显示多个表中的字段时, 就可以用表连接来实现这样的功能. 
 
 ```表连接(JOIN)``` 从大类上来分分为:
 
--   ```内连接 (inner join)```: 仅选出两张表中互相匹配的记录, 也可作 ```join```
+-   ```内连接 (inner join)```: 仅选出两张表中互相匹配的记录, 也可作 ```join```
 -   ```外连接 (outer join)```:
     -   ```left outer join```: 包含所有左边表中的记录甚至是右边表中没有和它匹配的记录
     -   ```right outer join```: 包含所有的右边表中的记录甚至是左边表中没有和它匹配的记录
 
 
 ```sql
--- INNER JOIN
+-- INNER JOIN
 -- 查询所有employee的名字和所在部门
 -- 因为雇员名称和部门分别存放在表 emp 和 dept 中,因此需要 join 来进行查询
-select a.ename, b.deptname
+select a.ename, b.deptname
 from emp a 
 join dept b
 on a.deptno = b.deptno;
 
 -- LEFT JOIN
--- 需求同上
+-- 需求同上
 select a.ename, b.deptname
 from emp a
 left join dept b
@@ -337,7 +337,7 @@ join dept
 on emp.deptno = dept.deptno;
 ```
 
-## 9. 记录联合
+## 9.记录联合
 
 有的需求要将两个表的数据按照一定的查询条件查询出来后,将结果合并到一起显示出来, 这时候就需要使用 ```UNION``` 和 ```UNION ALL```, 语法如下:
 
@@ -350,10 +350,10 @@ UNION | UNION ALL
 SELET * FROM table_n;
 ```
 
-```UNION``` 和 ```UNION ALL``` 的主要区别就是 UNIOIN ALL 是把结果集直接合并在一起, 而UNION 则是将 UNIOIN ALL 后的结果进行一次 DISTINCT, 去除重复记录后的结果.
+```UNION``` 和 ```UNION ALL```的主要区别就是 UNIOIN ALL 是把结果集直接合并在一起, 而UNION 则是将 UNIOIN ALL 后的结果进行一次 DISTINCT, 去除重复记录后的结果.
 所以从某种意义上来说, ```UNIOIN ALL 是有序的, 而 UNION 无序```, 这里的顺序是指查询语句的前后顺序
 
-注意 ```UNION | UNION ALL``` 联合的相同字段的结果集
+注意 ```UNION | UNION ALL``` 联合的相同字段的结果集
 
 ```sql
 --将 emp 和 dept表中部门编号的集合显示出来
