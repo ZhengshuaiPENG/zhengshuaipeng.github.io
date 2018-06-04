@@ -20,6 +20,12 @@ First, it's better to set a global user config:
 $ git config --global user.name "Your Name Here"
 $ git config --global user.email your@email.com
 ``` 
+to check if it has been well set, use commands below:
+
+```shell
+$ git config --global user.name
+$ git config --global user.email
+```
 
 If you are in the company's computer, it's better to set your company identifier as global config.
 
