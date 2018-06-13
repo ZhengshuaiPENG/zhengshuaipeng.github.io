@@ -16,21 +16,21 @@ Install it via ```homebrew```:
 brew cask install iterm2
 ```
 
-After install iTerm2, I would recommanded to install [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh)
+After install iTerm2, I would recommand to use [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh) to replace bash
 
 # II. Add Server Profile
 
-Generally, we need to connect to a remote server via ```SSH```. If you have many servers to connect, it's better to configure some server profiles to manage them.
+Generally, we connect to a remote server via ```SSH```. If you have many servers to connect, it's better to configure some server profiles to manage them in iTerm2.
 
 ## 1. Write a profile file on local disk
 
-create a file on disk, for example, in the folder ```~/Workspace```
+-   Create a file on disk, for example, in the folder ```~/Workspace```
+
 ```
 touch ~/Workspace/remote_server_1
 ```
 
-Then edit this file
--   Enter password each time when connect to the server
+-   Then edit this file, need password each time when connect to the server
 
 ```
 #!/usr/bin/expect -f
@@ -44,7 +44,8 @@ interact
 expect eof
 ```
 
--   Set the password as well
+- Or set the password as well
+
 
 ```
 #!/usr/bin/expect -f
