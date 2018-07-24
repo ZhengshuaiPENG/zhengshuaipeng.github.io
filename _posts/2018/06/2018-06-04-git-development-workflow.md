@@ -140,3 +140,9 @@ $ git branch -d feature/foo
 $ git branch -D feature/foo
 ```
 
+- update branch from master branch
+
+```
+$ git fetch origin
+$ git merge origin/master
+```
