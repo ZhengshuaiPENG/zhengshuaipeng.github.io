@@ -65,6 +65,11 @@ expect {
 interact
 expect eof
 ```
+- Give execution privilege to profile
+
+```
+chmod +x ~/Workspace/remote_server_1
+```
 
 ## 2. Add profile to iTerm2
 
